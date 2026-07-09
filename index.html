@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RAZONE Venituri</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f0f0f;--s1:#1a1a1a;--s2:#242424;--bd:#2e2e2e;
+  --acc:#e53935;--adim:rgba(229,57,53,.12);
+  --tx:#f0f0f0;--muted:#888;--dim:#555;--grn:#4caf50;
+  --gold:#e8a020;
+  --FD:'Space Grotesk',sans-serif;--FB:'Inter',sans-serif;
+}
+body{background:var(--bg);color:var(--tx);font-family:var(--FB);font-size:14px;min-height:100vh}
+
+/* TOPBAR */
+.topbar{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+.logo{font-family:var(--FD);font-size:17px;font-weight:700;letter-spacing:-.5px}.logo span{color:var(--acc)}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.drive-status{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.drive-dot{width:7px;height:7px;border-radius:50%;background:var(--dim);transition:background .3s}
+.drive-dot.ok{background:var(--grn)}
+.drive-dot.saving{background:var(--gold)}
+.btn-drive{background:none;border:1px solid var(--bd);color:var(--muted);border-radius:6px;padding:5px 11px;font-size:12px;cursor:pointer;font-family:var(--FB)}.btn-drive:hover{border-color:var(--grn);color:var(--grn)}
+.btn-nm{background:var(--acc);color:#fff;border:none;border-radius:7px;padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--FB)}.btn-nm:hover{opacity:.85}
+
+/* PAGE */
+.page{max-width:860px;margin:0 auto;padding:20px 20px 60px}
+.slbl{font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--dim);text-transform:uppercase;margin-bottom:12px}
+
+/* DRIVE BANNER */
+.drive-banner{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.drive-banner-txt{font-size:13px;color:var(--muted);line-height:1.5}
+.drive-banner-txt strong{color:var(--tx);display:block;margin-bottom:2px}
+.btn-gdrive{background:#4285f4;color:#fff;border:none;border-radius:7px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--FB);white-space:nowrap}
+.btn-gdrive:hover{background:#3574e2}
+
+/* CURRENT */
+.cur-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cur-title{font-family:var(--FD);font-size:24px;font-weight:700;color:var(--gold)}
+.btn-add{background:var(--s2);border:1px solid var(--bd);color:var(--tx);border-radius:7px;padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--FB)}.btn-add:hover{border-color:var(--acc);color:var(--acc)}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.stat{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:14px 16px}
+.stat-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.stat-val{font-family:var(--FD);font-size:22px;font-weight:700}
+.stat-val.acc{color:var(--acc)}.stat-val.grn{color:var(--grn)}
+
+/* TABLE */
+.tbl-wrap{background:var(--s1);border:1px solid var(--bd);border-radius:10px;overflow:hidden;margin-bottom:28px}
+table{width:100%;border-collapse:collapse}
+th{background:var(--s2);padding:9px 14px;text-align:left;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;border-bottom:1px solid var(--bd)}
+td{padding:9px 14px;border-bottom:1px solid var(--bd);font-size:13px}
+tr:last-child td{border-bottom:none}tr:hover td{background:var(--s2)}
+.td-amt{font-family:var(--FD);font-weight:600;color:var(--grn);text-align:right}
+.td-muted{color:var(--muted);font-size:12px}
+.badge{display:inline-block;padding:2px 7px;border-radius:999px;font-size:11px;font-weight:500}
+.b-sala{background:rgba(99,102,241,.15);color:#818cf8}.b-supl{background:rgba(245,158,11,.15);color:#fbbf24}
+.btn-del{background:none;border:none;color:var(--dim);cursor:pointer;font-size:14px;padding:2px 5px;border-radius:4px}.btn-del:hover{background:rgba(229,57,53,.15);color:var(--acc)}
+
+/* DIVIDER */
+hr{border:none;border-top:1px solid var(--bd);margin:24px 0}
+
+/* CHART */
+.chart-wrap{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:16px;margin-bottom:28px}
+.chart-inner{display:flex;align-items:flex-end;gap:5px;height:90px}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end;cursor:pointer}
+.bar-fill{width:100%;border-radius:4px 4px 0 0;background:var(--adim);border:1px solid rgba(229,57,53,.2);min-height:3px;transition:all .15s}
+.bar-fill.active{background:var(--acc);border-color:var(--acc)}
+.bar-col:hover .bar-fill{background:rgba(229,57,53,.4)}
+.bar-lbl{font-size:9px;color:var(--dim);text-align:center;width:100%}
+.bar-col.active .bar-lbl{color:var(--acc);font-weight:600}
+
+/* PAST GRID */
+.past-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.pc{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:12px 14px;cursor:pointer;transition:all .15s}
+.pc:hover{border-color:var(--acc);background:var(--s2)}.pc.active{border-color:var(--acc);background:var(--adim)}
+.pc-name{font-size:12px;font-weight:600;margin-bottom:4px;color:var(--gold)}
+.pc-total{font-family:var(--FD);font-size:16px;font-weight:700;color:var(--acc)}
+.pc-sub{font-size:10px;color:var(--dim);margin-top:2px}
+
+/* MODAL */
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:200;align-items:center;justify-content:center}.ov.open{display:flex}
+.modal{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:24px;width:390px;max-width:95vw}
+.mt{font-family:var(--FD);font-size:16px;font-weight:700;margin-bottom:4px}
+.mt-sub{font-size:12px;color:var(--muted);margin-bottom:16px}
+.fg{margin-bottom:13px;position:relative}
+.fl{display:block;font-size:11px;font-weight:500;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+.fi{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:7px;padding:9px 12px;color:var(--tx);font-family:var(--FB);font-size:14px;outline:none;transition:border .15s}
+.fi:focus{border-color:var(--acc)}
+.fi-hint{font-size:11px;color:var(--dim);margin-top:4px;font-style:italic}
+.fi-hint.ok{color:var(--grn);font-style:normal}
+
+/* AUTOCOMPLETE */
+.ac-list{position:absolute;top:calc(100% - 4px);left:0;right:0;background:var(--s2);border:1px solid var(--acc);border-top:none;border-radius:0 0 8px 8px;z-index:20;max-height:180px;overflow-y:auto}
+.ac-item{padding:9px 12px;cursor:pointer;font-size:13px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd)}
+.ac-item:last-child{border-bottom:none}
+.ac-item:hover,.ac-item.selected{background:var(--adim)}
+.ac-name{font-weight:500;color:var(--tx)}
+.ac-hint{font-size:11px;color:var(--muted)}
+
+/* PREFILL BANNER */
+.prefill-bar{background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.3);border-radius:7px;padding:8px 12px;margin-bottom:12px;font-size:12px;color:var(--gold);display:none}
+.prefill-bar.show{display:block}
+
+.mbtns{display:flex;gap:8px;margin-top:18px}
+.bn{flex:1;background:var(--s2);border:1px solid var(--bd);color:var(--muted);border-radius:7px;padding:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--FB)}
+.bs{flex:2;background:var(--acc);border:none;color:#fff;border-radius:7px;padding:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--FB)}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--s1);border:1px solid var(--grn);border-radius:9px;padding:11px 18px;font-size:13px;color:var(--grn);z-index:500;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.err{border-color:var(--acc);color:var(--acc)}
+
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">RAZONE <span>VENITURI</span></div>
+  <div class="topbar-right">
+    <div class="drive-status">
+      <div class="drive-dot" id="driveDot"></div>
+      <span id="driveLabel">Drive</span>
+    </div>
+    <button class="btn-drive" id="btnDrive" onclick="signIn()">Conectează Drive</button>
+    <button class="btn-nm" onclick="openNM()">+ Lună Nouă</button>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- DRIVE BANNER -->
+  <div class="drive-banner" id="driveBanner">
+    <div class="drive-banner-txt">
+      <strong>💾 Salvare Google Drive</strong>
+      Conectează-te pentru a salva datele automat în Drive-ul tău. Datele rămân doar la tine.
+    </div>
+    <button class="btn-gdrive" onclick="signIn()">Conectează Google Drive</button>
+  </div>
+
+  <div class="slbl">Luna Curentă</div>
+  <div class="cur-hdr">
+    <div class="cur-title" id="curTitle">—</div>
+    <button class="btn-add" onclick="openAdd()">+ Adaugă</button>
+  </div>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-label">Total Lună</div><div class="stat-val acc" id="sTotal">—</div></div>
+    <div class="stat"><div class="stat-label">Nr. Clienți</div><div class="stat-val" id="sClients">—</div></div>
+    <div class="stat"><div class="stat-label">Medie / Intrare</div><div class="stat-val grn" id="sAvg">—</div></div>
+  </div>
+  <div class="tbl-wrap">
+    <table><thead><tr><th>Client</th><th>Data</th><th>Tip</th><th style="text-align:right">Sumă</th><th></th></tr></thead>
+    <tbody id="tbody"></tbody></table>
+  </div>
+  <hr>
+  <div class="slbl">Evoluție Venituri</div>
+  <div class="chart-wrap"><div class="chart-inner" id="chart"></div></div>
+  <hr>
+  <div class="slbl">Luni Anterioare</div>
+  <div class="past-grid" id="pg"></div>
+</div>
+
+<!-- ADD MODAL -->
+<div class="ov" id="addOv" onclick="if(event.target===this)closeAdd()">
+  <div class="modal">
+    <div class="mt">Adaugă Intrare</div>
+    <div class="mt-sub" id="addMSub"></div>
+    <div class="prefill-bar" id="prefillBar">✓ Completat din <strong id="prefillSrc"></strong> — modifică orice câmp dacă e nevoie</div>
+    <div class="fg">
+      <label class="fl">Client</label>
+      <input class="fi" id="fN" placeholder="ex. Adina" autocomplete="off" oninput="onNameInput(this.value)" onkeydown="onNameKey(event)">
+      <div class="ac-list" id="acList" style="display:none"></div>
+    </div>
+    <div class="fg">
+      <label class="fl">Data Achitare</label>
+      <input class="fi" type="date" id="fD">
+      <div class="fi-hint ok" id="dateHint">Data de azi — modifică dacă e diferit</div>
+    </div>
+    <div class="fg">
+      <label class="fl">Tip</label>
+      <select class="fi" id="fT">
+        <option>O lună</option><option>8 ședințe</option><option>12 ședințe</option>
+        <option>6 ședințe</option><option>2 săptămâni</option><option>Supliment</option><option>Altele</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label class="fl">Sumă (RON)</label>
+      <input class="fi" type="number" id="fA" placeholder="800">
+      <div class="fi-hint" id="amtHint"></div>
+    </div>
+    <div class="mbtns">
+      <button class="bn" onclick="closeAdd()">Anulează</button>
+      <button class="bs" onclick="saveEntry()">Salvează</button>
+    </div>
+  </div>
+</div>
+
+<!-- NEW MONTH MODAL -->
+<div class="ov" id="nmOv" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <div class="mt">Lună Nouă</div>
+    <div class="mt-sub">Creează o lună nouă goală pentru a înregistra venituri</div>
+    <div class="fg"><label class="fl">Lună</label>
+      <select class="fi" id="nmM">
+        <option>Ianuarie</option><option>Februarie</option><option>Martie</option><option>Aprilie</option>
+        <option>Mai</option><option>Iunie</option><option>Iulie</option><option>August</option>
+        <option>Septembrie</option><option>Octombrie</option><option>Noiembrie</option><option>Decembrie</option>
+      </select>
+    </div>
+    <div class="fg"><label class="fl">An</label><input class="fi" type="number" id="nmY" value="2026"></div>
+    <div class="mbtns">
+      <button class="bn" onclick="this.closest('.ov').classList.remove('open')">Anulează</button>
+      <button class="bs" onclick="mkMonth()">Creează</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+const MONTH_NAMES_RO = ["Ianuarie","Februarie","Martie","Aprilie","Mai","Iunie","Iulie","August","Septembrie","Octombrie","Noiembrie","Decembrie"];
+const RAW_DATA = {
+  "Iulie 2026": [
+    {name:"Adina",date:"02.06.2026",type:"8 ședințe",amount:600},{name:"Maria Ovidiu",date:"06.07.2026",type:"O lună",amount:800},{name:"Sophia",date:"07.02.2026",type:"O lună",amount:600},{name:"Delia",date:"03.07.2026",type:"O lună",amount:500},{name:"Darius",date:"03.07.2026",type:"O lună",amount:800},{name:"Bianca",date:"06.07.2026",type:"8 ședințe",amount:800},{name:"Gimi",date:"06.07.2026",type:"O lună",amount:500},{name:"Aura",date:"02.06.2026",type:"O lună",amount:550},{name:"Dana",date:"06.07.2026",type:"O lună",amount:900},{name:"Marc",date:"04.07.2026",type:"O lună",amount:600},{name:"Vlad",date:"09.07.2026",type:"O lună",amount:1000},
+  ],
+  "Iunie 2026": [
+    {name:"Delia",date:"01.05.2026",type:"O lună",amount:500},{name:"Maria Ovidiu",date:"01.06.2026",type:"O lună",amount:800},{name:"Octavian",date:"01.06.2026",type:"O lună",amount:400},{name:"Cristina",date:"02.06.2026",type:"O lună",amount:500},{name:"Darius",date:"02.06.2026",type:"O lună",amount:800},{name:"Aurelian",date:"02.06.2026",type:"8 ședințe",amount:600},{name:"Gimi",date:"02.06.2026",type:"O lună",amount:500},{name:"Adina",date:"02.06.2026",type:"8 ședințe",amount:600},{name:"Sergiu",date:"02.06.2026",type:"O lună",amount:800},{name:"Dana",date:"04.06.2026",type:"O lună",amount:500},{name:"Luiza",date:"04.06.2026",type:"O lună",amount:800},{name:"Martis",date:"04.06.2026",type:"O lună",amount:750},{name:"Delia",date:"05.06.2026",type:"O lună",amount:450},{name:"Eugean",date:"08.06.2026",type:"O lună",amount:600},{name:"Aura",date:"08.06.2026",type:"O lună",amount:550},{name:"Maria Florin",date:"09.06.2026",type:"O lună",amount:500},{name:"Vlad",date:"10.06.2026",type:"O lună",amount:1000},{name:"Anca",date:"14.05.2026",type:"O lună",amount:500},{name:"Dragoș",date:"16.06.2026",type:"12 ședințe",amount:1000},{name:"Alex",date:"15.06.2026",type:"O lună",amount:800},{name:"Daria",date:"16.06.2026",type:"O lună",amount:1000},{name:"Anda",date:"24.06.2026",type:"8 ședințe",amount:600},{name:"Alin",date:"18.06.2026",type:"O lună",amount:500},{name:"Radu",date:"23.06.2026",type:"O lună",amount:600},{name:"Paul",date:"25.06.2026",type:"O lună",amount:450},{name:"Carmen",date:"25.06.2026",type:"O lună",amount:800},{name:"Octavian",date:"26.06.2026",type:"O lună",amount:800},{name:"Lori",date:"26.06.2026",type:"O lună",amount:600},{name:"Iulian",date:"25.06.2026",type:"O lună",amount:800},{name:"Cosmin",date:"29.06.2026",type:"O lună",amount:800},{name:"Ovidiu",date:"30.06.2026",type:"O lună",amount:800},{name:"Timi",date:"30.06.2026",type:"O lună",amount:1000},{name:"Aurelian",date:"30.07.2026",type:"8 ședințe",amount:600},{name:"Timi Ulei",date:"—",type:"Supliment",amount:270},{name:"Iulian Ulei",date:"—",type:"Supliment",amount:270},{name:"Reta Cosmin",date:"—",type:"Supliment",amount:300},{name:"GHK Andreea",date:"—",type:"Supliment",amount:800},{name:"Tesamorelin Dragoș",date:"—",type:"Supliment",amount:750},{name:"Răzvan Testo",date:"—",type:"Supliment",amount:160},{name:"Reta Dana",date:"—",type:"Supliment",amount:450},{name:"GHK Dana",date:"—",type:"Supliment",amount:800},
+  ],
+  "Mai 2026": [
+    {name:"Delia",date:"01.05.2026",type:"O lună",amount:500},{name:"Maria Ovidiu",date:"04.05.2026",type:"O lună",amount:800},{name:"Timi",date:"04.05.2026",type:"O lună",amount:1000},{name:"Aura",date:"04.05.2026",type:"O lună",amount:550},{name:"Ionuț",date:"04.05.2026",type:"O lună",amount:400},{name:"Aurelian",date:"05.04.2026",type:"8 ședințe",amount:600},{name:"Luiza",date:"05.05.2026",type:"O lună",amount:800},{name:"Adina",date:"05.05.2026",type:"8 ședințe",amount:600},{name:"Luca",date:"05.05.2026",type:"O lună",amount:700},{name:"Anca",date:"07.05.2026",type:"O lună",amount:450},{name:"Elena",date:"07.05.2026",type:"O lună",amount:800},{name:"Sophia",date:"08.05.2026",type:"O lună",amount:600},{name:"Anca",date:"05.05.2026",type:"O lună",amount:600},{name:"Vlad",date:"10.05.2026",type:"O lună",amount:1000},{name:"Alex David",date:"12.05.2026",type:"O lună",amount:800},{name:"Elena",date:"12.05.2026",type:"O lună",amount:800},{name:"Alex",date:"14.05.2026",type:"O lună",amount:600},{name:"Daria",date:"16.05.2026",type:"O lună",amount:1000},{name:"Dragoș",date:"19.05.2026",type:"12 ședințe",amount:1000},{name:"Alin",date:"19.05.2026",type:"O lună",amount:500},{name:"Eugean",date:"19.05.2026",type:"O lună",amount:600},{name:"Ovidiu",date:"25.05.2026",type:"O lună",amount:800},{name:"Carmen",date:"25.05.2026",type:"O lună",amount:800},{name:"Iulian",date:"25.05.2026",type:"O lună",amount:800},{name:"Andreea",date:"27.05.2026",type:"O lună",amount:700},{name:"Marc",date:"27.05.2026",type:"O lună",amount:600},{name:"Anca Dinu",date:"28.05.2026",type:"6 ședințe",amount:600},{name:"Ada",date:"28.05.2026",type:"6 ședințe",amount:600},{name:"Andrei",date:"30.05.2026",type:"O lună",amount:400},{name:"Octavian",date:"30.05.2026",type:"O lună",amount:400},{name:"Ale",date:"28.05.2026",type:"O lună",amount:600},{name:"Ulei Dragoș",date:"—",type:"Supliment",amount:300},{name:"Tesamorelin Dragoș",date:"—",type:"Supliment",amount:480},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:200},
+  ],
+  "Aprilie 2026": [
+    {name:"Ovidiu",date:"01.04.2026",type:"O lună",amount:800},{name:"Octavian",date:"01.04.2026",type:"O lună",amount:800},{name:"Andreea",date:"01.04.2026",type:"O lună",amount:700},{name:"Gheorghe",date:"02.04.2026",type:"8 ședințe",amount:500},{name:"Delia",date:"01.04.2026",type:"O lună",amount:550},{name:"Radu",date:"05.04.2026",type:"O lună",amount:600},{name:"Luiza",date:"03.04.2026",type:"O lună",amount:800},{name:"Maria Ovidiu",date:"06.04.2026",type:"O lună",amount:800},{name:"Luca",date:"06.04.2026",type:"O lună",amount:700},{name:"Sergiu",date:"08.04.2026",type:"O lună",amount:800},{name:"Aura",date:"09.04.2026",type:"O lună",amount:550},{name:"Vlad",date:"10.04.2026",type:"O lună",amount:1000},{name:"Eugean",date:"14.04.2026",type:"O lună",amount:600},{name:"Anca",date:"16.04.2026",type:"O lună",amount:450},{name:"Cristina Bosca",date:"17.04.2026",type:"O lună",amount:500},{name:"Daria",date:"17.04.2026",type:"O lună",amount:1000},{name:"Alin",date:"16.03.2026",type:"O lună",amount:500},{name:"Bianca",date:"20.04.2026",type:"8 ședințe",amount:800},{name:"Iulian",date:"20.04.2026",type:"12 ședințe",amount:800},{name:"Dragoș",date:"21.02.2026",type:"O lună",amount:1000},{name:"Cosmin",date:"23.04.2026",type:"O lună",amount:800},{name:"Lari",date:"24.04.2026",type:"O lună",amount:600},{name:"Ovidiu",date:"27.04.2026",type:"O lună",amount:800},{name:"Carmen",date:"27.04.2026",type:"O lună",amount:800},{name:"Timi",date:"27.04.2026",type:"O lună",amount:1000},{name:"Octavian",date:"27.04.2026",type:"O lună",amount:800},{name:"Marc",date:"28.04.2026",type:"O lună",amount:600},{name:"Vasilescu Dragoș",date:"28.04.2026",type:"12 ședințe",amount:800},{name:"Ale",date:"28.04.2026",type:"O lună",amount:600},{name:"Gheorghe",date:"30.04.2026",type:"O lună",amount:300},{name:"Daniela",date:"30.04.2026",type:"O lună",amount:500},{name:"Martis",date:"30.04.2026",type:"O lună",amount:750},{name:"Andrei",date:"30.04.2026",type:"O lună",amount:400},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:1600},{name:"Reta Dana",date:"—",type:"Supliment",amount:350},
+  ],
+  "Martie 2026": [
+    {name:"Delia",date:"01.12.2023",type:"O lună",amount:500},{name:"Octavian",date:"03.02.2026",type:"O lună",amount:800},{name:"Ovidiu",date:"02.03.2026",type:"O lună",amount:800},{name:"Maria Ovidiu",date:"02.03.2026",type:"O lună",amount:800},{name:"Andreea",date:"02.03.2026",type:"O lună",amount:700},{name:"Bogdan",date:"05.03.2026",type:"O lună",amount:600},{name:"Aura",date:"05.03.2026",type:"O lună",amount:550},{name:"Cosmin",date:"06.03.2026",type:"O lună",amount:800},{name:"Gheorghe",date:"06.03.2026",type:"8 ședințe",amount:500},{name:"Iulia Sabău",date:"10.03.2026",type:"O lună",amount:800},{name:"Anca Sabău",date:"10.03.2026",type:"O lună",amount:700},{name:"Vlad",date:"10.03.2026",type:"O lună",amount:1000},{name:"Luiza",date:"12.03.2026",type:"O lună",amount:800},{name:"Elena",date:"12.03.2026",type:"O lună",amount:800},{name:"Gheorghe",date:"12.03.2026",type:"8 ședințe",amount:500},{name:"Alex",date:"13.03.2026",type:"O lună",amount:600},{name:"Alin",date:"16.03.2026",type:"O lună",amount:500},{name:"Daria",date:"16.03.2026",type:"O lună",amount:1000},{name:"Cristina",date:"17.03.2026",type:"O lună",amount:500},{name:"Alex David",date:"13.03.2026",type:"O lună",amount:800},{name:"Dominic",date:"20.03.2026",type:"O lună",amount:720},{name:"Maria",date:"20.03.2026",type:"8 ședințe",amount:500},{name:"Florin",date:"20.03.2026",type:"8 ședințe",amount:500},{name:"Sophia",date:"20.03.2026",type:"O lună",amount:600},{name:"Timi",date:"24.03.2026",type:"O lună",amount:1000},{name:"Eugean",date:"26.03.2026",type:"O lună",amount:600},{name:"Anca",date:"26.03.2026",type:"O lună",amount:450},{name:"Lari",date:"24.02.2026",type:"O lună",amount:600},{name:"Martis",date:"30.03.2026",type:"O lună",amount:750},{name:"Gimi",date:"26.03.2026",type:"O lună",amount:500},{name:"Reta Martis",date:"—",type:"Supliment",amount:350},{name:"Reta Dana",date:"—",type:"Supliment",amount:350},{name:"Reta Cosmin",date:"—",type:"Supliment",amount:350},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:1850},{name:"Răzvan Deca",date:"—",type:"Supliment",amount:160},
+  ],
+  "Februarie 2026": [
+    {name:"Ionuț",date:"01.12.2023",type:"O lună",amount:800},{name:"Dana",date:"03.02.2026",type:"O lună",amount:500},{name:"Cosmin",date:"03.02.2026",type:"O lună",amount:800},{name:"Luca",date:"03.02.2026",type:"O lună",amount:700},{name:"Elena",date:"03.02.2026",type:"O lună",amount:800},{name:"Delia",date:"03.02.2026",type:"O lună",amount:400},{name:"Bogdan",date:"04.02.2026",type:"O lună",amount:600},{name:"Aura",date:"06.02.2026",type:"O lună",amount:550},{name:"Maria Ovidiu",date:"10.02.2026",type:"O lună",amount:800},{name:"Timi",date:"10.02.2026",type:"O lună",amount:1000},{name:"Sophia",date:"10.02.2026",type:"O lună",amount:600},{name:"Iulia",date:"10.02.2026",type:"O lună",amount:600},{name:"Vlad",date:"14.02.2026",type:"O lună",amount:1000},{name:"Eugean",date:"14.02.2026",type:"O lună",amount:600},{name:"Bianca",date:"16.02.2026",type:"O lună",amount:800},{name:"Cristina Best",date:"19.01.2026",type:"2 săptămâni",amount:500},{name:"Daria",date:"16.02.2026",type:"O lună",amount:1000},{name:"Cristina",date:"17.02.2026",type:"O lună",amount:500},{name:"David",date:"17.02.2026",type:"O lună",amount:800},{name:"Carmen",date:"17.02.2026",type:"O lună",amount:800},{name:"Alina Online",date:"18.02.2026",type:"O lună",amount:750},{name:"Gheorghe",date:"19.02.2026",type:"8 ședințe",amount:500},{name:"Ale",date:"19.02.2026",type:"O lună",amount:600},{name:"Sergiu",date:"19.02.2026",type:"O lună",amount:800},{name:"Radu",date:"23.02.2026",type:"O lună",amount:600},{name:"Ale",date:"23.02.2026",type:"O lună",amount:600},{name:"Mihai",date:"23.02.2026",type:"O lună",amount:750},{name:"Lari",date:"24.02.2026",type:"O lună",amount:600},{name:"Paul",date:"26.02.2026",type:"O lună",amount:450},{name:"Anca",date:"26.02.2026",type:"O lună",amount:450},{name:"Andrei",date:"26.02.2026",type:"O lună",amount:880},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:800},
+  ],
+  "Ianuarie 2026": [
+    {name:"Ionuț",date:"01.12.2023",type:"O lună",amount:800},{name:"Delia",date:"01.12.2026",type:"O lună",amount:400},{name:"Eugean",date:"02.12.2026",type:"O lună",amount:600},{name:"Bogdan",date:"02.12.2026",type:"O lună",amount:600},{name:"Gheorghe",date:"02.12.2026",type:"8 ședințe",amount:500},{name:"Luiza",date:"02.12.2026",type:"O lună",amount:800},{name:"Iulia Sabău",date:"02.12.2026",type:"O lună",amount:600},{name:"Vlad",date:"04.12.2026",type:"O lună",amount:1000},{name:"Maria",date:"04.12.2026",type:"O lună",amount:1000},{name:"Florin",date:"05.12.2026",type:"O lună",amount:500},{name:"Cristina Bosca",date:"19.01.2026",type:"O lună",amount:500},{name:"Adriana",date:"15.01.2026",type:"O lună",amount:700},{name:"Daria",date:"19.01.2026",type:"O lună",amount:1000},{name:"Lori",date:"20.01.2026",type:"O lună",amount:600},{name:"Ale",date:"19.01.2026",type:"O lună",amount:600},{name:"Cristina Best",date:"19.01.2026",type:"2 săptămâni",amount:300},{name:"Aura",date:"19.01.2026",type:"O lună",amount:500},{name:"Sergiu",date:"21.01.2026",type:"O lună",amount:800},{name:"Dominic",date:"23.01.2026",type:"O lună",amount:720},{name:"Ovidiu",date:"26.01.2026",type:"O lună",amount:800},{name:"Alex",date:"26.01.2026",type:"O lună",amount:600},{name:"Anca",date:"26.01.2026",type:"O lună",amount:500},{name:"Gheorghe",date:"26.01.2026",type:"8 ședințe",amount:500},{name:"Paul",date:"26.01.2026",type:"O lună",amount:500},{name:"Octavian",date:"27.01.2026",type:"O lună",amount:800},{name:"Andrei",date:"30.01.2026",type:"O lună",amount:240},{name:"Gheorghe",date:"30.01.2026",type:"8 ședințe",amount:500},{name:"Ovidiu LAR",date:"—",type:"Supliment",amount:2500},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:1050},
+  ],
+  "Decembrie 2025": [
+    {name:"Ionuț",date:"01.12.2025",type:"O lună",amount:800},{name:"Delia",date:"01.12.2025",type:"O lună",amount:400},{name:"Alin",date:"02.12.2025",type:"O lună",amount:500},{name:"Cristina",date:"02.12.2025",type:"O lună",amount:500},{name:"Paul",date:"02.12.2022",type:"O lună",amount:450},{name:"Vlad",date:"02.12.2025",type:"O lună",amount:1000},{name:"Gheorghe",date:"02.12.2025",type:"8 ședințe",amount:500},{name:"Dana",date:"04.12.2025",type:"8 ședințe",amount:500},{name:"Aura",date:"04.12.2025",type:"O lună",amount:500},{name:"Gelu",date:"05.12.2025",type:"O săptămână",amount:360},{name:"Sophia",date:"05.12.2025",type:"O lună",amount:600},{name:"Florin",date:"09.12.2025",type:"8 ședințe",amount:500},{name:"Anca",date:"11.12.2025",type:"O lună",amount:450},{name:"Iulia Sabău",date:"11.12.2025",type:"O lună",amount:600},{name:"Cristina Best",date:"10.12.2025",type:"O lună",amount:600},{name:"Timi",date:"11.12.2025",type:"O lună",amount:1000},{name:"Carmen",date:"11.12.2025",type:"O lună",amount:800},{name:"David",date:"11.12.2025",type:"O lună",amount:800},{name:"Gelu",date:"15.12.2025",type:"O săptămână",amount:240},{name:"Daria",date:"15.12.2025",type:"O lună",amount:1000},{name:"Gimi",date:"15.12.2025",type:"O lună",amount:450},{name:"Gelu",date:"19.12.2025",type:"O săptămână",amount:360},{name:"Larisa",date:"19.12.2025",type:"O lună",amount:600},{name:"Cosmin",date:"21.12.2025",type:"O lună",amount:800},{name:"Maria",date:"21.12.2025",type:"Rest 500",amount:500},{name:"Dominic",date:"22.12.2025",type:"O lună",amount:700},{name:"Radu",date:"22.12.2025",type:"O lună",amount:600},{name:"Gelu",date:"23.12.2025",type:"O săptămână",amount:180},{name:"Luca",date:"23.12.2025",type:"O lună",amount:700},{name:"Octavian",date:"23.12.2025",type:"O lună",amount:400},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:900},
+  ],
+  "Noiembrie 2025": [
+    {name:"Ionuț",date:"01.11.2025",type:"O lună",amount:800},{name:"Gheorghe",date:"02.11.2025",type:"8 ședințe",amount:500},{name:"Alin Bosca",date:"03.11.2025",type:"O lună",amount:500},{name:"Delia",date:"02.11.2025",type:"O lună",amount:500},{name:"Cristina",date:"04.11.2025",type:"O lună",amount:500},{name:"Adriana",date:"03.11.2025",type:"O lună",amount:700},{name:"Timi",date:"03.11.2025",type:"12 ședințe",amount:800},{name:"Aura",date:"03.11.2025",type:"O lună",amount:500},{name:"Maria Popa",date:"03.11.2025",type:"3 luni",amount:1000},{name:"Cosmin",date:"04.11.2025",type:"O lună",amount:900},{name:"Paul",date:"04.11.2025",type:"O lună",amount:450},{name:"Luiza",date:"04.11.2025",type:"O lună",amount:800},{name:"Vlad",date:"03.11.2025",type:"O lună",amount:1000},{name:"Eugean",date:"06.11.2025",type:"O lună",amount:600},{name:"Carmen",date:"07.11.2025",type:"O lună",amount:800},{name:"Anca",date:"09.11.2025",type:"O lună",amount:450},{name:"Iulia Sabău",date:"10.11.2025",type:"O lună",amount:600},{name:"Gimi",date:"10.11.2025",type:"O lună",amount:900},{name:"Cristina Best",date:"10.11.2025",type:"12 ședințe",amount:800},{name:"David",date:"10.11.2025",type:"O lună",amount:800},{name:"Gelu",date:"11.11.2025",type:"2 săptămâni",amount:360},{name:"Bogdan",date:"13.11.2025",type:"O lună",amount:600},{name:"Luca",date:"14.11.2025",type:"O lună",amount:700},{name:"Dominic",date:"14.11.2025",type:"O lună",amount:700},{name:"Alex",date:"18.11.2025",type:"O lună",amount:600},{name:"Bianca",date:"20.11.2025",type:"8 ședințe",amount:800},{name:"Maria Popa Rest",date:"21.11.2025",type:"16 ședințe",amount:1000},{name:"Sergiu",date:"21.11.2025",type:"12 ședințe",amount:800},{name:"Gelu",date:"21.11.2025",type:"6 ședințe",amount:360},{name:"Octavian",date:"21.11.2025",type:"O lună",amount:800},{name:"Lori",date:"26.11.2025",type:"O lună",amount:600},{name:"Adrian",date:"27.11.2025",type:"12 ședințe",amount:800},{name:"Gelu",date:"27.11.2025",type:"O săptămână",amount:180},{name:"Andrei",date:"27.11.2025",type:"O lună",amount:480},{name:"Supliment diverse",date:"—",type:"Supliment",amount:600},
+  ],
+  "Octombrie 2025": [
+    {name:"Ionuț",date:"01.10.2025",type:"O lună",amount:800},{name:"Anamaria",date:"02.10.2025",type:"O lună",amount:800},{name:"Cosmin",date:"03.10.2025",type:"O lună",amount:800},{name:"Delia",date:"03.10.2025",type:"O lună",amount:500},{name:"Cristina",date:"01.10.2025",type:"O lună",amount:500},{name:"Vlad",date:"01.10.2025",type:"O lună",amount:1000},{name:"Carmen",date:"02.10.2025",type:"O lună",amount:800},{name:"Aura",date:"06.10.2025",type:"O lună",amount:500},{name:"Bianca",date:"07.10.2025",type:"9 ședințe",amount:800},{name:"Gimi",date:"06.10.2025",type:"O lună",amount:900},{name:"Octavian",date:"01.10.2025",type:"O lună",amount:800},{name:"Luiza",date:"09.10.2025",type:"O lună",amount:800},{name:"Anca",date:"09.10.2025",type:"O lună",amount:450},{name:"Luca",date:"09.10.2025",type:"O lună",amount:800},{name:"David",date:"10.10.2025",type:"O lună",amount:800},{name:"Timi",date:"10.10.2025",type:"8 ședințe",amount:600},{name:"Bogdan",date:"11.10.2025",type:"O lună",amount:600},{name:"Eugean",date:"10.10.2025",type:"O lună",amount:600},{name:"Gheorghe",date:"14.10.2025",type:"8 ședințe",amount:500},{name:"Iulia Sabău",date:"10.10.2025",type:"O lună",amount:600},{name:"Alex",date:"13.10.2025",type:"O lună",amount:600},{name:"Daniela",date:"14.10.2025",type:"O lună",amount:500},{name:"Mariana",date:"14.10.2025",type:"O lună",amount:700},{name:"Mihaela",date:"14.10.2025",type:"O lună",amount:700},{name:"Dominic",date:"16.10.2025",type:"O lună",amount:700},{name:"Radu",date:"16.10.2025",type:"O lună",amount:600},{name:"Maria Popa",date:"16.10.2025",type:"8 ședințe",amount:500},{name:"Adriana",date:"—",type:"O lună",amount:700},{name:"Sergiu",date:"21.10.2025",type:"12 ședințe",amount:800},{name:"Daria",date:"21.10.2025",type:"12 ședințe",amount:1000},{name:"Marc",date:"24.09.2025",type:"12 ședințe",amount:600},{name:"Ale",date:"30.09.2025",type:"12 ședințe",amount:600},{name:"Sophia",date:"30.09.2025",type:"12 ședințe",amount:600},{name:"Octavian",date:"30.09.2025",type:"O lună",amount:400},{name:"Andrei",date:"30.09.2025",type:"O lună",amount:800},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:1400},
+  ],
+  "Septembrie 2025": [
+    {name:"Cosmin",date:"01.09.2025",type:"O lună",amount:800},{name:"Cristina",date:"01.09.2025",type:"O lună",amount:500},{name:"Martis",date:"01.09.2025",type:"O lună",amount:750},{name:"Ionuț",date:"01.09.2025",type:"O lună",amount:800},{name:"Delia",date:"01.09.2025",type:"O lună",amount:400},{name:"Ana Maria",date:"02.09.2025",type:"12 ședințe",amount:800},{name:"Vlad",date:"01.09.2025",type:"O lună",amount:1000},{name:"Bogdan",date:"05.09.2025",type:"O lună",amount:600},{name:"Anca",date:"08.09.2025",type:"O lună",amount:500},{name:"Aura",date:"08.09.2025",type:"O lună",amount:500},{name:"Sergiu",date:"09.09.2025",type:"O lună",amount:600},{name:"Gimi",date:"08.09.2025",type:"O lună",amount:450},{name:"Maria Florin",date:"—",type:"O lună",amount:500},{name:"Iulia Sabău",date:"10.09.2025",type:"O lună",amount:600},{name:"Mihaela",date:"10.09.2025",type:"O lună",amount:700},{name:"Eugean",date:"10.09.2025",type:"O lună",amount:600},{name:"David",date:"11.09.2025",type:"O lună",amount:800},{name:"Daria",date:"11.09.2025",type:"O lună",amount:1000},{name:"Sofia",date:"15.09.2025",type:"O lună",amount:600},{name:"Paul",date:"16.09.2025",type:"O lună",amount:500},{name:"Maria Lupescu",date:"16.09.2025",type:"O lună",amount:600},{name:"Ale",date:"19.09.2025",type:"O lună",amount:600},{name:"Marc",date:"21.09.2025",type:"O lună",amount:600},{name:"Daniela",date:"22.09.2025",type:"O lună",amount:500},{name:"Gheorghe",date:"23.09.2025",type:"8 ședințe",amount:500},{name:"Paul",date:"22.09.2025",type:"O lună",amount:450},{name:"Andrei",date:"30.09.2025",type:"O lună",amount:320},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:1000},
+  ],
+  "August 2025": [
+    {name:"Luiza",date:"01.08.2025",type:"O lună",amount:800},{name:"Delia",date:"02.08.2025",type:"O lună",amount:500},{name:"Bogdan",date:"05.08.2025",type:"O lună",amount:600},{name:"Vlad",date:"01.08.2025",type:"O lună",amount:1000},{name:"Iulia",date:"01.08.2025",type:"O lună",amount:400},{name:"Aura",date:"08.08.2025",type:"O lună",amount:550},{name:"Eugean",date:"10.08.2025",type:"O lună",amount:600},{name:"Iulia Sabău",date:"14.08.2025",type:"O lună",amount:600},{name:"Ale",date:"19.08.2025",type:"O lună",amount:600},{name:"Maria Lupescu",date:"19.08.2025",type:"O lună",amount:600},{name:"Oana",date:"19.08.2025",type:"O lună",amount:800},{name:"Radu",date:"19.08.2025",type:"O lună",amount:600},{name:"Carmen",date:"19.08.2025",type:"O lună",amount:800},{name:"Gheorghe",date:"20.08.2025",type:"8 ședințe",amount:500},{name:"Adriana",date:"20.08.2025",type:"O lună",amount:720},{name:"Larisa",date:"22.08.2025",type:"O lună",amount:600},{name:"Alex",date:"22.08.2025",type:"O lună",amount:600},{name:"Robert",date:"28.08.2025",type:"O lună",amount:600},{name:"Gheorghe",date:"30.08.2025",type:"8 ședințe",amount:500},{name:"Octavian",date:"30.08.2025",type:"O lună",amount:800},
+  ],
+  "Iulie 2025": [
+    {name:"Iulia",date:"01.07.2025",type:"O lună",amount:400},{name:"Delia",date:"01.07.2025",type:"O lună",amount:550},{name:"Anca",date:"06.07.2025",type:"O lună",amount:450},{name:"Ale",date:"03.07.2025",type:"O lună",amount:600},{name:"Vlad",date:"01.07.2025",type:"O lună",amount:1000},{name:"Mihai",date:"03.07.2025",type:"O lună",amount:720},{name:"Robert",date:"03.07.2025",type:"O lună",amount:600},{name:"Octavian",date:"03.07.2025",type:"O lună",amount:800},{name:"Bianca",date:"04.07.2025",type:"8 ședințe",amount:800},{name:"Gelu",date:"03.07.2025",type:"O săptămână",amount:240},{name:"Bogdan",date:"04.07.2025",type:"O lună",amount:600},{name:"Maria Lupescu",date:"07.07.2025",type:"O lună",amount:600},{name:"Ioana",date:"10.07.2025",type:"4 ședințe",amount:250},{name:"Gheorghe",date:"13.07.2025",type:"8 ședințe",amount:500},{name:"Sophia",date:"14.07.2025",type:"O lună",amount:600},{name:"Carmen",date:"01.07.2025",type:"O lună",amount:800},{name:"Iulia Sabău",date:"14.07.2025",type:"O lună",amount:800},{name:"Oana",date:"15.07.2025",type:"O lună",amount:800},{name:"Eugean",date:"10.07.2025",type:"O lună",amount:600},{name:"Sergiu",date:"17.07.2025",type:"O lună",amount:600},{name:"Paul",date:"17.07.2025",type:"O lună",amount:450},{name:"Daria",date:"17.07.2025",type:"O lună",amount:1000},{name:"Robert",date:"18.07.2025",type:"O lună",amount:600},{name:"Luiza",date:"18.07.2025",type:"O lună",amount:800},{name:"Alex",date:"22.07.2025",type:"O lună",amount:600},{name:"Larisa",date:"22.07.2025",type:"O lună",amount:600},{name:"Alimiru",date:"22.07.2025",type:"O lună",amount:450},{name:"Andrei",date:"31.07.2025",type:"O lună",amount:480},{name:"Octavian",date:"31.07.2025",type:"O lună",amount:800},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:1500},
+  ],
+  "Iunie 2025": [
+    {name:"Iulia",date:"01.06.2025",type:"O lună",amount:400},{name:"Delia",date:"01.06.2025",type:"O lună",amount:350},{name:"Vlad",date:"03.06.2025",type:"O lună",amount:1000},{name:"Gheorghe",date:"04.06.2025",type:"8 ședințe",amount:500},{name:"Bogdan",date:"04.06.2025",type:"O lună",amount:600},{name:"Sofia",date:"04.06.2025",type:"O lună",amount:600},{name:"Luiza",date:"04.06.2025",type:"O lună",amount:800},{name:"Gelu",date:"01.06.2025",type:"O lună",amount:200},{name:"Silvia",date:"06.06.2025",type:"8 ședințe",amount:600},{name:"Lupescu Maria",date:"10.06.2025",type:"O lună",amount:600},{name:"Anca",date:"10.06.2025",type:"O lună",amount:450},{name:"Eugen",date:"10.06.2025",type:"O lună",amount:600},{name:"Anca",date:"12.06.2025",type:"O lună",amount:450},{name:"Carmen",date:"13.06.2025",type:"O lună",amount:800},{name:"Maria Popa",date:"13.06.2025",type:"O lună",amount:1200},{name:"Oana",date:"16.06.2025",type:"12 ședințe",amount:800},{name:"Paul",date:"16.06.2025",type:"O lună",amount:900},{name:"Sabău Iulia",date:"16.06.2025",type:"12 ședințe",amount:800},{name:"Marc",date:"16.06.2025",type:"O lună",amount:600},{name:"Radu",date:"16.06.2025",type:"O lună",amount:600},{name:"Miki",date:"20.05.2025",type:"O lună",amount:1000},{name:"Cosmin",date:"23.06.2025",type:"O lună",amount:800},{name:"Gheorghe",date:"23.06.2025",type:"8 ședințe",amount:500},{name:"Mirela",date:"23.06.2025",type:"O lună",amount:1000},{name:"Daniela",date:"26.06.2025",type:"O lună",amount:500},{name:"Mariana",date:"26.06.2025",type:"O lună",amount:700},{name:"Mihaela",date:"26.06.2025",type:"O lună",amount:700},{name:"Tassos",date:"30.06.2025",type:"O lună",amount:600},{name:"Octavian",date:"30.06.2025",type:"O lună",amount:800},{name:"Robert",date:"30.06.2025",type:"O lună",amount:600},{name:"Lori",date:"30.06.2025",type:"O lună",amount:600},{name:"Anca",date:"30.06.2025",type:"O lună",amount:450},{name:"Ioana Maria",date:"30.06.2025",type:"8 ședințe",amount:500},{name:"Alimiru",date:"30.06.2025",type:"8 ședințe",amount:500},{name:"Maria Popa",date:"30.06.2025",type:"8 ședințe",amount:500},{name:"Andrei",date:"30.06.2025",type:"O lună",amount:720},{name:"Istvan",date:"30.06.2025",type:"O lună",amount:900},{name:"Ovidiu TFR",date:"—",type:"Supliment",amount:2500},{name:"Alina TFR",date:"—",type:"Supliment",amount:1200},{name:"Client 50 TFR",date:"—",type:"Supliment",amount:2500},
+  ],
+  "Mai 2025": [
+    {name:"Iulia",date:"01.05.2025",type:"O lună",amount:400},{name:"Bogdan",date:"05.05.2025",type:"O lună",amount:600},{name:"Anca",date:"05.05.2025",type:"O lună",amount:500},{name:"Delia",date:"05.05.2025",type:"O lună",amount:600},{name:"Aura",date:"05.05.2025",type:"O lună",amount:720},{name:"Sophia",date:"06.05.2025",type:"12 ședințe",amount:600},{name:"Vlad",date:"05.05.2025",type:"O lună",amount:1000},{name:"Gelu",date:"05.05.2025",type:"O săptămână",amount:360},{name:"Luiza",date:"05.05.2025",type:"O lună",amount:800},{name:"Alex",date:"06.05.2025",type:"O lună",amount:600},{name:"Marc",date:"07.05.2025",type:"O lună",amount:600},{name:"Daniela",date:"08.05.2025",type:"O lună",amount:500},{name:"Carmen",date:"08.05.2025",type:"O lună",amount:800},{name:"Adi",date:"08.05.2025",type:"O lună",amount:500},{name:"Paul",date:"08.05.2025",type:"O lună",amount:500},{name:"Eugean",date:"10.05.2025",type:"O lună",amount:600},{name:"Maria Lupescu",date:"12.05.2025",type:"O lună",amount:600},{name:"Gelu",date:"12.05.2025",type:"O săptămână",amount:240},{name:"Gheorghe",date:"13.05.2025",type:"8 ședințe",amount:500},{name:"Daria",date:"19.05.2025",type:"O lună",amount:800},{name:"Martis",date:"14.05.2025",type:"O lună",amount:750},{name:"Miki",date:"20.05.2025",type:"O lună",amount:1000},{name:"Gimi",date:"20.05.2025",type:"O lună",amount:900},{name:"Cosmin",date:"20.05.2025",type:"12 ședințe",amount:800},{name:"Gelu",date:"21.05.2025",type:"O săptămână",amount:180},{name:"Alimiru",date:"22.05.2025",type:"O lună",amount:500},{name:"Andreea",date:"22.05.2025",type:"6 luni",amount:3000},{name:"Ioana Maria",date:"22.05.2025",type:"8 ședințe",amount:500},{name:"Tassos",date:"26.05.2025",type:"O lună",amount:600},{name:"Maria Popa",date:"26.05.2025",type:"8 ședințe",amount:500},{name:"Mariana",date:"27.05.2025",type:"12 ședințe",amount:700},{name:"Mihaela",date:"27.05.2025",type:"12 ședințe",amount:700},{name:"Lori",date:"26.05.2025",type:"O lună",amount:600},{name:"Robert",date:"27.05.2025",type:"O lună",amount:600},{name:"Sergiu",date:"29.05.2025",type:"8 ședințe",amount:600},{name:"Octavian",date:"29.05.2025",type:"O lună",amount:800},
+  ],
+  "Aprilie 2025": [
+    {name:"Iulia",date:"01.04.2025",type:"O lună",amount:350},{name:"Daniela",date:"03.04.2025",type:"8 ședințe",amount:500},{name:"Aura",date:"03.04.2025",type:"O lună",amount:720},{name:"Vlad",date:"03.04.2025",type:"O lună",amount:1000},{name:"Alimiru",date:"03.04.2025",type:"8 ședințe",amount:500},{name:"Martis",date:"03.04.2025",type:"O lună",amount:750},{name:"Alex",date:"08.04.2025",type:"12 ședințe",amount:600},{name:"Ioana Maria",date:"08.04.2025",type:"8 ședințe",amount:500},{name:"Gelu",date:"08.04.2025",type:"O săptămână",amount:300},{name:"Radu",date:"10.04.2025",type:"O lună",amount:600},{name:"Maria L",date:"10.04.2025",type:"12 ședințe",amount:600},{name:"Eugean",date:"10.04.2025",type:"O lună",amount:600},{name:"Tassos",date:"14.04.2025",type:"O lună",amount:600},{name:"Mariana",date:"14.04.2025",type:"12 ședințe",amount:1000},{name:"Ioana Maria",date:"14.04.2025",type:"8 ședințe",amount:500},{name:"Maria",date:"15.04.2025",type:"8 ședințe",amount:500},{name:"Andreea",date:"17.04.2025",type:"O lună",amount:700},{name:"Gelu",date:"17.04.2025",type:"O săptămână",amount:240},{name:"Gimi",date:"17.04.2025",type:"O lună",amount:900},{name:"Sergiu",date:"17.04.2025",type:"8 ședințe",amount:600},{name:"Lori",date:"24.04.2025",type:"O lună",amount:600},{name:"Adriana",date:"24.04.2025",type:"12 ședințe",amount:720},{name:"Anita",date:"28.04.2025",type:"12 ședințe",amount:720},{name:"Robert",date:"25.04.2025",type:"O lună",amount:600},{name:"Andreea ESC",date:"28.04.2025",type:"O lună",amount:1500},{name:"Andrei",date:"30.04.2025",type:"O lună",amount:640},{name:"Octavian",date:"30.04.2025",type:"O lună",amount:400},
+  ],
+  "Martie 2025": [
+    {name:"Iulia",date:"01.03.2025",type:"O lună",amount:350},{name:"Martis",date:"06.03.2025",type:"O lună",amount:720},{name:"Radu",date:"03.03.2025",type:"O lună",amount:600},{name:"Alex",date:"07.03.2025",type:"O lună",amount:600},{name:"Carmen",date:"07.03.2025",type:"O lună",amount:720},{name:"Luiza",date:"07.03.2025",type:"O lună",amount:720},{name:"Aura",date:"06.03.2025",type:"O lună",amount:720},{name:"Ioana Maria",date:"06.03.2025",type:"8 ședințe",amount:500},{name:"Adriana",date:"06.03.2025",type:"12 ședințe",amount:720},{name:"Delia",date:"01.03.2025",type:"O lună",amount:450},{name:"Thassos",date:"10.03.2025",type:"O lună",amount:600},{name:"Evgenii",date:"10.03.2025",type:"O lună",amount:600},{name:"Octavian",date:"11.03.2025",type:"O lună",amount:600},{name:"Maria Lupescu",date:"11.03.2025",type:"O lună",amount:600},{name:"Andreea",date:"17.03.2025",type:"12 ședințe",amount:720},{name:"Tunde",date:"17.03.2025",type:"O lună",amount:450},{name:"Gelu",date:"17.03.2025",type:"O săptămână",amount:120},{name:"Sergiu",date:"20.03.2025",type:"8 ședințe",amount:600},{name:"Gimi",date:"20.03.2025",type:"O lună",amount:900},{name:"Anita",date:"21.03.2025",type:"12 ședințe",amount:720},{name:"Robert",date:"24.03.2025",type:"O lună",amount:600},{name:"Gelu",date:"24.03.2025",type:"O săptămână",amount:300},{name:"Marc",date:"16.03.2025",type:"O lună",amount:600},{name:"Anca",date:"27.03.2025",type:"O lună",amount:450},{name:"Paul",date:"—",type:"O lună",amount:450},{name:"Adi",date:"—",type:"O lună",amount:450},{name:"Bogdan",date:"—",type:"O lună",amount:600},{name:"Radu",date:"—",type:"O lună",amount:400},{name:"Delia",date:"31.03.2025",type:"O lună",amount:450},{name:"Andrei",date:"30.03.2025",type:"O lună",amount:880},{name:"Alina TFR",date:"—",type:"Supliment",amount:2500},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:1200},
+  ],
+  "Februarie 2025": [
+    {name:"Luiza Budusan",date:"01.02.2025",type:"O lună",amount:800},{name:"Delia",date:"01.02.2025",type:"O lună",amount:400},{name:"Paul",date:"03.02.2025",type:"O lună",amount:450},{name:"Adi Paul",date:"03.02.2025",type:"O lună",amount:450},{name:"Aura",date:"03.02.2025",type:"O lună",amount:720},{name:"Lori",date:"03.02.2025",type:"12 ședințe",amount:840},{name:"Sergiu",date:"04.02.2025",type:"8 ședințe",amount:600},{name:"Carmen",date:"04.02.2025",type:"12 ședințe",amount:800},{name:"Gelu",date:"06.02.2025",type:"O săptămână",amount:360},{name:"Paul Pastile",date:"06.02.2025",type:"O lună",amount:500},{name:"Alex Wise",date:"07.02.2025",type:"O lună",amount:600},{name:"Gelu",date:"10.02.2025",type:"O săptămână",amount:360},{name:"Tassos",date:"11.02.2025",type:"O lună",amount:600},{name:"Alexia",date:"11.02.2025",type:"Parțial",amount:150},{name:"Ioana Maria",date:"13.02.2025",type:"8 ședințe",amount:500},{name:"Alisa Miruna",date:"13.02.2025",type:"8 ședințe",amount:500},{name:"Gheorghe",date:"13.02.2025",type:"8 ședințe",amount:500},{name:"Maria Lupescu",date:"13.02.2025",type:"12 ședințe",amount:600},{name:"Anita",date:"18.01.2025",type:"12 ședințe",amount:720},{name:"Larisa 2 luni",date:"20.02.2025",type:"2 luni",amount:1200},{name:"Dana",date:"24.02.2025",type:"8 ședințe",amount:500},{name:"Gelu",date:"25.02.2025",type:"O săptămână",amount:300},{name:"Robert",date:"24.02.2025",type:"O lună",amount:600},{name:"Marc",date:"17.02.2025",type:"O lună",amount:600},{name:"Gimi",date:"26.02.2025",type:"O lună",amount:450},{name:"Bogdan",date:"27.02.2025",type:"O lună",amount:600},{name:"Paul",date:"27.02.2025",type:"O lună",amount:450},{name:"Adi",date:"27.02.2025",type:"O lună",amount:450},{name:"Anca",date:"27.02.2025",type:"O lună",amount:450},{name:"Andrei",date:"28.02.2025",type:"O lună",amount:960},{name:"Vlad",date:"28.02.2025",type:"16 ședințe",amount:1000},{name:"Teodora",date:"27.02.2025",type:"O lună",amount:600},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:800},
+  ],
+};
+
+// ─── GOOGLE CONFIG ────────────────────────────────────────────────────────────
+const CLIENT_ID = '173581589112-kvvq9q9jr1o7u8e7v01jetb477jqed76.apps.googleusercontent.com';
+const SCOPES    = 'https://www.googleapis.com/auth/drive.file';
+const FILE_NAME = 'razone-venituri.json';
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let db       = JSON.parse(JSON.stringify(RAW_DATA));
+let ALL      = Object.keys(db);
+let cur      = ALL[0];
+let gToken   = null;
+let gFileId  = null;
+let saveTimer= null;
+let acIdx    = -1;
+
+// ─── UTILS ───────────────────────────────────────────────────────────────────
+const $  = id => document.getElementById(id);
+const tot = m => (db[m]||[]).reduce((s,e)=>s+(e.amount||0),0);
+const todayStr = () => new Date().toISOString().split('T')[0];
+
+function toast(msg, err=false){
+  const t=$('toast'); t.textContent=msg;
+  t.className='toast'+(err?' err':'');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2800);
+}
+
+// ─── DRIVE STATUS UI ─────────────────────────────────────────────────────────
+function setDrive(state, label){
+  // state: 'off' | 'ok' | 'saving'
+  const dot=$('driveDot'), lbl=$('driveLabel'), btn=$('btnDrive');
+  dot.className='drive-dot'+(state==='ok'?' ok':state==='saving'?' saving':'');
+  lbl.textContent=label;
+  btn.style.display=state==='ok'?'none':'inline-block';
+  $('driveBanner').style.display=state==='ok'?'none':'flex';
+}
+
+// ─── GOOGLE SIGN IN ───────────────────────────────────────────────────────────
+function signIn(){
+  if(typeof google==='undefined'){toast('Google API nu s-a încărcat încă, încearcă din nou',true);return;}
+  const client = google.accounts.oauth2.initTokenClient({
+    client_id: CLIENT_ID,
+    scope: SCOPES,
+    callback: async resp=>{
+      if(resp.error){toast('Autentificare eșuată: '+resp.error,true);return;}
+      gToken=resp.access_token;
+      setDrive('saving','Se conectează...');
+      await findOrCreate();
+      await loadFromDrive();
+      setDrive('ok','Drive conectat ✓');
+      toast('Google Drive conectat!');
+    }
+  });
+  client.requestAccessToken();
+}
+
+// ─── DRIVE FILE OPS ──────────────────────────────────────────────────────────
+async function findOrCreate(){
+  const r = await fetch(
+    `https://www.googleapis.com/drive/v3/files?q=name%3D'${FILE_NAME}'+and+trashed%3Dfalse&fields=files(id)`,
+    {headers:{Authorization:'Bearer '+gToken}}
+  );
+  const d = await r.json();
+  if(d.files&&d.files.length){
+    gFileId=d.files[0].id;
+  } else {
+    const cr = await fetch('https://www.googleapis.com/drive/v3/files',{
+      method:'POST',
+      headers:{Authorization:'Bearer '+gToken,'Content-Type':'application/json'},
+      body:JSON.stringify({name:FILE_NAME,mimeType:'application/json'})
+    });
+    const f=await cr.json(); gFileId=f.id;
+  }
+}
+
+async function loadFromDrive(){
+  if(!gToken||!gFileId)return;
+  try{
+    const r=await fetch(
+      `https://www.googleapis.com/drive/v3/files/${gFileId}?alt=media`,
+      {headers:{Authorization:'Bearer '+gToken}}
+    );
+    if(!r.ok)return;
+    const saved=await r.json();
+    if(saved&&saved.data&&Object.keys(saved.data).length>0){
+      db=saved.data; ALL=Object.keys(db); cur=ALL[0];
+      render(); toast('Date încărcate din Drive ✓');
+    } else {
+      // first time - save the historical data
+      await saveToDrive();
+    }
+  }catch(e){console.error(e);}
+}
+
+async function saveToDrive(){
+  if(!gToken||!gFileId)return;
+  setDrive('saving','Se salvează...');
+  try{
+    await fetch(
+      `https://www.googleapis.com/upload/drive/v3/files/${gFileId}?uploadType=media`,
+      {
+        method:'PATCH',
+        headers:{Authorization:'Bearer '+gToken,'Content-Type':'application/json'},
+        body:JSON.stringify({data:db,savedAt:new Date().toISOString()})
+      }
+    );
+    setDrive('ok','Drive salvat ✓');
+    toast('Salvat în Drive ✓');
+  }catch(e){setDrive('ok','Drive conectat');toast('Eroare salvare',true);}
+}
+
+function scheduleSave(){
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(()=>{if(gToken)saveToDrive();},1500);
+}
+
+// ─── CLIENT HISTORY / AUTOCOMPLETE ───────────────────────────────────────────
+function buildHistory(){
+  const map={};
+  // go newest→oldest so first found = most recent
+  ALL.forEach(m=>{
+    (db[m]||[]).forEach(e=>{
+      if(!e.name)return;
+      const key=e.name.trim().toLowerCase();
+      if(!map[key]) map[key]={name:e.name,type:e.type,amount:e.amount,month:m};
+    });
+  });
+  return map;
+}
+
+let acMatches=[];
+
+function onNameInput(val){
+  const ac=$('acList'), pb=$('prefillBar');
+  if(val.length<2){ac.style.display='none';acIdx=-1;return;}
+  const hist=buildHistory(), q=val.trim().toLowerCase();
+  acMatches=Object.values(hist).filter(c=>c.name.toLowerCase().startsWith(q));
+  if(!acMatches.length){ac.style.display='none';return;}
+  acIdx=-1;
+  ac.style.display='block';
+  ac.innerHTML=acMatches.slice(0,6).map((c,i)=>`
+    <div class="ac-item" id="ac${i}" onclick="pickClient(${i})">
+      <span class="ac-name">${c.name}</span>
+      <span class="ac-hint">${c.type} · ${(c.amount||0).toLocaleString('ro-RO')} RON · ${c.month}</span>
+    </div>`).join('');
+}
+
+function onNameKey(e){
+  const ac=$('acList');
+  if(ac.style.display==='none')return;
+  const items=ac.querySelectorAll('.ac-item');
+  if(e.key==='ArrowDown'){acIdx=Math.min(acIdx+1,items.length-1);highlightAC(items);e.preventDefault();}
+  else if(e.key==='ArrowUp'){acIdx=Math.max(acIdx-1,0);highlightAC(items);e.preventDefault();}
+  else if(e.key==='Enter'&&acIdx>=0){pickClient(acIdx);e.preventDefault();}
+  else if(e.key==='Escape'){ac.style.display='none';}
+}
+
+function highlightAC(items){
+  items.forEach((el,i)=>el.classList.toggle('selected',i===acIdx));
+}
+
+function pickClient(i){
+  const c=acMatches[i];
+  $('fN').value=c.name;
+  $('acList').style.display='none';
+  // prefill type
+  const sel=$('fT'), opts=Array.from(sel.options).map(o=>o.value);
+  if(opts.includes(c.type)) sel.value=c.type;
+  // prefill amount
+  $('fA').value=c.amount||'';
+  $('amtHint').textContent=`Din ${c.month}: ${(c.amount||0).toLocaleString('ro-RO')} RON — modifică dacă s-a schimbat`;
+  $('amtHint').className='fi-hint ok';
+  // banner
+  $('prefillSrc').textContent=c.month;
+  $('prefillBar').classList.add('show');
+}
+
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#fN')&&!e.target.closest('#acList'))
+    $('acList').style.display='none';
+});
+
+// ─── RENDER ──────────────────────────────────────────────────────────────────
+function render(){
+  $('curTitle').textContent=cur;
+  const ents=db[cur]||[], total=tot(cur), sala=ents.filter(e=>e.type!=='Supliment');
+  $('sTotal').textContent=total.toLocaleString('ro-RO')+' RON';
+  $('sClients').textContent=sala.length;
+  $('sAvg').textContent=ents.length?Math.round(total/ents.length).toLocaleString('ro-RO')+' RON':'—';
+
+  $('tbody').innerHTML=ents.length
+    ?ents.map((e,i)=>`<tr>
+        <td style="font-weight:500">${e.name}</td>
+        <td class="td-muted">${e.date||'—'}</td>
+        <td><span class="badge ${e.type==='Supliment'?'b-supl':'b-sala'}">${e.type}</span></td>
+        <td class="td-amt">${(e.amount||0).toLocaleString('ro-RO')} RON</td>
+        <td><button class="btn-del" onclick="delEntry('${cur}',${i})">✕</button></td>
+      </tr>`).join('')
+    :'<tr><td colspan="5" style="text-align:center;color:#555;padding:32px 0">Nicio intrare — apasă + Adaugă</td></tr>';
+
+  // chart
+  const ch=$('chart'); ch.innerHTML='';
+  const max=Math.max(...ALL.map(tot),1);
+  ALL.forEach(m=>{
+    const pct=(tot(m)/max)*100;
+    const c=document.createElement('div');
+    c.className='bar-col'+(m===cur?' active':'');
+    c.onclick=()=>{cur=m;render();};
+    c.innerHTML=`<div class="bar-fill${m===cur?' active':''}" style="height:${Math.max(pct,3)}%"></div><div class="bar-lbl">${m.split(' ')[0].substring(0,3)}</div>`;
+    ch.appendChild(c);
+  });
+
+  // past grid
+  $('pg').innerHTML=ALL.filter(m=>m!==cur).map(m=>`
+    <div class="pc" onclick="cur='${m}';render()">
+      <div class="pc-name">${m}</div>
+      <div class="pc-total">${tot(m).toLocaleString('ro-RO')} RON</div>
+      <div class="pc-sub">${(db[m]||[]).filter(e=>e.type!=='Supliment').length} clienți</div>
+    </div>`).join('');
+}
+
+// ─── ADD / DELETE ─────────────────────────────────────────────────────────────
+function openAdd(){
+  $('fN').value=''; $('fD').value=todayStr(); $('fA').value='';
+  $('amtHint').textContent=''; $('amtHint').className='fi-hint';
+  $('prefillBar').classList.remove('show');
+  $('acList').style.display='none'; acIdx=-1;
+  $('addMSub').textContent=cur;
+  $('dateHint').textContent='Data de azi — modifică dacă e diferit';
+  $('addOv').classList.add('open');
+  setTimeout(()=>$('fN').focus(),120);
+}
+function closeAdd(){$('addOv').classList.remove('open');}
+
+function saveEntry(){
+  const n=$('fN').value.trim(), d=$('fD').value,
+        t=$('fT').value, a=parseInt($('fA').value);
+  if(!n||!a){alert('Completează numele și suma!');return;}
+  if(!db[cur]) db[cur]=[];
+  db[cur].push({name:n,date:d,type:t,amount:a});
+  closeAdd(); render(); scheduleSave();
+  toast(n+' adăugat ✓');
+}
+
+function delEntry(m,i){
+  if(!confirm('Ștergi această intrare?'))return;
+  db[m].splice(i,1); render(); scheduleSave();
+}
+
+// ─── NEW MONTH ────────────────────────────────────────────────────────────────
+function openNM(){$('nmOv').classList.add('open');}
+function mkMonth(){
+  const k=$('nmM').value+' '+$('nmY').value;
+  if(db[k]){alert('Luna '+k+' există deja!');return;}
+  db[k]=[]; ALL.unshift(k); cur=k;
+  $('nmOv').classList.remove('open');
+  render(); scheduleSave();
+  toast('Luna '+k+' creată ✓');
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+setDrive('off','Drive');
+render();
+</script>
+</body>
+</html>
