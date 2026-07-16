@@ -13,7 +13,10 @@
   --gold:#e8a020;--blue:#4285f4;
   --FD:'Space Grotesk',sans-serif;--FB:'Inter',sans-serif;
 }
-body{background:var(--bg);color:var(--tx);font-family:var(--FB);font-size:14px;min-height:100vh}
+/* FIX ZOOM iOS - toate inputurile min 16px */
+body{background:var(--bg);color:var(--tx);font-family:var(--FB);font-size:16px;min-height:100vh}
+input,select,textarea{font-size:16px !important;}
+
 .topbar{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
 .logo{font-family:var(--FD);font-size:17px;font-weight:700;letter-spacing:-.5px}.logo span{color:var(--acc)}
 .topbar-right{display:flex;align-items:center;gap:12px}
@@ -70,7 +73,7 @@ hr{border:none;border-top:1px solid var(--bd);margin:24px 0}
 .pc-name{font-size:12px;font-weight:600;margin-bottom:4px;color:var(--gold)}
 .pc-total{font-family:var(--FD);font-size:16px;font-weight:700;color:var(--acc)}
 .pc-sub{font-size:10px;color:var(--dim);margin-top:2px}
-.sed-search{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:10px 14px;color:var(--tx);font-family:var(--FB);font-size:14px;outline:none;margin-bottom:16px;transition:border .15s}
+.sed-search{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:10px 14px;color:var(--tx);font-family:var(--FB);font-size:16px !important;outline:none;margin-bottom:16px;transition:border .15s}
 .sed-search:focus{border-color:var(--acc)}
 .sed-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
 .sed-card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:16px;transition:all .15s}
@@ -100,7 +103,7 @@ hr{border:none;border-top:1px solid var(--bd);margin:24px 0}
 .mt-sub{font-size:12px;color:var(--muted);margin-bottom:16px}
 .fg{margin-bottom:13px;position:relative}
 .fl{display:block;font-size:11px;font-weight:500;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
-.fi{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:7px;padding:9px 12px;color:var(--tx);font-family:var(--FB);font-size:14px;outline:none;transition:border .15s}
+.fi{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:7px;padding:9px 12px;color:var(--tx);font-family:var(--FB);font-size:16px !important;outline:none;transition:border .15s}
 .fi:focus{border-color:var(--acc)}
 .fi-hint{font-size:11px;color:var(--dim);margin-top:4px;font-style:italic}
 .fi-hint.ok{color:var(--grn);font-style:normal}
@@ -128,6 +131,7 @@ hr{border:none;border-top:1px solid var(--bd);margin:24px 0}
 </style>
 </head>
 <body>
+
 <div class="topbar">
   <div class="logo">RAZONE <span>VENITURI</span></div>
   <div class="topbar-right">
@@ -139,10 +143,12 @@ hr{border:none;border-top:1px solid var(--bd);margin:24px 0}
     <button class="btn-nm" onclick="openNM()">+ Lună Nouă</button>
   </div>
 </div>
+
 <div class="nav-tabs">
   <div class="tab active" onclick="switchTab('venituri',this)">💰 Venituri</div>
   <div class="tab" onclick="switchTab('sedinte',this)">📋 Ședințe</div>
 </div>
+
 <div class="page">
   <div class="tab-content active" id="tab-venituri">
     <div class="drive-banner" id="driveBanner">
@@ -173,6 +179,7 @@ hr{border:none;border-top:1px solid var(--bd);margin:24px 0}
     <div class="slbl">Luni Anterioare</div>
     <div class="past-grid" id="pg"></div>
   </div>
+
   <div class="tab-content" id="tab-sedinte">
     <div class="cur-hdr">
       <div class="cur-title" id="sedTitle">—</div>
@@ -182,6 +189,8 @@ hr{border:none;border-top:1px solid var(--bd);margin:24px 0}
     <div class="sed-grid" id="sedGrid"></div>
   </div>
 </div>
+
+<!-- ADD VENITURI MODAL -->
 <div class="ov" id="addOv" onclick="if(event.target===this)closeAdd()">
   <div class="modal">
     <div class="mt">Adaugă Intrare</div>
@@ -214,6 +223,8 @@ hr{border:none;border-top:1px solid var(--bd);margin:24px 0}
     </div>
   </div>
 </div>
+
+<!-- ADD SEDINTE MODAL -->
 <div class="ov" id="addSedOv" onclick="if(event.target===this)closeAddSed()">
   <div class="modal">
     <div class="mt">Client Nou — Ședințe</div>
@@ -238,6 +249,8 @@ hr{border:none;border-top:1px solid var(--bd);margin:24px 0}
     </div>
   </div>
 </div>
+
+<!-- HIST MODAL -->
 <div class="ov" id="histOv" onclick="if(event.target===this)closeHist()">
   <div class="modal" style="width:340px">
     <div class="mt" id="histTitle">Istoric Ședințe</div>
@@ -246,6 +259,8 @@ hr{border:none;border-top:1px solid var(--bd);margin:24px 0}
     <button class="bn" style="width:100%" onclick="closeHist()">Închide</button>
   </div>
 </div>
+
+<!-- NEW MONTH MODAL -->
 <div class="ov" id="nmOv" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="modal">
     <div class="mt">Lună Nouă</div>
@@ -264,6 +279,7 @@ hr{border:none;border-top:1px solid var(--bd);margin:24px 0}
     </div>
   </div>
 </div>
+
 <div class="toast" id="toast"></div>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
@@ -283,60 +299,232 @@ const RAW_DATA = {
   "Ianuarie 2026":[{name:"Ionuț",date:"01.12.2023",type:"O lună",amount:800},{name:"Delia",date:"01.12.2026",type:"O lună",amount:400},{name:"Eugean",date:"02.12.2026",type:"O lună",amount:600},{name:"Bogdan",date:"02.12.2026",type:"O lună",amount:600},{name:"Gheorghe",date:"02.12.2026",type:"8 ședințe",amount:500},{name:"Luiza",date:"02.12.2026",type:"O lună",amount:800},{name:"Iulia Sabău",date:"02.12.2026",type:"O lună",amount:600},{name:"Vlad",date:"04.12.2026",type:"O lună",amount:1000},{name:"Maria",date:"04.12.2026",type:"O lună",amount:1000},{name:"Florin",date:"05.12.2026",type:"O lună",amount:500},{name:"Cristina Bosca",date:"19.01.2026",type:"O lună",amount:500},{name:"Adriana",date:"15.01.2026",type:"O lună",amount:700},{name:"Daria",date:"19.01.2026",type:"O lună",amount:1000},{name:"Lori",date:"20.01.2026",type:"O lună",amount:600},{name:"Ale",date:"19.01.2026",type:"O lună",amount:600},{name:"Cristina Best",date:"19.01.2026",type:"2 săptămâni",amount:300},{name:"Aura",date:"19.01.2026",type:"O lună",amount:500},{name:"Sergiu",date:"21.01.2026",type:"O lună",amount:800},{name:"Dominic",date:"23.01.2026",type:"O lună",amount:720},{name:"Ovidiu",date:"26.01.2026",type:"O lună",amount:800},{name:"Alex",date:"26.01.2026",type:"O lună",amount:600},{name:"Anca",date:"26.01.2026",type:"O lună",amount:500},{name:"Gheorghe",date:"26.01.2026",type:"8 ședințe",amount:500},{name:"Paul",date:"26.01.2026",type:"O lună",amount:500},{name:"Octavian",date:"27.01.2026",type:"O lună",amount:800},{name:"Andrei",date:"30.01.2026",type:"O lună",amount:240},{name:"Gheorghe",date:"30.01.2026",type:"8 ședințe",amount:500},{name:"Ovidiu LAR",date:"—",type:"Supliment",amount:2500},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:1050}],
   "Decembrie 2025":[{name:"Ionuț",date:"01.12.2025",type:"O lună",amount:800},{name:"Delia",date:"01.12.2025",type:"O lună",amount:400},{name:"Alin",date:"02.12.2025",type:"O lună",amount:500},{name:"Cristina",date:"02.12.2025",type:"O lună",amount:500},{name:"Paul",date:"02.12.2022",type:"O lună",amount:450},{name:"Vlad",date:"02.12.2025",type:"O lună",amount:1000},{name:"Gheorghe",date:"02.12.2025",type:"8 ședințe",amount:500},{name:"Dana",date:"04.12.2025",type:"8 ședințe",amount:500},{name:"Aura",date:"04.12.2025",type:"O lună",amount:500},{name:"Gelu",date:"05.12.2025",type:"O săptămână",amount:360},{name:"Sophia",date:"05.12.2025",type:"O lună",amount:600},{name:"Florin",date:"09.12.2025",type:"8 ședințe",amount:500},{name:"Anca",date:"11.12.2025",type:"O lună",amount:450},{name:"Iulia Sabău",date:"11.12.2025",type:"O lună",amount:600},{name:"Cristina Best",date:"10.12.2025",type:"O lună",amount:600},{name:"Timi",date:"11.12.2025",type:"O lună",amount:1000},{name:"Carmen",date:"11.12.2025",type:"O lună",amount:800},{name:"David",date:"11.12.2025",type:"O lună",amount:800},{name:"Gelu",date:"15.12.2025",type:"O săptămână",amount:240},{name:"Daria",date:"15.12.2025",type:"O lună",amount:1000},{name:"Gimi",date:"15.12.2025",type:"O lună",amount:450},{name:"Gelu",date:"19.12.2025",type:"O săptămână",amount:360},{name:"Larisa",date:"19.12.2025",type:"O lună",amount:600},{name:"Cosmin",date:"21.12.2025",type:"O lună",amount:800},{name:"Maria",date:"21.12.2025",type:"Rest 500",amount:500},{name:"Dominic",date:"22.12.2025",type:"O lună",amount:700},{name:"Radu",date:"22.12.2025",type:"O lună",amount:600},{name:"Gelu",date:"23.12.2025",type:"O săptămână",amount:180},{name:"Luca",date:"23.12.2025",type:"O lună",amount:700},{name:"Octavian",date:"23.12.2025",type:"O lună",amount:400},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:900}],
 };
-const CLIENT_ID = '173581589112-kvvq9q9jr1o7u8e7v01jetb477jqed76.apps.googleusercontent.com';
-const SCOPES    = 'https://www.googleapis.com/auth/drive.file';
-const FILE_NAME = 'razone-venituri.json';
+
+const CLIENT_ID='173581589112-kvvq9q9jr1o7u8e7v01jetb477jqed76.apps.googleusercontent.com';
+const SCOPES='https://www.googleapis.com/auth/drive.file';
+const FILE_NAME='razone-venituri.json';
+
 let db=JSON.parse(JSON.stringify(RAW_DATA));
 let sedDb={};
 let ALL=Object.keys(db);
 let cur=ALL[0];
-let gToken=null,gFileId=null,saveTimer=null,acIdx=-1,sacIdx=-1,histClientKey=null,sacMatches=[];
+let gToken=null,gFileId=null,saveTimer=null,acIdx=-1,sacIdx=-1,sacMatches=[],acMatches=[];
+
 const $=id=>document.getElementById(id);
 const tot=m=>(db[m]||[]).reduce((s,e)=>s+(e.amount||0),0);
 const todayStr=()=>new Date().toISOString().split('T')[0];
 const nowStr=()=>{const d=new Date();return d.toLocaleDateString('ro-RO',{day:'2-digit',month:'2-digit',year:'numeric'})+' '+d.toLocaleTimeString('ro-RO',{hour:'2-digit',minute:'2-digit'});};
 const extractSedNr=type=>{const m=type.match(/(\d+)\s*ședințe/i);return m?parseInt(m[1]):0;};
 const isSedType=type=>/ședințe/i.test(type);
+
+// ── FIX CHEIE SEDINTE: folosim UUID unic, nu nume+luna ──
+// Cheia e generata o singura data la creare si stocata in obiect
+function genId(){return Date.now().toString(36)+Math.random().toString(36).substr(2,5);}
+
 function toast(msg,err=false){const t=$('toast');t.textContent=msg;t.className='toast'+(err?' err':'');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
 function switchTab(name,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));el.classList.add('active');$('tab-'+name).classList.add('active');if(name==='sedinte')renderSedinte();}
+
+// ── DRIVE cu refresh automat ──
 function setDrive(state,label){const dot=$('driveDot'),lbl=$('driveLabel'),btn=$('btnDrive');dot.className='drive-dot'+(state==='ok'?' ok':state==='saving'?' saving':'');lbl.textContent=label;btn.style.display=state==='ok'?'none':'inline-block';$('driveBanner').style.display=state==='ok'?'none':'flex';}
-let tokenClient=null;
-function initTokenClient(){if(typeof google==='undefined')return;tokenClient=google.accounts.oauth2.initTokenClient({client_id:CLIENT_ID,scope:SCOPES,callback:async resp=>{if(resp.error){toast('Autentificare eșuată: '+resp.error,true);return;}gToken=resp.access_token;setTimeout(refreshToken,55*60*1000);setDrive('saving','Se conectează...');await findOrCreate();await loadFromDrive();setDrive('ok','Drive conectat ✓');toast('Google Drive conectat!');}});}
-function signIn(){if(typeof google==='undefined'){toast('Google API nu s-a încărcat încă',true);return;}if(!tokenClient)initTokenClient();tokenClient.requestAccessToken();}
-function refreshToken(){if(!tokenClient)return;tokenClient.requestAccessToken({prompt:''});}
+
+let tokenClient=null,tokenExpiry=0,refreshTimerId=null;
+
+function initTokenClient(){
+  if(typeof google==='undefined')return;
+  tokenClient=google.accounts.oauth2.initTokenClient({
+    client_id:CLIENT_ID,scope:SCOPES,
+    callback:async resp=>{
+      if(resp.error){toast('Autentificare eșuată',true);return;}
+      gToken=resp.access_token;
+      tokenExpiry=Date.now()+(55*60*1000);
+      // refresh automat cu 5 min inainte de expirare
+      if(refreshTimerId)clearTimeout(refreshTimerId);
+      refreshTimerId=setTimeout(silentRefresh,50*60*1000);
+      if(!gFileId){
+        setDrive('saving','Se conectează...');
+        await findOrCreate();
+        await loadFromDrive();
+        setDrive('ok','Drive conectat ✓');
+        toast('Google Drive conectat!');
+      } else {
+        setDrive('ok','Drive conectat ✓');
+      }
+    }
+  });
+}
+
+function signIn(){
+  if(typeof google==='undefined'){toast('Google API nu s-a încărcat',true);return;}
+  if(!tokenClient)initTokenClient();
+  tokenClient.requestAccessToken({prompt:'consent'});
+}
+
+function silentRefresh(){
+  if(!tokenClient)return;
+  tokenClient.requestAccessToken({prompt:''});
+}
+
+// Verifica token inainte de orice request Drive
+async function ensureToken(){
+  if(!gToken||Date.now()>tokenExpiry-60000){
+    return new Promise(resolve=>{
+      if(!tokenClient){resolve(false);return;}
+      const origCb=tokenClient.callback;
+      tokenClient.callback=async resp=>{
+        if(origCb)origCb(resp);
+        resolve(!resp.error);
+      };
+      tokenClient.requestAccessToken({prompt:''});
+    });
+  }
+  return true;
+}
+
 window.addEventListener('load',()=>{setTimeout(()=>{if(typeof google!=='undefined')initTokenClient();},1000);});
-async function findOrCreate(){const r=await fetch(`https://www.googleapis.com/drive/v3/files?q=name%3D'${FILE_NAME}'+and+trashed%3Dfalse&fields=files(id)`,{headers:{Authorization:'Bearer '+gToken}});const d=await r.json();if(d.files&&d.files.length){gFileId=d.files[0].id;}else{const cr=await fetch('https://www.googleapis.com/drive/v3/files',{method:'POST',headers:{Authorization:'Bearer '+gToken,'Content-Type':'application/json'},body:JSON.stringify({name:FILE_NAME,mimeType:'application/json'})});const f=await cr.json();gFileId=f.id;}}
-async function loadFromDrive(){if(!gToken||!gFileId)return;try{const r=await fetch(`https://www.googleapis.com/drive/v3/files/${gFileId}?alt=media`,{headers:{Authorization:'Bearer '+gToken}});if(!r.ok)return;const saved=await r.json();if(saved&&saved.data&&Object.keys(saved.data).length>0){db=saved.data;ALL=Object.keys(db);cur=ALL[0];if(saved.sedDb)sedDb=saved.sedDb;render();renderSedinte();toast('Date încărcate din Drive ✓');}else{await saveToDrive();}}catch(e){console.error(e);}}
-async function saveToDrive(){if(!gToken||!gFileId)return;setDrive('saving','Se salvează...');try{await fetch(`https://www.googleapis.com/upload/drive/v3/files/${gFileId}?uploadType=media`,{method:'PATCH',headers:{Authorization:'Bearer '+gToken,'Content-Type':'application/json'},body:JSON.stringify({data:db,sedDb:sedDb,savedAt:new Date().toISOString()})});setDrive('ok','Drive salvat ✓');}catch(e){setDrive('ok','Drive conectat');toast('Eroare salvare',true);}}
+
+async function findOrCreate(){
+  const ok=await ensureToken();if(!ok)return;
+  const r=await fetch(`https://www.googleapis.com/drive/v3/files?q=name%3D'${FILE_NAME}'+and+trashed%3Dfalse&fields=files(id)`,{headers:{Authorization:'Bearer '+gToken}});
+  const d=await r.json();
+  if(d.files&&d.files.length){gFileId=d.files[0].id;}
+  else{const cr=await fetch('https://www.googleapis.com/drive/v3/files',{method:'POST',headers:{Authorization:'Bearer '+gToken,'Content-Type':'application/json'},body:JSON.stringify({name:FILE_NAME,mimeType:'application/json'})});const f=await cr.json();gFileId=f.id;}
+}
+
+async function loadFromDrive(){
+  const ok=await ensureToken();if(!ok||!gFileId)return;
+  try{
+    const r=await fetch(`https://www.googleapis.com/drive/v3/files/${gFileId}?alt=media`,{headers:{Authorization:'Bearer '+gToken}});
+    if(!r.ok)return;
+    const saved=await r.json();
+    if(saved&&saved.data&&Object.keys(saved.data).length>0){
+      db=saved.data;ALL=Object.keys(db);cur=ALL[0];
+      if(saved.sedDb)sedDb=saved.sedDb;
+      render();renderSedinte();toast('Date încărcate din Drive ✓');
+    }else{await saveToDrive();}
+  }catch(e){console.error(e);}
+}
+
+async function saveToDrive(){
+  const ok=await ensureToken();if(!ok||!gFileId)return;
+  setDrive('saving','Se salvează...');
+  try{
+    await fetch(`https://www.googleapis.com/upload/drive/v3/files/${gFileId}?uploadType=media`,{method:'PATCH',headers:{Authorization:'Bearer '+gToken,'Content-Type':'application/json'},body:JSON.stringify({data:db,sedDb:sedDb,savedAt:new Date().toISOString()})});
+    setDrive('ok','Drive salvat ✓');
+  }catch(e){setDrive('ok','Drive conectat');toast('Eroare salvare',true);}
+}
+
 function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(()=>{if(gToken)saveToDrive();},1500);}
+
+// ── AUTOCOMPLETE VENITURI ──
 function buildHistory(){const map={};ALL.forEach(m=>{(db[m]||[]).forEach(e=>{if(!e.name)return;const key=e.name.trim().toLowerCase();if(!map[key])map[key]={name:e.name,type:e.type,amount:e.amount,month:m};});});return map;}
-let acMatches=[];
-function onNameInput(val){const ac=$('acList');if(val.length<2){ac.style.display='none';acIdx=-1;return;}const hist=buildHistory(),q=val.trim().toLowerCase();acMatches=Object.values(hist).filter(c=>c.name.toLowerCase().startsWith(q));if(!acMatches.length){ac.style.display='none';return;}acIdx=-1;ac.style.display='block';ac.innerHTML=acMatches.slice(0,6).map((c,i)=>`<div class="ac-item" id="ac${i}" onclick="pickClient(${i})"><span class="ac-name">${c.name}</span><span class="ac-hint">${c.type} · ${(c.amount||0).toLocaleString('ro-RO')} RON · ${c.month}</span></div>`).join('');}
+
+function onNameInput(val){const ac=$('acList');if(val.length<2){ac.style.display='none';acIdx=-1;return;}const hist=buildHistory(),q=val.trim().toLowerCase();acMatches=Object.values(hist).filter(c=>c.name.toLowerCase().startsWith(q));if(!acMatches.length){ac.style.display='none';return;}acIdx=-1;ac.style.display='block';ac.innerHTML=acMatches.slice(0,6).map((c,i)=>`<div class="ac-item" onclick="pickClient(${i})"><span class="ac-name">${c.name}</span><span class="ac-hint">${c.type} · ${(c.amount||0).toLocaleString('ro-RO')} RON</span></div>`).join('');}
 function onNameKey(e){const ac=$('acList');if(ac.style.display==='none')return;const items=ac.querySelectorAll('.ac-item');if(e.key==='ArrowDown'){acIdx=Math.min(acIdx+1,items.length-1);items.forEach((el,i)=>el.classList.toggle('selected',i===acIdx));e.preventDefault();}else if(e.key==='ArrowUp'){acIdx=Math.max(acIdx-1,0);items.forEach((el,i)=>el.classList.toggle('selected',i===acIdx));e.preventDefault();}else if(e.key==='Enter'&&acIdx>=0){pickClient(acIdx);e.preventDefault();}else if(e.key==='Escape'){ac.style.display='none';}}
 function pickClient(i){const c=acMatches[i];$('fN').value=c.name;$('acList').style.display='none';const sel=$('fT'),opts=Array.from(sel.options).map(o=>o.value);if(opts.includes(c.type))sel.value=c.type;$('fA').value=c.amount||'';$('amtHint').textContent=`Din ${c.month}: ${(c.amount||0).toLocaleString('ro-RO')} RON`;$('amtHint').className='fi-hint ok';$('prefillSrc').textContent=c.month;$('prefillBar').classList.add('show');}
-document.addEventListener('click',e=>{if(!e.target.closest('#fN')&&!e.target.closest('#acList'))$('acList').style.display='none';if(!e.target.closest('#sfN')&&!e.target.closest('#sacList'))$('sacList').style.display='none';});
+
+// ── AUTOCOMPLETE SEDINTE ──
 function buildSedHistory(){const map={};ALL.forEach(m=>{(db[m]||[]).forEach(e=>{if(!e.name||!isSedType(e.type))return;const key=e.name.trim().toLowerCase();if(!map[key])map[key]={name:e.name,type:e.type,nr:extractSedNr(e.type),month:m};});});return map;}
-function onSedNameInput(val){const ac=$('sacList');if(val.length<2){ac.style.display='none';sacIdx=-1;return;}const hist=buildSedHistory(),q=val.trim().toLowerCase();sacMatches=Object.values(hist).filter(c=>c.name.toLowerCase().startsWith(q));if(!sacMatches.length){ac.style.display='none';return;}sacIdx=-1;ac.style.display='block';ac.innerHTML=sacMatches.slice(0,6).map((c,i)=>`<div class="ac-item" id="sac${i}" onclick="pickSedClient(${i})"><span class="ac-name">${c.name}</span><span class="ac-hint">${c.type} · ${c.month}</span></div>`).join('');}
+function onSedNameInput(val){const ac=$('sacList');if(val.length<2){ac.style.display='none';sacIdx=-1;return;}const hist=buildSedHistory(),q=val.trim().toLowerCase();sacMatches=Object.values(hist).filter(c=>c.name.toLowerCase().startsWith(q));if(!sacMatches.length){ac.style.display='none';return;}sacIdx=-1;ac.style.display='block';ac.innerHTML=sacMatches.slice(0,6).map((c,i)=>`<div class="ac-item" onclick="pickSedClient(${i})"><span class="ac-name">${c.name}</span><span class="ac-hint">${c.type} · ${c.month}</span></div>`).join('');}
 function onSedNameKey(e){const ac=$('sacList');if(ac.style.display==='none')return;const items=ac.querySelectorAll('.ac-item');if(e.key==='ArrowDown'){sacIdx=Math.min(sacIdx+1,items.length-1);items.forEach((el,i)=>el.classList.toggle('selected',i===sacIdx));e.preventDefault();}else if(e.key==='ArrowUp'){sacIdx=Math.max(sacIdx-1,0);items.forEach((el,i)=>el.classList.toggle('selected',i===sacIdx));e.preventDefault();}else if(e.key==='Enter'&&sacIdx>=0){pickSedClient(sacIdx);e.preventDefault();}else if(e.key==='Escape'){ac.style.display='none';}}
-function pickSedClient(i){const c=sacMatches[i];$('sfN').value=c.name;$('sacList').style.display='none';$('sfT').value=c.nr||'';const hint=$('sedTotalHint');hint.textContent=`✓ Sugestie din ${c.month}: ${c.nr} ședințe — modifică dacă e nevoie`;hint.classList.add('show');}
-function getSedKey(name,month){return(name+'|'+month).toLowerCase().replace(/\s+/g,'_');}
-function getSedInfo(name,month){const key=getSedKey(name,month);return sedDb[key]||null;}
-function render(){$('curTitle').textContent=cur;const ents=db[cur]||[],total=tot(cur),sala=ents.filter(e=>e.type!=='Supliment');$('sTotal').textContent=total.toLocaleString('ro-RO')+' RON';$('sClients').textContent=sala.length;$('sAvg').textContent=ents.length?Math.round(total/ents.length).toLocaleString('ro-RO')+' RON':'—';$('tbody').innerHTML=ents.length?ents.map((e,i)=>{let sedCell='';if(isSedType(e.type)){const key=getSedKey(e.name,cur);const sed=sedDb[key];if(sed){const left=sed.total-sed.used;const cls=left===0?'epuizat':left<=2?'putine':'';sedCell=`<span class="sed-badge ${cls}" onclick="openHistModal('${key}')">${left>0?left+'🏃':'✅'} / ${sed.total}</span>`;}}return`<tr><td style="font-weight:500">${e.name}${sedCell?' '+sedCell:''}</td><td class="td-muted">${e.date||'—'}</td><td><span class="badge ${e.type==='Supliment'?'b-supl':'b-sala'}">${e.type}</span></td><td class="td-amt">${(e.amount||0).toLocaleString('ro-RO')} RON</td><td><button class="btn-del" onclick="delEntry('${cur}',${i})">✕</button></td></tr>`;}).join(''):'<tr><td colspan="5" style="text-align:center;color:#555;padding:32px 0">Nicio intrare</td></tr>';const ch=$('chart');ch.innerHTML='';const max=Math.max(...ALL.map(tot),1);ALL.forEach(m=>{const pct=(tot(m)/max)*100;const c=document.createElement('div');c.className='bar-col'+(m===cur?' active':'');c.onclick=()=>{cur=m;render();};c.innerHTML=`<div class="bar-fill${m===cur?' active':''}" style="height:${Math.max(pct,3)}%"></div><div class="bar-lbl">${m.split(' ')[0].substring(0,3)}</div>`;ch.appendChild(c);});$('pg').innerHTML=ALL.filter(m=>m!==cur).map(m=>`<div class="pc" onclick="cur='${m}';render()"><div class="pc-name">${m}</div><div class="pc-total">${tot(m).toLocaleString('ro-RO')} RON</div><div class="pc-sub">${(db[m]||[]).filter(e=>e.type!=='Supliment').length} clienți</div></div>`).join('');}
-function renderSedinte(){$('sedTitle').textContent=cur;const q=($('sedSearch').value||'').toLowerCase().trim();const entries=Object.entries(sedDb).filter(([k,v])=>!q||v.name.toLowerCase().includes(q)).sort((a,b)=>(b[1].total-b[1].used)-(a[1].total-a[1].used));if(!entries.length){$('sedGrid').innerHTML=`<div class="sed-empty"><div style="font-size:32px;margin-bottom:8px">📋</div>${q?'Niciun client găsit':'Niciun client cu ședințe activ.<br>Apasă <strong>+ Client Nou</strong> pentru a adăuga.'}</div>`;return;}$('sedGrid').innerHTML=entries.map(([key,sed])=>{const left=sed.total-sed.used;const pct=Math.round((sed.used/sed.total)*100);const cls=left===0?'epuizat':left<=2?'putine':'';return`<div class="sed-card"><div class="sed-card-header"><div class="sed-name">${sed.name}</div><div class="sed-type-badge">${sed.total} ședințe</div></div><div class="sed-progress-wrap"><div class="sed-progress-bar"><div class="sed-progress-fill ${cls}" style="width:${pct}%"></div></div><div class="sed-count"><span>Efectuate: <strong>${sed.used}</strong></span><span style="color:${left===0?'var(--acc)':left<=2?'var(--gold)':'var(--grn)'}"><strong>${left}</strong> rămase</span></div></div>${left===0?'<div class="sed-done-msg">✅ Pachet finalizat</div>':''}<div class="sed-actions" style="margin-top:10px"><button class="btn-sed minus" onclick="sedMinus('${key}')" ${sed.used<=0?'disabled':''}>−</button><button class="btn-sed plus" onclick="sedPlus('${key}')" ${left<=0?'disabled':''}>+</button><button class="btn-sed-hist" onclick="openHistModal('${key}')">📅 Istoric</button></div><div style="font-size:10px;color:var(--dim);margin-top:8px">Start: ${sed.startDate||'—'} · Luna: ${sed.month||'—'}</div></div>`;}).join('');}
-function sedPlus(key){if(!sedDb[key])return;const sed=sedDb[key];if(sed.used>=sed.total){toast('Pachetul e epuizat!',true);return;}sed.used++;sed.history=sed.history||[];sed.history.push({date:nowStr(),action:'+'});renderSedinte();render();scheduleSave();toast(`✓ Ședință bifată — ${sed.name} (${sed.total-sed.used} rămase)`);}
-function sedMinus(key){if(!sedDb[key])return;const sed=sedDb[key];if(sed.used<=0){toast('Nu poți scădea sub 0',true);return;}sed.used--;sed.history=sed.history||[];sed.history.push({date:nowStr(),action:'-'});renderSedinte();render();scheduleSave();toast(`↩ Ședință anulată — ${sed.name} (${sed.total-sed.used} rămase)`);}
-function openHistModal(key){const sed=sedDb[key];if(!sed)return;histClientKey=key;$('histTitle').textContent='Istoric — '+sed.name;$('histSub').textContent=`${sed.used} din ${sed.total} ședințe efectuate`;const hist=(sed.history||[]).slice().reverse();$('histList').innerHTML=hist.length?hist.map((h,i)=>`<div class="hist-item"><span class="hist-num">${h.action==='+'?'▶':'↩'}</span><span style="font-size:13px;color:${h.action==='+'?'var(--grn)':'var(--acc)'}">${h.action==='+'?'Ședință efectuată':'Anulată'}</span><span class="hist-date">${h.date}</span><button class="btn-hist-del" onclick="delHistItem('${key}',${hist.length-1-i})">✕</button></div>`).join(''):'<div class="hist-empty">Nicio activitate</div>';$('histOv').classList.add('open');}
+function pickSedClient(i){const c=sacMatches[i];$('sfN').value=c.name;$('sacList').style.display='none';$('sfT').value=c.nr||'';const hint=$('sedTotalHint');hint.textContent=`✓ Sugestie din ${c.month}: ${c.nr} ședințe`;hint.classList.add('show');}
+
+document.addEventListener('click',e=>{if(!e.target.closest('#fN')&&!e.target.closest('#acList'))$('acList').style.display='none';if(!e.target.closest('#sfN')&&!e.target.closest('#sacList'))$('sacList').style.display='none';});
+
+// ── RENDER VENITURI ──
+function render(){
+  $('curTitle').textContent=cur;
+  const ents=db[cur]||[],total=tot(cur),sala=ents.filter(e=>e.type!=='Supliment');
+  $('sTotal').textContent=total.toLocaleString('ro-RO')+' RON';
+  $('sClients').textContent=sala.length;
+  $('sAvg').textContent=ents.length?Math.round(total/ents.length).toLocaleString('ro-RO')+' RON':'—';
+  $('tbody').innerHTML=ents.length?ents.map((e,i)=>{
+    let sedCell='';
+    if(isSedType(e.type)&&e.sedId&&sedDb[e.sedId]){
+      const sed=sedDb[e.sedId];
+      const left=sed.total-sed.used;
+      const cls=left===0?'epuizat':left<=2?'putine':'';
+      sedCell=` <span class="sed-badge ${cls}" onclick="openHistModal('${e.sedId}')">${left>0?left+'🏃':'✅'} / ${sed.total}</span>`;
+    }
+    return`<tr><td style="font-weight:500">${e.name}${sedCell}</td><td class="td-muted">${e.date||'—'}</td><td><span class="badge ${e.type==='Supliment'?'b-supl':'b-sala'}">${e.type}</span></td><td class="td-amt">${(e.amount||0).toLocaleString('ro-RO')} RON</td><td><button class="btn-del" onclick="delEntry('${cur}',${i})">✕</button></td></tr>`;
+  }).join(''):'<tr><td colspan="5" style="text-align:center;color:#555;padding:32px 0">Nicio intrare</td></tr>';
+  const ch=$('chart');ch.innerHTML='';const max=Math.max(...ALL.map(tot),1);
+  ALL.forEach(m=>{const pct=(tot(m)/max)*100;const c=document.createElement('div');c.className='bar-col'+(m===cur?' active':'');c.onclick=()=>{cur=m;render();};c.innerHTML=`<div class="bar-fill${m===cur?' active':''}" style="height:${Math.max(pct,3)}%"></div><div class="bar-lbl">${m.split(' ')[0].substring(0,3)}</div>`;ch.appendChild(c);});
+  $('pg').innerHTML=ALL.filter(m=>m!==cur).map(m=>`<div class="pc" onclick="cur='${m}';render()"><div class="pc-name">${m}</div><div class="pc-total">${tot(m).toLocaleString('ro-RO')} RON</div><div class="pc-sub">${(db[m]||[]).filter(e=>e.type!=='Supliment').length} clienți</div></div>`).join('');
+}
+
+// ── RENDER SEDINTE ──
+function renderSedinte(){
+  $('sedTitle').textContent=cur;
+  const q=($('sedSearch').value||'').toLowerCase().trim();
+  const entries=Object.entries(sedDb).filter(([k,v])=>!q||v.name.toLowerCase().includes(q)).sort((a,b)=>(b[1].total-b[1].used)-(a[1].total-a[1].used));
+  if(!entries.length){$('sedGrid').innerHTML=`<div class="sed-empty"><div style="font-size:32px;margin-bottom:8px">📋</div>${q?'Niciun client găsit':'Niciun client cu ședințe.<br>Apasă <strong>+ Client Nou</strong>.'}</div>`;return;}
+  $('sedGrid').innerHTML=entries.map(([key,sed])=>{
+    const left=sed.total-sed.used;const pct=Math.round((sed.used/sed.total)*100);const cls=left===0?'epuizat':left<=2?'putine':'';
+    return`<div class="sed-card">
+      <div class="sed-card-header"><div class="sed-name">${sed.name}</div><div class="sed-type-badge">${sed.total} ședințe · ${sed.month||''}</div></div>
+      <div class="sed-progress-wrap"><div class="sed-progress-bar"><div class="sed-progress-fill ${cls}" style="width:${pct}%"></div></div>
+      <div class="sed-count"><span>Efectuate: <strong>${sed.used}</strong></span><span style="color:${left===0?'var(--acc)':left<=2?'var(--gold)':'var(--grn)'}"><strong>${left}</strong> rămase</span></div></div>
+      ${left===0?'<div class="sed-done-msg">✅ Pachet finalizat</div>':''}
+      <div class="sed-actions" style="margin-top:10px">
+        <button class="btn-sed minus" onclick="sedMinus('${key}')" ${sed.used<=0?'disabled':''}>−</button>
+        <button class="btn-sed plus" onclick="sedPlus('${key}')" ${left<=0?'disabled':''}>+</button>
+        <button class="btn-sed-hist" onclick="openHistModal('${key}')">📅 Istoric</button>
+      </div>
+      <div style="font-size:10px;color:var(--dim);margin-top:8px">Start: ${sed.startDate||'—'}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── SEDINTE PLUS/MINUS ──
+function sedPlus(key){if(!sedDb[key])return;const sed=sedDb[key];if(sed.used>=sed.total){toast('Pachetul e epuizat!',true);return;}sed.used++;sed.history=sed.history||[];sed.history.push({date:nowStr(),action:'+'});renderSedinte();render();scheduleSave();toast(`✓ ${sed.name} — ${sed.total-sed.used} ședințe rămase`);}
+function sedMinus(key){if(!sedDb[key])return;const sed=sedDb[key];if(sed.used<=0){toast('Nu poți scădea sub 0',true);return;}sed.used--;sed.history=sed.history||[];sed.history.push({date:nowStr(),action:'-'});renderSedinte();render();scheduleSave();toast(`↩ ${sed.name} — ${sed.total-sed.used} ședințe rămase`);}
+
+// ── HIST MODAL ──
+function openHistModal(key){const sed=sedDb[key];if(!sed)return;$('histTitle').textContent='Istoric — '+sed.name;$('histSub').textContent=`${sed.used} din ${sed.total} ședințe efectuate`;const hist=(sed.history||[]).slice().reverse();$('histList').innerHTML=hist.length?hist.map((h,i)=>`<div class="hist-item"><span class="hist-num">${h.action==='+'?'▶':'↩'}</span><span style="font-size:13px;color:${h.action==='+'?'var(--grn)':'var(--acc)'}">${h.action==='+'?'Ședință efectuată':'Anulată'}</span><span class="hist-date">${h.date}</span><button class="btn-hist-del" onclick="delHistItem('${key}',${hist.length-1-i})">✕</button></div>`).join(''):'<div class="hist-empty">Nicio activitate</div>';$('histOv').classList.add('open');}
 function closeHist(){$('histOv').classList.remove('open');}
-function delHistItem(key,idx){if(!sedDb[key])return;const sed=sedDb[key];const item=sed.history[idx];if(!item)return;if(item.action==='+')sed.used=Math.max(0,sed.used-1);else sed.used=Math.min(sed.total,sed.used+1);sed.history.splice(idx,1);openHistModal(key);renderSedinte();render();scheduleSave();toast('Intrare ștearsă');}
-function openAddSed(){$('sfN').value='';$('sfT').value='';$('sfD').value=todayStr();$('sedTotalHint').classList.remove('show');$('sacList').style.display='none';sacIdx=-1;$('addSedOv').classList.add('open');setTimeout(()=>$('sfN').focus(),120);}
+function delHistItem(key,idx){if(!sedDb[key])return;const sed=sedDb[key];const item=sed.history[idx];if(!item)return;if(item.action==='+')sed.used=Math.max(0,sed.used-1);else sed.used=Math.min(sed.total,sed.used+1);sed.history.splice(idx,1);openHistModal(key);renderSedinte();render();scheduleSave();}
+
+// ── ADD SEDINTE ──
+function openAddSed(){$('sfN').value='';$('sfT').value='';$('sfD').value=todayStr();$('sedTotalHint').classList.remove('show');$('sacList').style.display='none';sacIdx=-1;$('addSedOv').classList.add('open');}
 function closeAddSed(){$('addSedOv').classList.remove('open');}
-function saveNewSed(){const name=$('sfN').value.trim();const total=parseInt($('sfT').value);const startDate=$('sfD').value;if(!name||!total||total<1){alert('Completează numele și numărul de ședințe!');return;}const key=getSedKey(name,cur);if(sedDb[key]){if(!confirm(`${name} există deja. Suprascrii?`))return;}sedDb[key]={name,total,used:0,startDate,month:cur,history:[]};closeAddSed();renderSedinte();render();scheduleSave();toast(`${name} adăugat — ${total} ședințe ✓`);}
-function openAdd(){$('fN').value='';$('fD').value=todayStr();$('fA').value='';$('amtHint').textContent='';$('amtHint').className='fi-hint';$('prefillBar').classList.remove('show');$('acList').style.display='none';acIdx=-1;$('addMSub').textContent=cur;$('addOv').classList.add('open');setTimeout(()=>$('fN').focus(),120);}
+function saveNewSed(){
+  const name=$('sfN').value.trim();const total=parseInt($('sfT').value);const startDate=$('sfD').value;
+  if(!name||!total||total<1){alert('Completează numele și numărul de ședințe!');return;}
+  // Verifica daca exista deja un client activ cu acelasi nume
+  const existing=Object.entries(sedDb).find(([k,v])=>v.name.trim().toLowerCase()===name.toLowerCase()&&v.total-v.used>0);
+  if(existing){if(!confirm(`${name} are deja ședințe active (${existing[1].total-existing[1].used} rămase). Adaugi un pachet nou?`))return;}
+  const id=genId();
+  sedDb[id]={id,name,total,used:0,startDate,month:cur,history:[]};
+  closeAddSed();renderSedinte();scheduleSave();toast(`${name} adăugat — ${total} ședințe ✓`);
+}
+
+// ── ADD VENITURI ──
+function openAdd(){$('fN').value='';$('fD').value=todayStr();$('fA').value='';$('amtHint').textContent='';$('amtHint').className='fi-hint';$('prefillBar').classList.remove('show');$('acList').style.display='none';acIdx=-1;$('addMSub').textContent=cur;$('addOv').classList.add('open');}
 function closeAdd(){$('addOv').classList.remove('open');}
-function saveEntry(){const n=$('fN').value.trim(),d=$('fD').value,t=$('fT').value,a=parseInt($('fA').value);if(!n||!a){alert('Completează numele și suma!');return;}if(!db[cur])db[cur]=[];db[cur].push({name:n,date:d,type:t,amount:a});if(isSedType(t)){const key=getSedKey(n,cur);const nr=extractSedNr(t);if(!sedDb[key]&&nr>0){sedDb[key]={name:n,total:nr,used:0,startDate:d,month:cur,history:[]};}}closeAdd();render();scheduleSave();toast(n+' adăugat ✓');}
-function delEntry(m,i){if(!confirm('Ștergi această intrare?'))return;db[m].splice(i,1);render();scheduleSave();}
+function saveEntry(){
+  const n=$('fN').value.trim(),d=$('fD').value,t=$('fT').value,a=parseInt($('fA').value);
+  if(!n||!a){alert('Completează numele și suma!');return;}
+  if(!db[cur])db[cur]=[];
+  const entry={name:n,date:d,type:t,amount:a};
+  // Daca e tip sedinte, creeaza automat in sedDb cu ID unic
+  if(isSedType(t)){
+    const nr=extractSedNr(t);
+    if(nr>0){const id=genId();sedDb[id]={id,name:n,total:nr,used:0,startDate:d,month:cur,history:[]};entry.sedId=id;}
+  }
+  db[cur].push(entry);
+  closeAdd();render();scheduleSave();toast(n+' adăugat ✓');
+}
+function delEntry(m,i){
+  if(!confirm('Ștergi această intrare?'))return;
+  const e=db[m][i];
+  if(e&&e.sedId&&sedDb[e.sedId])delete sedDb[e.sedId];
+  db[m].splice(i,1);render();scheduleSave();
+}
+
+// ── NEW MONTH ──
 function openNM(){$('nmOv').classList.add('open');}
 function mkMonth(){const k=$('nmM').value+' '+$('nmY').value;if(db[k]){alert('Luna '+k+' există deja!');return;}db[k]=[];ALL.unshift(k);cur=k;$('nmOv').classList.remove('open');render();scheduleSave();toast('Luna '+k+' creată ✓');}
+
 setDrive('off','Drive');
 render();
 </script>
