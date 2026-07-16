@@ -324,22 +324,57 @@ function genId(){return Date.now().toString(36)+Math.random().toString(36).subst
 function toast(msg,err=false){const t=$('toast');t.textContent=msg;t.className='toast'+(err?' err':'');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
 function switchTab(name,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));el.classList.add('active');$('tab-'+name).classList.add('active');if(name==='sedinte')renderSedinte();}
 
-// ── DRIVE cu refresh automat ──
+// ── DRIVE cu reconectare automata ──
 function setDrive(state,label){const dot=$('driveDot'),lbl=$('driveLabel'),btn=$('btnDrive');dot.className='drive-dot'+(state==='ok'?' ok':state==='saving'?' saving':'');lbl.textContent=label;btn.style.display=state==='ok'?'none':'inline-block';$('driveBanner').style.display=state==='ok'?'none':'flex';}
 
 let tokenClient=null,tokenExpiry=0,refreshTimerId=null;
+const LS_HINT='razone_gdrive_hint'; // salvam email hint in localStorage
 
-function initTokenClient(){
+function initTokenClient(hint,prompt){
   if(typeof google==='undefined')return;
-  tokenClient=google.accounts.oauth2.initTokenClient({
+  const cfg={
+    client_id:CLIENT_ID,scope:SCOPES,
+    callback:async resp=>{
+      if(resp.error){
+        // daca silent refresh a esuat, cere manual
+        if(prompt===''){signIn();return;}
+        toast('Autentificare eșuată',true);return;
+      }
+      gToken=resp.access_token;
+      tokenExpiry=Date.now()+(55*60*1000);
+      if(refreshTimerId)clearTimeout(refreshTimerId);
+      refreshTimerId=setTimeout(()=>silentRefresh(),50*60*1000);
+      if(!gFileId){
+        setDrive('saving','Se conectează...');
+        await findOrCreate();
+        await loadFromDrive();
+        setDrive('ok','Drive conectat ✓');
+        if(prompt!=='')toast('Google Drive conectat!');
+      } else {
+        setDrive('ok','Drive conectat ✓');
+      }
+    }
+  };
+  if(hint)cfg.hint=hint;
+  tokenClient=google.accounts.oauth2.initTokenClient(cfg);
+  tokenClient.requestAccessToken({prompt:prompt||''});
+}
+
+function signIn(){
+  if(typeof google==='undefined'){toast('Google API nu s-a încărcat',true);return;}
+  // Prima conectare — arata selector cont, salveaza hint
+  if(typeof google==='undefined')return;
+  const cfg={
     client_id:CLIENT_ID,scope:SCOPES,
     callback:async resp=>{
       if(resp.error){toast('Autentificare eșuată',true);return;}
       gToken=resp.access_token;
       tokenExpiry=Date.now()+(55*60*1000);
-      // refresh automat cu 5 min inainte de expirare
       if(refreshTimerId)clearTimeout(refreshTimerId);
-      refreshTimerId=setTimeout(silentRefresh,50*60*1000);
+      refreshTimerId=setTimeout(()=>silentRefresh(),50*60*1000);
+      // Salveaza timestamp ca sa stim ca userul s-a conectat
+      try{localStorage.setItem(LS_HINT,'connected');
+          localStorage.setItem(LS_HINT+'_ts',Date.now().toString());}catch(e){}
       if(!gFileId){
         setDrive('saving','Se conectează...');
         await findOrCreate();
@@ -350,13 +385,9 @@ function initTokenClient(){
         setDrive('ok','Drive conectat ✓');
       }
     }
-  });
-}
-
-function signIn(){
-  if(typeof google==='undefined'){toast('Google API nu s-a încărcat',true);return;}
-  if(!tokenClient)initTokenClient();
-  tokenClient.requestAccessToken({prompt:'consent'});
+  };
+  tokenClient=google.accounts.oauth2.initTokenClient(cfg);
+  tokenClient.requestAccessToken({prompt:'select_account'});
 }
 
 function silentRefresh(){
@@ -364,23 +395,36 @@ function silentRefresh(){
   tokenClient.requestAccessToken({prompt:''});
 }
 
-// Verifica token inainte de orice request Drive
+// Verifica token inainte de request
 async function ensureToken(){
-  if(!gToken||Date.now()>tokenExpiry-60000){
-    return new Promise(resolve=>{
-      if(!tokenClient){resolve(false);return;}
-      const origCb=tokenClient.callback;
-      tokenClient.callback=async resp=>{
-        if(origCb)origCb(resp);
-        resolve(!resp.error);
-      };
-      tokenClient.requestAccessToken({prompt:''});
-    });
-  }
-  return true;
+  if(gToken&&Date.now()<tokenExpiry-60000)return true;
+  return new Promise(resolve=>{
+    if(!tokenClient){resolve(false);return;}
+    const prev=tokenClient.callback;
+    tokenClient.callback=async resp=>{
+      if(prev)await prev(resp);
+      resolve(!resp.error);
+    };
+    tokenClient.requestAccessToken({prompt:''});
+  });
 }
 
-window.addEventListener('load',()=>{setTimeout(()=>{if(typeof google!=='undefined')initTokenClient();},1000);});
+// La incarcare pagina - incearca reconectare silentioasa daca userul s-a mai conectat
+window.addEventListener('load',()=>{
+  setTimeout(async()=>{
+    if(typeof google==='undefined')return;
+    try{
+      const hint=localStorage.getItem(LS_HINT);
+      const ts=parseInt(localStorage.getItem(LS_HINT+'_ts')||'0');
+      const zilesDeAtunci=(Date.now()-ts)/(1000*60*60*24);
+      // Daca s-a conectat in ultimele 7 zile, incearca silent
+      if(hint&&zilesDeAtunci<7){
+        setDrive('saving','Se reconectează...');
+        initTokenClient(null,'');
+      }
+    }catch(e){}
+  },1500);
+});
 
 async function findOrCreate(){
   const ok=await ensureToken();if(!ok)return;
