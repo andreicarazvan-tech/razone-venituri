@@ -13,10 +13,8 @@
   --gold:#e8a020;--blue:#4285f4;
   --FD:'Space Grotesk',sans-serif;--FB:'Inter',sans-serif;
 }
-/* FIX ZOOM iOS - toate inputurile min 16px */
 body{background:var(--bg);color:var(--tx);font-family:var(--FB);font-size:16px;min-height:100vh}
 input,select,textarea{font-size:16px !important;}
-
 .topbar{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
 .logo{font-family:var(--FD);font-size:17px;font-weight:700;letter-spacing:-.5px}.logo span{color:var(--acc)}
 .topbar-right{display:flex;align-items:center;gap:12px}
@@ -28,14 +26,13 @@ input,select,textarea{font-size:16px !important;}
 .nav-tabs{background:var(--s1);border-bottom:1px solid var(--bd);display:flex;padding:0 24px;gap:0}
 .tab{padding:10px 18px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s}
 .tab.active{color:var(--tx);border-bottom-color:var(--acc)}
-.tab:hover:not(.active){color:var(--tx)}
 .page{max-width:860px;margin:0 auto;padding:20px 20px 60px}
 .tab-content{display:none}.tab-content.active{display:block}
 .slbl{font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--dim);text-transform:uppercase;margin-bottom:12px}
 .drive-banner{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
 .drive-banner-txt{font-size:13px;color:var(--muted);line-height:1.5}
 .drive-banner-txt strong{color:var(--tx);display:block;margin-bottom:2px}
-.btn-gdrive{background:#4285f4;color:#fff;border:none;border-radius:7px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--FB);white-space:nowrap}.btn-gdrive:hover{background:#3574e2}
+.btn-gdrive{background:#4285f4;color:#fff;border:none;border-radius:7px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--FB);white-space:nowrap}
 .cur-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .cur-title{font-family:var(--FD);font-size:24px;font-weight:700;color:var(--gold)}
 .btn-add{background:var(--s2);border:1px solid var(--bd);color:var(--tx);border-radius:7px;padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--FB)}.btn-add:hover{border-color:var(--acc);color:var(--acc)}
@@ -54,8 +51,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--s2)}
 .badge{display:inline-block;padding:2px 7px;border-radius:999px;font-size:11px;font-weight:500}
 .b-sala{background:rgba(99,102,241,.15);color:#818cf8}.b-supl{background:rgba(245,158,11,.15);color:#fbbf24}
 .btn-del{background:none;border:none;color:var(--dim);cursor:pointer;font-size:14px;padding:2px 5px;border-radius:4px}.btn-del:hover{background:rgba(229,57,53,.15);color:var(--acc)}
-.sed-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(76,175,80,.12);border:1px solid rgba(76,175,80,.25);border-radius:6px;padding:2px 8px;font-size:11px;color:var(--grn);cursor:pointer;transition:all .15s}
-.sed-badge:hover{background:rgba(76,175,80,.2);border-color:var(--grn)}
+.sed-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(76,175,80,.12);border:1px solid rgba(76,175,80,.25);border-radius:6px;padding:2px 8px;font-size:11px;color:var(--grn);cursor:pointer}
 .sed-badge.epuizat{background:rgba(229,57,53,.12);border-color:rgba(229,57,53,.25);color:var(--acc)}
 .sed-badge.putine{background:rgba(232,160,32,.12);border-color:rgba(232,160,32,.25);color:var(--gold)}
 hr{border:none;border-top:1px solid var(--bd);margin:24px 0}
@@ -64,65 +60,53 @@ hr{border:none;border-top:1px solid var(--bd);margin:24px 0}
 .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end;cursor:pointer}
 .bar-fill{width:100%;border-radius:4px 4px 0 0;background:var(--adim);border:1px solid rgba(229,57,53,.2);min-height:3px;transition:all .15s}
 .bar-fill.active{background:var(--acc);border-color:var(--acc)}
-.bar-col:hover .bar-fill{background:rgba(229,57,53,.4)}
 .bar-lbl{font-size:9px;color:var(--dim);text-align:center;width:100%}
 .bar-col.active .bar-lbl{color:var(--acc);font-weight:600}
 .past-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .pc{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:12px 14px;cursor:pointer;transition:all .15s}
-.pc:hover{border-color:var(--acc);background:var(--s2)}.pc.active{border-color:var(--acc);background:var(--adim)}
-.pc-name{font-size:12px;font-weight:600;margin-bottom:4px;color:var(--gold)}
+.pc:hover{border-color:var(--acc)}.pc-name{font-size:12px;font-weight:600;margin-bottom:4px;color:var(--gold)}
 .pc-total{font-family:var(--FD);font-size:16px;font-weight:700;color:var(--acc)}
 .pc-sub{font-size:10px;color:var(--dim);margin-top:2px}
-.sed-search{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:10px 14px;color:var(--tx);font-family:var(--FB);font-size:16px !important;outline:none;margin-bottom:16px;transition:border .15s}
-.sed-search:focus{border-color:var(--acc)}
+.sed-search{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:10px 14px;color:var(--tx);font-size:16px !important;outline:none;margin-bottom:16px}
 .sed-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
-.sed-card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:16px;transition:all .15s}
-.sed-card:hover{border-color:rgba(229,57,53,.4)}
+.sed-card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:16px}
 .sed-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .sed-name{font-weight:700;font-size:15px}
 .sed-type-badge{font-size:10px;font-weight:600;color:var(--muted);background:var(--s2);border:1px solid var(--bd);border-radius:5px;padding:2px 7px}
-.sed-progress-wrap{margin-bottom:12px}
 .sed-progress-bar{height:6px;background:var(--bd);border-radius:3px;overflow:hidden;margin-bottom:6px}
 .sed-progress-fill{height:100%;border-radius:3px;transition:width .3s;background:var(--grn)}
-.sed-progress-fill.putine{background:var(--gold)}
-.sed-progress-fill.epuizat{background:var(--acc)}
+.sed-progress-fill.putine{background:var(--gold)}.sed-progress-fill.epuizat{background:var(--acc)}
 .sed-count{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--muted)}
 .sed-count strong{font-family:var(--FD);font-size:18px;color:var(--tx)}
-.sed-actions{display:flex;align-items:center;gap:8px}
-.btn-sed{background:var(--s2);border:1px solid var(--bd);color:var(--tx);border-radius:8px;padding:8px 16px;font-size:20px;font-weight:700;cursor:pointer;flex:1;text-align:center;transition:all .15s;font-family:var(--FB)}
-.btn-sed.minus:hover{border-color:var(--acc);color:var(--acc);background:var(--adim)}
-.btn-sed.plus:hover{border-color:var(--grn);color:var(--grn);background:rgba(76,175,80,.1)}
+.sed-actions{display:flex;align-items:center;gap:8px;margin-top:10px}
+.btn-sed{background:var(--s2);border:1px solid var(--bd);color:var(--tx);border-radius:8px;padding:8px 16px;font-size:20px;font-weight:700;cursor:pointer;flex:1;text-align:center}
 .btn-sed:disabled{opacity:.3;cursor:not-allowed}
-.btn-sed-hist{background:none;border:1px solid var(--bd);color:var(--muted);border-radius:8px;padding:8px 10px;font-size:12px;cursor:pointer;transition:all .15s;white-space:nowrap}
-.btn-sed-hist:hover{border-color:var(--blue);color:var(--blue)}
+.btn-sed-hist{background:none;border:1px solid var(--bd);color:var(--muted);border-radius:8px;padding:8px 10px;font-size:12px;cursor:pointer}
 .sed-done-msg{text-align:center;color:var(--acc);font-size:12px;font-weight:600;margin-top:6px}
-.sed-empty{text-align:center;color:var(--dim);padding:60px 20px;font-size:14px}
+.sed-empty{text-align:center;color:var(--dim);padding:60px 20px}
 .ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:200;align-items:center;justify-content:center}.ov.open{display:flex}
 .modal{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:24px;width:390px;max-width:95vw;max-height:90vh;overflow-y:auto}
 .mt{font-family:var(--FD);font-size:16px;font-weight:700;margin-bottom:4px}
 .mt-sub{font-size:12px;color:var(--muted);margin-bottom:16px}
 .fg{margin-bottom:13px;position:relative}
 .fl{display:block;font-size:11px;font-weight:500;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
-.fi{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:7px;padding:9px 12px;color:var(--tx);font-family:var(--FB);font-size:16px !important;outline:none;transition:border .15s}
+.fi{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:7px;padding:9px 12px;color:var(--tx);font-size:16px !important;outline:none;transition:border .15s}
 .fi:focus{border-color:var(--acc)}
-.fi-hint{font-size:11px;color:var(--dim);margin-top:4px;font-style:italic}
-.fi-hint.ok{color:var(--grn);font-style:normal}
+.fi-hint{font-size:11px;color:var(--dim);margin-top:4px}.fi-hint.ok{color:var(--grn)}
 .ac-list{position:absolute;top:calc(100% - 4px);left:0;right:0;background:var(--s2);border:1px solid var(--acc);border-top:none;border-radius:0 0 8px 8px;z-index:20;max-height:180px;overflow-y:auto}
 .ac-item{padding:9px 12px;cursor:pointer;font-size:13px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd)}
-.ac-item:last-child{border-bottom:none}.ac-item:hover,.ac-item.selected{background:var(--adim)}
+.ac-item:hover,.ac-item.selected{background:var(--adim)}
 .ac-name{font-weight:500;color:var(--tx)}.ac-hint{font-size:11px;color:var(--muted)}
 .prefill-bar{background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.3);border-radius:7px;padding:8px 12px;margin-bottom:12px;font-size:12px;color:var(--gold);display:none}
 .prefill-bar.show{display:block}
 .mbtns{display:flex;gap:8px;margin-top:18px}
-.bn{flex:1;background:var(--s2);border:1px solid var(--bd);color:var(--muted);border-radius:7px;padding:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--FB)}
-.bs{flex:2;background:var(--acc);border:none;color:#fff;border-radius:7px;padding:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--FB)}
+.bn{flex:1;background:var(--s2);border:1px solid var(--bd);color:var(--muted);border-radius:7px;padding:9px;font-size:13px;font-weight:600;cursor:pointer}
+.bs{flex:2;background:var(--acc);border:none;color:#fff;border-radius:7px;padding:9px;font-size:13px;font-weight:600;cursor:pointer}
 .hist-list{max-height:300px;overflow-y:auto;margin-bottom:16px}
 .hist-item{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--bd)}
-.hist-item:last-child{border-bottom:none}
-.hist-num{font-family:var(--FD);font-weight:700;color:var(--acc);min-width:28px}
 .hist-date{font-size:12px;color:var(--muted)}
 .hist-empty{text-align:center;color:var(--dim);padding:20px;font-size:13px}
-.btn-hist-del{background:none;border:none;color:var(--dim);cursor:pointer;font-size:13px;padding:2px 5px}.btn-hist-del:hover{color:var(--acc)}
+.btn-hist-del{background:none;border:none;color:var(--dim);cursor:pointer;font-size:13px;padding:2px 5px}
 .sed-total-hint{background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.2);border-radius:7px;padding:8px 12px;font-size:12px;color:var(--grn);margin-bottom:12px;display:none}
 .sed-total-hint.show{display:block}
 .toast{position:fixed;bottom:24px;right:24px;background:var(--s1);border:1px solid var(--grn);border-radius:9px;padding:11px 18px;font-size:13px;color:var(--grn);z-index:500;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none}
@@ -131,7 +115,6 @@ hr{border:none;border-top:1px solid var(--bd);margin:24px 0}
 </style>
 </head>
 <body>
-
 <div class="topbar">
   <div class="logo">RAZONE <span>VENITURI</span></div>
   <div class="topbar-right">
@@ -143,19 +126,14 @@ hr{border:none;border-top:1px solid var(--bd);margin:24px 0}
     <button class="btn-nm" onclick="openNM()">+ Lună Nouă</button>
   </div>
 </div>
-
 <div class="nav-tabs">
   <div class="tab active" onclick="switchTab('venituri',this)">💰 Venituri</div>
   <div class="tab" onclick="switchTab('sedinte',this)">📋 Ședințe</div>
 </div>
-
 <div class="page">
   <div class="tab-content active" id="tab-venituri">
     <div class="drive-banner" id="driveBanner">
-      <div class="drive-banner-txt">
-        <strong>💾 Salvare Google Drive</strong>
-        Conectează-te pentru a salva datele automat în Drive-ul tău.
-      </div>
+      <div class="drive-banner-txt"><strong>💾 Salvare Google Drive</strong>Conectează-te pentru a salva datele automat.</div>
       <button class="btn-gdrive" onclick="signIn()">Conectează Google Drive</button>
     </div>
     <div class="slbl">Luna Curentă</div>
@@ -179,7 +157,6 @@ hr{border:none;border-top:1px solid var(--bd);margin:24px 0}
     <div class="slbl">Luni Anterioare</div>
     <div class="past-grid" id="pg"></div>
   </div>
-
   <div class="tab-content" id="tab-sedinte">
     <div class="cur-hdr">
       <div class="cur-title" id="sedTitle">—</div>
@@ -190,244 +167,105 @@ hr{border:none;border-top:1px solid var(--bd);margin:24px 0}
   </div>
 </div>
 
-<!-- ADD VENITURI MODAL -->
+<!-- MODALS -->
 <div class="ov" id="addOv" onclick="if(event.target===this)closeAdd()">
   <div class="modal">
-    <div class="mt">Adaugă Intrare</div>
-    <div class="mt-sub" id="addMSub"></div>
+    <div class="mt">Adaugă Intrare</div><div class="mt-sub" id="addMSub"></div>
     <div class="prefill-bar" id="prefillBar">✓ Completat din <strong id="prefillSrc"></strong></div>
-    <div class="fg">
-      <label class="fl">Client</label>
+    <div class="fg"><label class="fl">Client</label>
       <input class="fi" id="fN" placeholder="ex. Adina" autocomplete="off" oninput="onNameInput(this.value)" onkeydown="onNameKey(event)">
       <div class="ac-list" id="acList" style="display:none"></div>
     </div>
-    <div class="fg">
-      <label class="fl">Data Achitare</label>
-      <input class="fi" type="date" id="fD">
-    </div>
-    <div class="fg">
-      <label class="fl">Tip</label>
+    <div class="fg"><label class="fl">Data Achitare</label><input class="fi" type="date" id="fD"></div>
+    <div class="fg"><label class="fl">Tip</label>
       <select class="fi" id="fT">
         <option>O lună</option><option>8 ședințe</option><option>12 ședințe</option>
         <option>6 ședințe</option><option>2 săptămâni</option><option>Supliment</option><option>Altele</option>
       </select>
     </div>
-    <div class="fg">
-      <label class="fl">Sumă (RON)</label>
+    <div class="fg"><label class="fl">Sumă (RON)</label>
       <input class="fi" type="number" id="fA" placeholder="800">
       <div class="fi-hint" id="amtHint"></div>
     </div>
-    <div class="mbtns">
-      <button class="bn" onclick="closeAdd()">Anulează</button>
-      <button class="bs" onclick="saveEntry()">Salvează</button>
-    </div>
+    <div class="mbtns"><button class="bn" onclick="closeAdd()">Anulează</button><button class="bs" onclick="saveEntry()">Salvează</button></div>
   </div>
 </div>
 
-<!-- ADD SEDINTE MODAL -->
 <div class="ov" id="addSedOv" onclick="if(event.target===this)closeAddSed()">
   <div class="modal">
-    <div class="mt">Client Nou — Ședințe</div>
-    <div class="mt-sub">Adaugă un client cu pachet de ședințe</div>
-    <div class="fg">
-      <label class="fl">Nume Client</label>
+    <div class="mt">Client Nou — Ședințe</div><div class="mt-sub">Adaugă un client cu pachet de ședințe</div>
+    <div class="fg"><label class="fl">Nume Client</label>
       <input class="fi" id="sfN" placeholder="ex. Cosmin" autocomplete="off" oninput="onSedNameInput(this.value)" onkeydown="onSedNameKey(event)">
       <div class="ac-list" id="sacList" style="display:none"></div>
     </div>
     <div class="sed-total-hint" id="sedTotalHint"></div>
-    <div class="fg">
-      <label class="fl">Număr Total Ședințe</label>
-      <input class="fi" type="number" id="sfT" placeholder="ex. 12" min="1">
-    </div>
-    <div class="fg">
-      <label class="fl">Data Start</label>
-      <input class="fi" type="date" id="sfD">
-    </div>
-    <div class="mbtns">
-      <button class="bn" onclick="closeAddSed()">Anulează</button>
-      <button class="bs" onclick="saveNewSed()">Adaugă</button>
-    </div>
+    <div class="fg"><label class="fl">Număr Total Ședințe</label><input class="fi" type="number" id="sfT" placeholder="ex. 12" min="1"></div>
+    <div class="fg"><label class="fl">Data Start</label><input class="fi" type="date" id="sfD"></div>
+    <div class="mbtns"><button class="bn" onclick="closeAddSed()">Anulează</button><button class="bs" onclick="saveNewSed()">Adaugă</button></div>
   </div>
 </div>
 
-<!-- HIST MODAL -->
 <div class="ov" id="histOv" onclick="if(event.target===this)closeHist()">
   <div class="modal" style="width:340px">
-    <div class="mt" id="histTitle">Istoric Ședințe</div>
-    <div class="mt-sub" id="histSub"></div>
+    <div class="mt" id="histTitle">Istoric Ședințe</div><div class="mt-sub" id="histSub"></div>
     <div class="hist-list" id="histList"></div>
     <button class="bn" style="width:100%" onclick="closeHist()">Închide</button>
   </div>
 </div>
 
-<!-- NEW MONTH MODAL -->
 <div class="ov" id="nmOv" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="modal">
-    <div class="mt">Lună Nouă</div>
-    <div class="mt-sub">Creează o lună nouă goală</div>
+    <div class="mt">Lună Nouă</div><div class="mt-sub">Creează o lună nouă goală</div>
     <div class="fg"><label class="fl">Lună</label>
-      <select class="fi" id="nmM">
-        <option>Ianuarie</option><option>Februarie</option><option>Martie</option><option>Aprilie</option>
-        <option>Mai</option><option>Iunie</option><option>Iulie</option><option>August</option>
-        <option>Septembrie</option><option>Octombrie</option><option>Noiembrie</option><option>Decembrie</option>
-      </select>
+      <select class="fi" id="nmM"><option>Ianuarie</option><option>Februarie</option><option>Martie</option><option>Aprilie</option><option>Mai</option><option>Iunie</option><option>Iulie</option><option>August</option><option>Septembrie</option><option>Octombrie</option><option>Noiembrie</option><option>Decembrie</option></select>
     </div>
     <div class="fg"><label class="fl">An</label><input class="fi" type="number" id="nmY" value="2026"></div>
-    <div class="mbtns">
-      <button class="bn" onclick="this.closest('.ov').classList.remove('open')">Anulează</button>
-      <button class="bs" onclick="mkMonth()">Creează</button>
-    </div>
+    <div class="mbtns"><button class="bn" onclick="this.closest('.ov').classList.remove('open')">Anulează</button><button class="bs" onclick="mkMonth()">Creează</button></div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
-<script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
-const RAW_DATA = {
-  "Iulie 2026": [
-    {name:"Adina",date:"02.06.2026",type:"8 ședințe",amount:600},{name:"Maria Ovidiu",date:"06.07.2026",type:"O lună",amount:800},{name:"Sophia",date:"07.02.2026",type:"O lună",amount:600},{name:"Delia",date:"03.07.2026",type:"O lună",amount:500},{name:"Darius",date:"03.07.2026",type:"O lună",amount:800},{name:"Bianca",date:"06.07.2026",type:"8 ședințe",amount:800},{name:"Gimi",date:"06.07.2026",type:"O lună",amount:500},{name:"Aura",date:"02.06.2026",type:"O lună",amount:550},{name:"Dana",date:"06.07.2026",type:"O lună",amount:900},{name:"Marc",date:"04.07.2026",type:"O lună",amount:600},{name:"Vlad",date:"09.07.2026",type:"O lună",amount:1000},
-  ],
-  "Iunie 2026": [
-    {name:"Delia",date:"01.05.2026",type:"O lună",amount:500},{name:"Maria Ovidiu",date:"01.06.2026",type:"O lună",amount:800},{name:"Octavian",date:"01.06.2026",type:"O lună",amount:400},{name:"Cristina",date:"02.06.2026",type:"O lună",amount:500},{name:"Darius",date:"02.06.2026",type:"O lună",amount:800},{name:"Aurelian",date:"02.06.2026",type:"8 ședințe",amount:600},{name:"Gimi",date:"02.06.2026",type:"O lună",amount:500},{name:"Adina",date:"02.06.2026",type:"8 ședințe",amount:600},{name:"Sergiu",date:"02.06.2026",type:"O lună",amount:800},{name:"Dana",date:"04.06.2026",type:"O lună",amount:500},{name:"Luiza",date:"04.06.2026",type:"O lună",amount:800},{name:"Martis",date:"04.06.2026",type:"O lună",amount:750},{name:"Delia",date:"05.06.2026",type:"O lună",amount:450},{name:"Eugean",date:"08.06.2026",type:"O lună",amount:600},{name:"Aura",date:"08.06.2026",type:"O lună",amount:550},{name:"Maria Florin",date:"09.06.2026",type:"O lună",amount:500},{name:"Vlad",date:"10.06.2026",type:"O lună",amount:1000},{name:"Anca",date:"14.05.2026",type:"O lună",amount:500},{name:"Dragoș",date:"16.06.2026",type:"12 ședințe",amount:1000},{name:"Alex",date:"15.06.2026",type:"O lună",amount:800},{name:"Daria",date:"16.06.2026",type:"O lună",amount:1000},{name:"Anda",date:"24.06.2026",type:"8 ședințe",amount:600},{name:"Alin",date:"18.06.2026",type:"O lună",amount:500},{name:"Radu",date:"23.06.2026",type:"O lună",amount:600},{name:"Paul",date:"25.06.2026",type:"O lună",amount:450},{name:"Carmen",date:"25.06.2026",type:"O lună",amount:800},{name:"Octavian",date:"26.06.2026",type:"O lună",amount:800},{name:"Lori",date:"26.06.2026",type:"O lună",amount:600},{name:"Iulian",date:"25.06.2026",type:"O lună",amount:800},{name:"Cosmin",date:"29.06.2026",type:"O lună",amount:800},{name:"Ovidiu",date:"30.06.2026",type:"O lună",amount:800},{name:"Timi",date:"30.06.2026",type:"O lună",amount:1000},{name:"Aurelian",date:"30.07.2026",type:"8 ședințe",amount:600},{name:"Timi Ulei",date:"—",type:"Supliment",amount:270},{name:"Iulian Ulei",date:"—",type:"Supliment",amount:270},{name:"Reta Cosmin",date:"—",type:"Supliment",amount:300},{name:"GHK Andreea",date:"—",type:"Supliment",amount:800},{name:"Tesamorelin Dragoș",date:"—",type:"Supliment",amount:750},{name:"Răzvan Testo",date:"—",type:"Supliment",amount:160},{name:"Reta Dana",date:"—",type:"Supliment",amount:450},{name:"GHK Dana",date:"—",type:"Supliment",amount:800},
-  ],
-  "Mai 2026": [
-    {name:"Delia",date:"01.05.2026",type:"O lună",amount:500},{name:"Maria Ovidiu",date:"04.05.2026",type:"O lună",amount:800},{name:"Timi",date:"04.05.2026",type:"O lună",amount:1000},{name:"Aura",date:"04.05.2026",type:"O lună",amount:550},{name:"Ionuț",date:"04.05.2026",type:"O lună",amount:400},{name:"Aurelian",date:"05.04.2026",type:"8 ședințe",amount:600},{name:"Luiza",date:"05.05.2026",type:"O lună",amount:800},{name:"Adina",date:"05.05.2026",type:"8 ședințe",amount:600},{name:"Luca",date:"05.05.2026",type:"O lună",amount:700},{name:"Anca",date:"07.05.2026",type:"O lună",amount:450},{name:"Elena",date:"07.05.2026",type:"O lună",amount:800},{name:"Sophia",date:"08.05.2026",type:"O lună",amount:600},{name:"Anca",date:"05.05.2026",type:"O lună",amount:600},{name:"Vlad",date:"10.05.2026",type:"O lună",amount:1000},{name:"Alex David",date:"12.05.2026",type:"O lună",amount:800},{name:"Elena",date:"12.05.2026",type:"O lună",amount:800},{name:"Alex",date:"14.05.2026",type:"O lună",amount:600},{name:"Daria",date:"16.05.2026",type:"O lună",amount:1000},{name:"Dragoș",date:"19.05.2026",type:"12 ședințe",amount:1000},{name:"Alin",date:"19.05.2026",type:"O lună",amount:500},{name:"Eugean",date:"19.05.2026",type:"O lună",amount:600},{name:"Ovidiu",date:"25.05.2026",type:"O lună",amount:800},{name:"Carmen",date:"25.05.2026",type:"O lună",amount:800},{name:"Iulian",date:"25.05.2026",type:"O lună",amount:800},{name:"Andreea",date:"27.05.2026",type:"O lună",amount:700},{name:"Marc",date:"27.05.2026",type:"O lună",amount:600},{name:"Anca Dinu",date:"28.05.2026",type:"6 ședințe",amount:600},{name:"Ada",date:"28.05.2026",type:"6 ședințe",amount:600},{name:"Andrei",date:"30.05.2026",type:"O lună",amount:400},{name:"Octavian",date:"30.05.2026",type:"O lună",amount:400},{name:"Ale",date:"28.05.2026",type:"O lună",amount:600},{name:"Ulei Dragoș",date:"—",type:"Supliment",amount:300},{name:"Tesamorelin Dragoș",date:"—",type:"Supliment",amount:480},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:200},
-  ],
-  "Aprilie 2026":[{name:"Ovidiu",date:"01.04.2026",type:"O lună",amount:800},{name:"Octavian",date:"01.04.2026",type:"O lună",amount:800},{name:"Andreea",date:"01.04.2026",type:"O lună",amount:700},{name:"Gheorghe",date:"02.04.2026",type:"8 ședințe",amount:500},{name:"Delia",date:"01.04.2026",type:"O lună",amount:550},{name:"Radu",date:"05.04.2026",type:"O lună",amount:600},{name:"Luiza",date:"03.04.2026",type:"O lună",amount:800},{name:"Maria Ovidiu",date:"06.04.2026",type:"O lună",amount:800},{name:"Luca",date:"06.04.2026",type:"O lună",amount:700},{name:"Sergiu",date:"08.04.2026",type:"O lună",amount:800},{name:"Aura",date:"09.04.2026",type:"O lună",amount:550},{name:"Vlad",date:"10.04.2026",type:"O lună",amount:1000},{name:"Eugean",date:"14.04.2026",type:"O lună",amount:600},{name:"Anca",date:"16.04.2026",type:"O lună",amount:450},{name:"Cristina Bosca",date:"17.04.2026",type:"O lună",amount:500},{name:"Daria",date:"17.04.2026",type:"O lună",amount:1000},{name:"Alin",date:"16.03.2026",type:"O lună",amount:500},{name:"Bianca",date:"20.04.2026",type:"8 ședințe",amount:800},{name:"Iulian",date:"20.04.2026",type:"12 ședințe",amount:800},{name:"Dragoș",date:"21.02.2026",type:"O lună",amount:1000},{name:"Cosmin",date:"23.04.2026",type:"O lună",amount:800},{name:"Lari",date:"24.04.2026",type:"O lună",amount:600},{name:"Ovidiu",date:"27.04.2026",type:"O lună",amount:800},{name:"Carmen",date:"27.04.2026",type:"O lună",amount:800},{name:"Timi",date:"27.04.2026",type:"O lună",amount:1000},{name:"Octavian",date:"27.04.2026",type:"O lună",amount:800},{name:"Marc",date:"28.04.2026",type:"O lună",amount:600},{name:"Vasilescu Dragoș",date:"28.04.2026",type:"12 ședințe",amount:800},{name:"Ale",date:"28.04.2026",type:"O lună",amount:600},{name:"Gheorghe",date:"30.04.2026",type:"O lună",amount:300},{name:"Daniela",date:"30.04.2026",type:"O lună",amount:500},{name:"Martis",date:"30.04.2026",type:"O lună",amount:750},{name:"Andrei",date:"30.04.2026",type:"O lună",amount:400},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:1600},{name:"Reta Dana",date:"—",type:"Supliment",amount:350}],
-  "Martie 2026":[{name:"Delia",date:"01.12.2023",type:"O lună",amount:500},{name:"Octavian",date:"03.02.2026",type:"O lună",amount:800},{name:"Ovidiu",date:"02.03.2026",type:"O lună",amount:800},{name:"Maria Ovidiu",date:"02.03.2026",type:"O lună",amount:800},{name:"Andreea",date:"02.03.2026",type:"O lună",amount:700},{name:"Bogdan",date:"05.03.2026",type:"O lună",amount:600},{name:"Aura",date:"05.03.2026",type:"O lună",amount:550},{name:"Cosmin",date:"06.03.2026",type:"O lună",amount:800},{name:"Gheorghe",date:"06.03.2026",type:"8 ședințe",amount:500},{name:"Iulia Sabău",date:"10.03.2026",type:"O lună",amount:800},{name:"Anca Sabău",date:"10.03.2026",type:"O lună",amount:700},{name:"Vlad",date:"10.03.2026",type:"O lună",amount:1000},{name:"Luiza",date:"12.03.2026",type:"O lună",amount:800},{name:"Elena",date:"12.03.2026",type:"O lună",amount:800},{name:"Gheorghe",date:"12.03.2026",type:"8 ședințe",amount:500},{name:"Alex",date:"13.03.2026",type:"O lună",amount:600},{name:"Alin",date:"16.03.2026",type:"O lună",amount:500},{name:"Daria",date:"16.03.2026",type:"O lună",amount:1000},{name:"Cristina",date:"17.03.2026",type:"O lună",amount:500},{name:"Alex David",date:"13.03.2026",type:"O lună",amount:800},{name:"Dominic",date:"20.03.2026",type:"O lună",amount:720},{name:"Maria",date:"20.03.2026",type:"8 ședințe",amount:500},{name:"Florin",date:"20.03.2026",type:"8 ședințe",amount:500},{name:"Sophia",date:"20.03.2026",type:"O lună",amount:600},{name:"Timi",date:"24.03.2026",type:"O lună",amount:1000},{name:"Eugean",date:"26.03.2026",type:"O lună",amount:600},{name:"Anca",date:"26.03.2026",type:"O lună",amount:450},{name:"Lari",date:"24.02.2026",type:"O lună",amount:600},{name:"Martis",date:"30.03.2026",type:"O lună",amount:750},{name:"Gimi",date:"26.03.2026",type:"O lună",amount:500},{name:"Reta Martis",date:"—",type:"Supliment",amount:350},{name:"Reta Dana",date:"—",type:"Supliment",amount:350},{name:"Reta Cosmin",date:"—",type:"Supliment",amount:350},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:1850},{name:"Răzvan Deca",date:"—",type:"Supliment",amount:160}],
-  "Februarie 2026":[{name:"Ionuț",date:"01.12.2023",type:"O lună",amount:800},{name:"Dana",date:"03.02.2026",type:"O lună",amount:500},{name:"Cosmin",date:"03.02.2026",type:"O lună",amount:800},{name:"Luca",date:"03.02.2026",type:"O lună",amount:700},{name:"Elena",date:"03.02.2026",type:"O lună",amount:800},{name:"Delia",date:"03.02.2026",type:"O lună",amount:400},{name:"Bogdan",date:"04.02.2026",type:"O lună",amount:600},{name:"Aura",date:"06.02.2026",type:"O lună",amount:550},{name:"Maria Ovidiu",date:"10.02.2026",type:"O lună",amount:800},{name:"Timi",date:"10.02.2026",type:"O lună",amount:1000},{name:"Sophia",date:"10.02.2026",type:"O lună",amount:600},{name:"Iulia",date:"10.02.2026",type:"O lună",amount:600},{name:"Vlad",date:"14.02.2026",type:"O lună",amount:1000},{name:"Eugean",date:"14.02.2026",type:"O lună",amount:600},{name:"Bianca",date:"16.02.2026",type:"O lună",amount:800},{name:"Cristina Best",date:"19.01.2026",type:"2 săptămâni",amount:500},{name:"Daria",date:"16.02.2026",type:"O lună",amount:1000},{name:"Cristina",date:"17.02.2026",type:"O lună",amount:500},{name:"David",date:"17.02.2026",type:"O lună",amount:800},{name:"Carmen",date:"17.02.2026",type:"O lună",amount:800},{name:"Alina Online",date:"18.02.2026",type:"O lună",amount:750},{name:"Gheorghe",date:"19.02.2026",type:"8 ședințe",amount:500},{name:"Ale",date:"19.02.2026",type:"O lună",amount:600},{name:"Sergiu",date:"19.02.2026",type:"O lună",amount:800},{name:"Radu",date:"23.02.2026",type:"O lună",amount:600},{name:"Ale",date:"23.02.2026",type:"O lună",amount:600},{name:"Mihai",date:"23.02.2026",type:"O lună",amount:750},{name:"Lari",date:"24.02.2026",type:"O lună",amount:600},{name:"Paul",date:"26.02.2026",type:"O lună",amount:450},{name:"Anca",date:"26.02.2026",type:"O lună",amount:450},{name:"Andrei",date:"26.02.2026",type:"O lună",amount:880},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:800}],
-  "Ianuarie 2026":[{name:"Ionuț",date:"01.12.2023",type:"O lună",amount:800},{name:"Delia",date:"01.12.2026",type:"O lună",amount:400},{name:"Eugean",date:"02.12.2026",type:"O lună",amount:600},{name:"Bogdan",date:"02.12.2026",type:"O lună",amount:600},{name:"Gheorghe",date:"02.12.2026",type:"8 ședințe",amount:500},{name:"Luiza",date:"02.12.2026",type:"O lună",amount:800},{name:"Iulia Sabău",date:"02.12.2026",type:"O lună",amount:600},{name:"Vlad",date:"04.12.2026",type:"O lună",amount:1000},{name:"Maria",date:"04.12.2026",type:"O lună",amount:1000},{name:"Florin",date:"05.12.2026",type:"O lună",amount:500},{name:"Cristina Bosca",date:"19.01.2026",type:"O lună",amount:500},{name:"Adriana",date:"15.01.2026",type:"O lună",amount:700},{name:"Daria",date:"19.01.2026",type:"O lună",amount:1000},{name:"Lori",date:"20.01.2026",type:"O lună",amount:600},{name:"Ale",date:"19.01.2026",type:"O lună",amount:600},{name:"Cristina Best",date:"19.01.2026",type:"2 săptămâni",amount:300},{name:"Aura",date:"19.01.2026",type:"O lună",amount:500},{name:"Sergiu",date:"21.01.2026",type:"O lună",amount:800},{name:"Dominic",date:"23.01.2026",type:"O lună",amount:720},{name:"Ovidiu",date:"26.01.2026",type:"O lună",amount:800},{name:"Alex",date:"26.01.2026",type:"O lună",amount:600},{name:"Anca",date:"26.01.2026",type:"O lună",amount:500},{name:"Gheorghe",date:"26.01.2026",type:"8 ședințe",amount:500},{name:"Paul",date:"26.01.2026",type:"O lună",amount:500},{name:"Octavian",date:"27.01.2026",type:"O lună",amount:800},{name:"Andrei",date:"30.01.2026",type:"O lună",amount:240},{name:"Gheorghe",date:"30.01.2026",type:"8 ședințe",amount:500},{name:"Ovidiu LAR",date:"—",type:"Supliment",amount:2500},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:1050}],
-  "Decembrie 2025":[{name:"Ionuț",date:"01.12.2025",type:"O lună",amount:800},{name:"Delia",date:"01.12.2025",type:"O lună",amount:400},{name:"Alin",date:"02.12.2025",type:"O lună",amount:500},{name:"Cristina",date:"02.12.2025",type:"O lună",amount:500},{name:"Paul",date:"02.12.2022",type:"O lună",amount:450},{name:"Vlad",date:"02.12.2025",type:"O lună",amount:1000},{name:"Gheorghe",date:"02.12.2025",type:"8 ședințe",amount:500},{name:"Dana",date:"04.12.2025",type:"8 ședințe",amount:500},{name:"Aura",date:"04.12.2025",type:"O lună",amount:500},{name:"Gelu",date:"05.12.2025",type:"O săptămână",amount:360},{name:"Sophia",date:"05.12.2025",type:"O lună",amount:600},{name:"Florin",date:"09.12.2025",type:"8 ședințe",amount:500},{name:"Anca",date:"11.12.2025",type:"O lună",amount:450},{name:"Iulia Sabău",date:"11.12.2025",type:"O lună",amount:600},{name:"Cristina Best",date:"10.12.2025",type:"O lună",amount:600},{name:"Timi",date:"11.12.2025",type:"O lună",amount:1000},{name:"Carmen",date:"11.12.2025",type:"O lună",amount:800},{name:"David",date:"11.12.2025",type:"O lună",amount:800},{name:"Gelu",date:"15.12.2025",type:"O săptămână",amount:240},{name:"Daria",date:"15.12.2025",type:"O lună",amount:1000},{name:"Gimi",date:"15.12.2025",type:"O lună",amount:450},{name:"Gelu",date:"19.12.2025",type:"O săptămână",amount:360},{name:"Larisa",date:"19.12.2025",type:"O lună",amount:600},{name:"Cosmin",date:"21.12.2025",type:"O lună",amount:800},{name:"Maria",date:"21.12.2025",type:"Rest 500",amount:500},{name:"Dominic",date:"22.12.2025",type:"O lună",amount:700},{name:"Radu",date:"22.12.2025",type:"O lună",amount:600},{name:"Gelu",date:"23.12.2025",type:"O săptămână",amount:180},{name:"Luca",date:"23.12.2025",type:"O lună",amount:700},{name:"Octavian",date:"23.12.2025",type:"O lună",amount:400},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:900}],
-};
+const RAW_DATA={"Iulie 2026":[{name:"Adina",date:"02.06.2026",type:"8 ședințe",amount:600},{name:"Maria Ovidiu",date:"06.07.2026",type:"O lună",amount:800},{name:"Sophia",date:"07.02.2026",type:"O lună",amount:600},{name:"Delia",date:"03.07.2026",type:"O lună",amount:500},{name:"Darius",date:"03.07.2026",type:"O lună",amount:800},{name:"Bianca",date:"06.07.2026",type:"8 ședințe",amount:800},{name:"Gimi",date:"06.07.2026",type:"O lună",amount:500},{name:"Aura",date:"02.06.2026",type:"O lună",amount:550},{name:"Dana",date:"06.07.2026",type:"O lună",amount:900},{name:"Marc",date:"04.07.2026",type:"O lună",amount:600},{name:"Vlad",date:"09.07.2026",type:"O lună",amount:1000}],"Iunie 2026":[{name:"Delia",date:"01.05.2026",type:"O lună",amount:500},{name:"Maria Ovidiu",date:"01.06.2026",type:"O lună",amount:800},{name:"Octavian",date:"01.06.2026",type:"O lună",amount:400},{name:"Cristina",date:"02.06.2026",type:"O lună",amount:500},{name:"Darius",date:"02.06.2026",type:"O lună",amount:800},{name:"Aurelian",date:"02.06.2026",type:"8 ședințe",amount:600},{name:"Gimi",date:"02.06.2026",type:"O lună",amount:500},{name:"Adina",date:"02.06.2026",type:"8 ședințe",amount:600},{name:"Sergiu",date:"02.06.2026",type:"O lună",amount:800},{name:"Dana",date:"04.06.2026",type:"O lună",amount:500},{name:"Luiza",date:"04.06.2026",type:"O lună",amount:800},{name:"Martis",date:"04.06.2026",type:"O lună",amount:750},{name:"Delia",date:"05.06.2026",type:"O lună",amount:450},{name:"Eugean",date:"08.06.2026",type:"O lună",amount:600},{name:"Aura",date:"08.06.2026",type:"O lună",amount:550},{name:"Maria Florin",date:"09.06.2026",type:"O lună",amount:500},{name:"Vlad",date:"10.06.2026",type:"O lună",amount:1000},{name:"Anca",date:"14.05.2026",type:"O lună",amount:500},{name:"Dragoș",date:"16.06.2026",type:"12 ședințe",amount:1000},{name:"Alex",date:"15.06.2026",type:"O lună",amount:800},{name:"Daria",date:"16.06.2026",type:"O lună",amount:1000},{name:"Anda",date:"24.06.2026",type:"8 ședințe",amount:600},{name:"Alin",date:"18.06.2026",type:"O lună",amount:500},{name:"Radu",date:"23.06.2026",type:"O lună",amount:600},{name:"Paul",date:"25.06.2026",type:"O lună",amount:450},{name:"Carmen",date:"25.06.2026",type:"O lună",amount:800},{name:"Octavian",date:"26.06.2026",type:"O lună",amount:800},{name:"Lori",date:"26.06.2026",type:"O lună",amount:600},{name:"Iulian",date:"25.06.2026",type:"O lună",amount:800},{name:"Cosmin",date:"29.06.2026",type:"O lună",amount:800},{name:"Ovidiu",date:"30.06.2026",type:"O lună",amount:800},{name:"Timi",date:"30.06.2026",type:"O lună",amount:1000},{name:"Aurelian",date:"30.07.2026",type:"8 ședințe",amount:600},{name:"Timi Ulei",date:"—",type:"Supliment",amount:270},{name:"Iulian Ulei",date:"—",type:"Supliment",amount:270},{name:"Reta Cosmin",date:"—",type:"Supliment",amount:300},{name:"GHK Andreea",date:"—",type:"Supliment",amount:800},{name:"Tesamorelin Dragoș",date:"—",type:"Supliment",amount:750},{name:"Răzvan Testo",date:"—",type:"Supliment",amount:160},{name:"Reta Dana",date:"—",type:"Supliment",amount:450},{name:"GHK Dana",date:"—",type:"Supliment",amount:800}],"Mai 2026":[{name:"Delia",date:"01.05.2026",type:"O lună",amount:500},{name:"Maria Ovidiu",date:"04.05.2026",type:"O lună",amount:800},{name:"Timi",date:"04.05.2026",type:"O lună",amount:1000},{name:"Aura",date:"04.05.2026",type:"O lună",amount:550},{name:"Ionuț",date:"04.05.2026",type:"O lună",amount:400},{name:"Aurelian",date:"05.04.2026",type:"8 ședințe",amount:600},{name:"Luiza",date:"05.05.2026",type:"O lună",amount:800},{name:"Adina",date:"05.05.2026",type:"8 ședințe",amount:600},{name:"Luca",date:"05.05.2026",type:"O lună",amount:700},{name:"Anca",date:"07.05.2026",type:"O lună",amount:450},{name:"Elena",date:"07.05.2026",type:"O lună",amount:800},{name:"Sophia",date:"08.05.2026",type:"O lună",amount:600},{name:"Vlad",date:"10.05.2026",type:"O lună",amount:1000},{name:"Alex David",date:"12.05.2026",type:"O lună",amount:800},{name:"Elena",date:"12.05.2026",type:"O lună",amount:800},{name:"Alex",date:"14.05.2026",type:"O lună",amount:600},{name:"Daria",date:"16.05.2026",type:"O lună",amount:1000},{name:"Dragoș",date:"19.05.2026",type:"12 ședințe",amount:1000},{name:"Alin",date:"19.05.2026",type:"O lună",amount:500},{name:"Eugean",date:"19.05.2026",type:"O lună",amount:600},{name:"Ovidiu",date:"25.05.2026",type:"O lună",amount:800},{name:"Carmen",date:"25.05.2026",type:"O lună",amount:800},{name:"Iulian",date:"25.05.2026",type:"O lună",amount:800},{name:"Andreea",date:"27.05.2026",type:"O lună",amount:700},{name:"Marc",date:"27.05.2026",type:"O lună",amount:600},{name:"Anca Dinu",date:"28.05.2026",type:"6 ședințe",amount:600},{name:"Ada",date:"28.05.2026",type:"6 ședințe",amount:600},{name:"Andrei",date:"30.05.2026",type:"O lună",amount:400},{name:"Octavian",date:"30.05.2026",type:"O lună",amount:400},{name:"Ale",date:"28.05.2026",type:"O lună",amount:600},{name:"Ulei Dragoș",date:"—",type:"Supliment",amount:300},{name:"Tesamorelin Dragoș",date:"—",type:"Supliment",amount:480},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:200}],"Aprilie 2026":[{name:"Ovidiu",date:"01.04.2026",type:"O lună",amount:800},{name:"Octavian",date:"01.04.2026",type:"O lună",amount:800},{name:"Andreea",date:"01.04.2026",type:"O lună",amount:700},{name:"Gheorghe",date:"02.04.2026",type:"8 ședințe",amount:500},{name:"Delia",date:"01.04.2026",type:"O lună",amount:550},{name:"Radu",date:"05.04.2026",type:"O lună",amount:600},{name:"Luiza",date:"03.04.2026",type:"O lună",amount:800},{name:"Maria Ovidiu",date:"06.04.2026",type:"O lună",amount:800},{name:"Luca",date:"06.04.2026",type:"O lună",amount:700},{name:"Sergiu",date:"08.04.2026",type:"O lună",amount:800},{name:"Aura",date:"09.04.2026",type:"O lună",amount:550},{name:"Vlad",date:"10.04.2026",type:"O lună",amount:1000},{name:"Eugean",date:"14.04.2026",type:"O lună",amount:600},{name:"Anca",date:"16.04.2026",type:"O lună",amount:450},{name:"Cristina Bosca",date:"17.04.2026",type:"O lună",amount:500},{name:"Daria",date:"17.04.2026",type:"O lună",amount:1000},{name:"Alin",date:"16.03.2026",type:"O lună",amount:500},{name:"Bianca",date:"20.04.2026",type:"8 ședințe",amount:800},{name:"Iulian",date:"20.04.2026",type:"12 ședințe",amount:800},{name:"Dragoș",date:"21.02.2026",type:"O lună",amount:1000},{name:"Cosmin",date:"23.04.2026",type:"O lună",amount:800},{name:"Lari",date:"24.04.2026",type:"O lună",amount:600},{name:"Ovidiu",date:"27.04.2026",type:"O lună",amount:800},{name:"Carmen",date:"27.04.2026",type:"O lună",amount:800},{name:"Timi",date:"27.04.2026",type:"O lună",amount:1000},{name:"Octavian",date:"27.04.2026",type:"O lună",amount:800},{name:"Marc",date:"28.04.2026",type:"O lună",amount:600},{name:"Vasilescu Dragoș",date:"28.04.2026",type:"12 ședințe",amount:800},{name:"Ale",date:"28.04.2026",type:"O lună",amount:600},{name:"Gheorghe",date:"30.04.2026",type:"O lună",amount:300},{name:"Daniela",date:"30.04.2026",type:"O lună",amount:500},{name:"Martis",date:"30.04.2026",type:"O lună",amount:750},{name:"Andrei",date:"30.04.2026",type:"O lună",amount:400},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:1600},{name:"Reta Dana",date:"—",type:"Supliment",amount:350}],"Martie 2026":[{name:"Delia",date:"01.12.2023",type:"O lună",amount:500},{name:"Octavian",date:"03.02.2026",type:"O lună",amount:800},{name:"Ovidiu",date:"02.03.2026",type:"O lună",amount:800},{name:"Maria Ovidiu",date:"02.03.2026",type:"O lună",amount:800},{name:"Andreea",date:"02.03.2026",type:"O lună",amount:700},{name:"Bogdan",date:"05.03.2026",type:"O lună",amount:600},{name:"Aura",date:"05.03.2026",type:"O lună",amount:550},{name:"Cosmin",date:"06.03.2026",type:"O lună",amount:800},{name:"Gheorghe",date:"06.03.2026",type:"8 ședințe",amount:500},{name:"Iulia Sabău",date:"10.03.2026",type:"O lună",amount:800},{name:"Anca Sabău",date:"10.03.2026",type:"O lună",amount:700},{name:"Vlad",date:"10.03.2026",type:"O lună",amount:1000},{name:"Luiza",date:"12.03.2026",type:"O lună",amount:800},{name:"Elena",date:"12.03.2026",type:"O lună",amount:800},{name:"Gheorghe",date:"12.03.2026",type:"8 ședințe",amount:500},{name:"Alex",date:"13.03.2026",type:"O lună",amount:600},{name:"Alin",date:"16.03.2026",type:"O lună",amount:500},{name:"Daria",date:"16.03.2026",type:"O lună",amount:1000},{name:"Cristina",date:"17.03.2026",type:"O lună",amount:500},{name:"Alex David",date:"13.03.2026",type:"O lună",amount:800},{name:"Dominic",date:"20.03.2026",type:"O lună",amount:720},{name:"Maria",date:"20.03.2026",type:"8 ședințe",amount:500},{name:"Florin",date:"20.03.2026",type:"8 ședințe",amount:500},{name:"Sophia",date:"20.03.2026",type:"O lună",amount:600},{name:"Timi",date:"24.03.2026",type:"O lună",amount:1000},{name:"Eugean",date:"26.03.2026",type:"O lună",amount:600},{name:"Anca",date:"26.03.2026",type:"O lună",amount:450},{name:"Lari",date:"24.02.2026",type:"O lună",amount:600},{name:"Martis",date:"30.03.2026",type:"O lună",amount:750},{name:"Gimi",date:"26.03.2026",type:"O lună",amount:500},{name:"Reta Martis",date:"—",type:"Supliment",amount:350},{name:"Reta Dana",date:"—",type:"Supliment",amount:350},{name:"Reta Cosmin",date:"—",type:"Supliment",amount:350},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:1850},{name:"Răzvan Deca",date:"—",type:"Supliment",amount:160}],"Februarie 2026":[{name:"Ionuț",date:"01.12.2023",type:"O lună",amount:800},{name:"Dana",date:"03.02.2026",type:"O lună",amount:500},{name:"Cosmin",date:"03.02.2026",type:"O lună",amount:800},{name:"Luca",date:"03.02.2026",type:"O lună",amount:700},{name:"Elena",date:"03.02.2026",type:"O lună",amount:800},{name:"Delia",date:"03.02.2026",type:"O lună",amount:400},{name:"Bogdan",date:"04.02.2026",type:"O lună",amount:600},{name:"Aura",date:"06.02.2026",type:"O lună",amount:550},{name:"Maria Ovidiu",date:"10.02.2026",type:"O lună",amount:800},{name:"Timi",date:"10.02.2026",type:"O lună",amount:1000},{name:"Sophia",date:"10.02.2026",type:"O lună",amount:600},{name:"Iulia",date:"10.02.2026",type:"O lună",amount:600},{name:"Vlad",date:"14.02.2026",type:"O lună",amount:1000},{name:"Eugean",date:"14.02.2026",type:"O lună",amount:600},{name:"Bianca",date:"16.02.2026",type:"O lună",amount:800},{name:"Cristina Best",date:"19.01.2026",type:"2 săptămâni",amount:500},{name:"Daria",date:"16.02.2026",type:"O lună",amount:1000},{name:"Cristina",date:"17.02.2026",type:"O lună",amount:500},{name:"David",date:"17.02.2026",type:"O lună",amount:800},{name:"Carmen",date:"17.02.2026",type:"O lună",amount:800},{name:"Alina Online",date:"18.02.2026",type:"O lună",amount:750},{name:"Gheorghe",date:"19.02.2026",type:"8 ședințe",amount:500},{name:"Ale",date:"19.02.2026",type:"O lună",amount:600},{name:"Sergiu",date:"19.02.2026",type:"O lună",amount:800},{name:"Radu",date:"23.02.2026",type:"O lună",amount:600},{name:"Mihai",date:"23.02.2026",type:"O lună",amount:750},{name:"Lari",date:"24.02.2026",type:"O lună",amount:600},{name:"Paul",date:"26.02.2026",type:"O lună",amount:450},{name:"Anca",date:"26.02.2026",type:"O lună",amount:450},{name:"Andrei",date:"26.02.2026",type:"O lună",amount:880},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:800}],"Ianuarie 2026":[{name:"Ionuț",date:"01.12.2023",type:"O lună",amount:800},{name:"Delia",date:"01.12.2026",type:"O lună",amount:400},{name:"Eugean",date:"02.12.2026",type:"O lună",amount:600},{name:"Bogdan",date:"02.12.2026",type:"O lună",amount:600},{name:"Gheorghe",date:"02.12.2026",type:"8 ședințe",amount:500},{name:"Luiza",date:"02.12.2026",type:"O lună",amount:800},{name:"Iulia Sabău",date:"02.12.2026",type:"O lună",amount:600},{name:"Vlad",date:"04.12.2026",type:"O lună",amount:1000},{name:"Maria",date:"04.12.2026",type:"O lună",amount:1000},{name:"Florin",date:"05.12.2026",type:"O lună",amount:500},{name:"Cristina Bosca",date:"19.01.2026",type:"O lună",amount:500},{name:"Adriana",date:"15.01.2026",type:"O lună",amount:700},{name:"Daria",date:"19.01.2026",type:"O lună",amount:1000},{name:"Lori",date:"20.01.2026",type:"O lună",amount:600},{name:"Ale",date:"19.01.2026",type:"O lună",amount:600},{name:"Cristina Best",date:"19.01.2026",type:"2 săptămâni",amount:300},{name:"Aura",date:"19.01.2026",type:"O lună",amount:500},{name:"Sergiu",date:"21.01.2026",type:"O lună",amount:800},{name:"Dominic",date:"23.01.2026",type:"O lună",amount:720},{name:"Ovidiu",date:"26.01.2026",type:"O lună",amount:800},{name:"Alex",date:"26.01.2026",type:"O lună",amount:600},{name:"Anca",date:"26.01.2026",type:"O lună",amount:500},{name:"Gheorghe",date:"26.01.2026",type:"8 ședințe",amount:500},{name:"Paul",date:"26.01.2026",type:"O lună",amount:500},{name:"Octavian",date:"27.01.2026",type:"O lună",amount:800},{name:"Andrei",date:"30.01.2026",type:"O lună",amount:240},{name:"Gheorghe",date:"30.01.2026",type:"8 ședințe",amount:500},{name:"Ovidiu LAR",date:"—",type:"Supliment",amount:2500},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:1050}],"Decembrie 2025":[{name:"Ionuț",date:"01.12.2025",type:"O lună",amount:800},{name:"Delia",date:"01.12.2025",type:"O lună",amount:400},{name:"Alin",date:"02.12.2025",type:"O lună",amount:500},{name:"Cristina",date:"02.12.2025",type:"O lună",amount:500},{name:"Paul",date:"02.12.2022",type:"O lună",amount:450},{name:"Vlad",date:"02.12.2025",type:"O lună",amount:1000},{name:"Gheorghe",date:"02.12.2025",type:"8 ședințe",amount:500},{name:"Dana",date:"04.12.2025",type:"8 ședințe",amount:500},{name:"Aura",date:"04.12.2025",type:"O lună",amount:500},{name:"Sophia",date:"05.12.2025",type:"O lună",amount:600},{name:"Florin",date:"09.12.2025",type:"8 ședințe",amount:500},{name:"Anca",date:"11.12.2025",type:"O lună",amount:450},{name:"Iulia Sabău",date:"11.12.2025",type:"O lună",amount:600},{name:"Cristina Best",date:"10.12.2025",type:"O lună",amount:600},{name:"Timi",date:"11.12.2025",type:"O lună",amount:1000},{name:"Carmen",date:"11.12.2025",type:"O lună",amount:800},{name:"David",date:"11.12.2025",type:"O lună",amount:800},{name:"Daria",date:"15.12.2025",type:"O lună",amount:1000},{name:"Gimi",date:"15.12.2025",type:"O lună",amount:450},{name:"Larisa",date:"19.12.2025",type:"O lună",amount:600},{name:"Cosmin",date:"21.12.2025",type:"O lună",amount:800},{name:"Dominic",date:"22.12.2025",type:"O lună",amount:700},{name:"Radu",date:"22.12.2025",type:"O lună",amount:600},{name:"Luca",date:"23.12.2025",type:"O lună",amount:700},{name:"Octavian",date:"23.12.2025",type:"O lună",amount:400},{name:"Uleiuri diverse",date:"—",type:"Supliment",amount:900}]};
 
-const CLIENT_ID='173581589112-kvvq9q9jr1o7u8e7v01jetb477jqed76.apps.googleusercontent.com';
-const SCOPES='https://www.googleapis.com/auth/drive.file';
 const FILE_NAME='razone-venituri.json';
-
-let db=JSON.parse(JSON.stringify(RAW_DATA));
-let sedDb={};
-let ALL=Object.keys(db);
-let cur=ALL[0];
+let db=JSON.parse(JSON.stringify(RAW_DATA)),sedDb={},ALL=Object.keys(db),cur=ALL[0];
 let gToken=null,gFileId=null,saveTimer=null,acIdx=-1,sacIdx=-1,sacMatches=[],acMatches=[];
-
 const $=id=>document.getElementById(id);
 const tot=m=>(db[m]||[]).reduce((s,e)=>s+(e.amount||0),0);
 const todayStr=()=>new Date().toISOString().split('T')[0];
 const nowStr=()=>{const d=new Date();return d.toLocaleDateString('ro-RO',{day:'2-digit',month:'2-digit',year:'numeric'})+' '+d.toLocaleTimeString('ro-RO',{hour:'2-digit',minute:'2-digit'});};
 const extractSedNr=type=>{const m=type.match(/(\d+)\s*ședințe/i);return m?parseInt(m[1]):0;};
 const isSedType=type=>/ședințe/i.test(type);
-
-// ── FIX CHEIE SEDINTE: folosim UUID unic, nu nume+luna ──
-// Cheia e generata o singura data la creare si stocata in obiect
 function genId(){return Date.now().toString(36)+Math.random().toString(36).substr(2,5);}
-
 function toast(msg,err=false){const t=$('toast');t.textContent=msg;t.className='toast'+(err?' err':'');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
 function switchTab(name,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));el.classList.add('active');$('tab-'+name).classList.add('active');if(name==='sedinte')renderSedinte();}
 
-// ── DRIVE cu reconectare automata ──
+// ── DRIVE via backend ──
 function setDrive(state,label){const dot=$('driveDot'),lbl=$('driveLabel'),btn=$('btnDrive');dot.className='drive-dot'+(state==='ok'?' ok':state==='saving'?' saving':'');lbl.textContent=label;btn.style.display=state==='ok'?'none':'inline-block';$('driveBanner').style.display=state==='ok'?'none':'flex';}
 
-let tokenClient=null,tokenExpiry=0,refreshTimerId=null;
-const LS_HINT='razone_gdrive_hint'; // salvam email hint in localStorage
+function signIn(){window.location.href='/api/auth';}
 
-function initTokenClient(hint,prompt){
-  if(typeof google==='undefined')return;
-  const cfg={
-    client_id:CLIENT_ID,scope:SCOPES,
-    callback:async resp=>{
-      if(resp.error){
-        // daca silent refresh a esuat, cere manual
-        if(prompt===''){signIn();return;}
-        toast('Autentificare eșuată',true);return;
-      }
-      gToken=resp.access_token;
-      tokenExpiry=Date.now()+(55*60*1000);
-      if(refreshTimerId)clearTimeout(refreshTimerId);
-      refreshTimerId=setTimeout(()=>silentRefresh(),50*60*1000);
-      if(!gFileId){
-        setDrive('saving','Se conectează...');
-        await findOrCreate();
-        await loadFromDrive();
-        setDrive('ok','Drive conectat ✓');
-        if(prompt!=='')toast('Google Drive conectat!');
-      } else {
-        setDrive('ok','Drive conectat ✓');
-      }
-    }
-  };
-  if(hint)cfg.hint=hint;
-  tokenClient=google.accounts.oauth2.initTokenClient(cfg);
-  tokenClient.requestAccessToken({prompt:prompt||''});
+async function getToken(){
+  try{
+    const r=await fetch('/api/token');
+    if(r.status===401)return null;
+    const d=await r.json();
+    return d.access_token||null;
+  }catch(e){return null;}
 }
 
-function signIn(){
-  if(typeof google==='undefined'){toast('Google API nu s-a încărcat',true);return;}
-  // Prima conectare — arata selector cont, salveaza hint
-  if(typeof google==='undefined')return;
-  const cfg={
-    client_id:CLIENT_ID,scope:SCOPES,
-    callback:async resp=>{
-      if(resp.error){toast('Autentificare eșuată',true);return;}
-      gToken=resp.access_token;
-      tokenExpiry=Date.now()+(55*60*1000);
-      if(refreshTimerId)clearTimeout(refreshTimerId);
-      refreshTimerId=setTimeout(()=>silentRefresh(),50*60*1000);
-      // Salveaza timestamp ca sa stim ca userul s-a conectat
-      try{localStorage.setItem(LS_HINT,'connected');
-          localStorage.setItem(LS_HINT+'_ts',Date.now().toString());}catch(e){}
-      if(!gFileId){
-        setDrive('saving','Se conectează...');
-        await findOrCreate();
-        await loadFromDrive();
-        setDrive('ok','Drive conectat ✓');
-        toast('Google Drive conectat!');
-      } else {
-        setDrive('ok','Drive conectat ✓');
-      }
-    }
-  };
-  tokenClient=google.accounts.oauth2.initTokenClient(cfg);
-  tokenClient.requestAccessToken({prompt:'select_account'});
+async function initDrive(){
+  setDrive('saving','Se conectează...');
+  const token=await getToken();
+  if(!token){setDrive('off','Drive');return;}
+  gToken=token;
+  await findOrCreate();
+  await loadFromDrive();
+  setDrive('ok','Drive conectat ✓');
 }
-
-function silentRefresh(){
-  if(!tokenClient)return;
-  tokenClient.requestAccessToken({prompt:''});
-}
-
-// Verifica token inainte de request
-async function ensureToken(){
-  if(gToken&&Date.now()<tokenExpiry-60000)return true;
-  return new Promise(resolve=>{
-    if(!tokenClient){resolve(false);return;}
-    const prev=tokenClient.callback;
-    tokenClient.callback=async resp=>{
-      if(prev)await prev(resp);
-      resolve(!resp.error);
-    };
-    tokenClient.requestAccessToken({prompt:''});
-  });
-}
-
-// La incarcare pagina - incearca reconectare silentioasa daca userul s-a mai conectat
-window.addEventListener('load',()=>{
-  setTimeout(async()=>{
-    if(typeof google==='undefined')return;
-    try{
-      const hint=localStorage.getItem(LS_HINT);
-      const ts=parseInt(localStorage.getItem(LS_HINT+'_ts')||'0');
-      const zilesDeAtunci=(Date.now()-ts)/(1000*60*60*24);
-      // Daca s-a conectat in ultimele 7 zile, incearca silent
-      if(hint&&zilesDeAtunci<7){
-        setDrive('saving','Se reconectează...');
-        initTokenClient(null,'');
-      }
-    }catch(e){}
-  },1500);
-});
 
 async function findOrCreate(){
-  const ok=await ensureToken();if(!ok)return;
   const r=await fetch(`https://www.googleapis.com/drive/v3/files?q=name%3D'${FILE_NAME}'+and+trashed%3Dfalse&fields=files(id)`,{headers:{Authorization:'Bearer '+gToken}});
   const d=await r.json();
   if(d.files&&d.files.length){gFileId=d.files[0].id;}
@@ -435,7 +273,7 @@ async function findOrCreate(){
 }
 
 async function loadFromDrive(){
-  const ok=await ensureToken();if(!ok||!gFileId)return;
+  if(!gToken||!gFileId)return;
   try{
     const r=await fetch(`https://www.googleapis.com/drive/v3/files/${gFileId}?alt=media`,{headers:{Authorization:'Bearer '+gToken}});
     if(!r.ok)return;
@@ -443,13 +281,17 @@ async function loadFromDrive(){
     if(saved&&saved.data&&Object.keys(saved.data).length>0){
       db=saved.data;ALL=Object.keys(db);cur=ALL[0];
       if(saved.sedDb)sedDb=saved.sedDb;
-      render();renderSedinte();toast('Date încărcate din Drive ✓');
+      render();renderSedinte();toast('Date încărcate ✓');
     }else{await saveToDrive();}
   }catch(e){console.error(e);}
 }
 
 async function saveToDrive(){
-  const ok=await ensureToken();if(!ok||!gFileId)return;
+  if(!gToken||!gFileId){
+    // Incearca sa obtina un token nou
+    const t=await getToken();
+    if(t)gToken=t; else return;
+  }
   setDrive('saving','Se salvează...');
   try{
     await fetch(`https://www.googleapis.com/upload/drive/v3/files/${gFileId}?uploadType=media`,{method:'PATCH',headers:{Authorization:'Bearer '+gToken,'Content-Type':'application/json'},body:JSON.stringify({data:db,sedDb:sedDb,savedAt:new Date().toISOString()})});
@@ -457,119 +299,39 @@ async function saveToDrive(){
   }catch(e){setDrive('ok','Drive conectat');toast('Eroare salvare',true);}
 }
 
-function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(()=>{if(gToken)saveToDrive();},1500);}
+function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(()=>saveToDrive(),1500);}
 
-// ── AUTOCOMPLETE VENITURI ──
+// La incarcare - incearca automat
+window.addEventListener('load',()=>setTimeout(initDrive,500));
+
+// ── AUTOCOMPLETE ──
 function buildHistory(){const map={};ALL.forEach(m=>{(db[m]||[]).forEach(e=>{if(!e.name)return;const key=e.name.trim().toLowerCase();if(!map[key])map[key]={name:e.name,type:e.type,amount:e.amount,month:m};});});return map;}
-
 function onNameInput(val){const ac=$('acList');if(val.length<2){ac.style.display='none';acIdx=-1;return;}const hist=buildHistory(),q=val.trim().toLowerCase();acMatches=Object.values(hist).filter(c=>c.name.toLowerCase().startsWith(q));if(!acMatches.length){ac.style.display='none';return;}acIdx=-1;ac.style.display='block';ac.innerHTML=acMatches.slice(0,6).map((c,i)=>`<div class="ac-item" onclick="pickClient(${i})"><span class="ac-name">${c.name}</span><span class="ac-hint">${c.type} · ${(c.amount||0).toLocaleString('ro-RO')} RON</span></div>`).join('');}
 function onNameKey(e){const ac=$('acList');if(ac.style.display==='none')return;const items=ac.querySelectorAll('.ac-item');if(e.key==='ArrowDown'){acIdx=Math.min(acIdx+1,items.length-1);items.forEach((el,i)=>el.classList.toggle('selected',i===acIdx));e.preventDefault();}else if(e.key==='ArrowUp'){acIdx=Math.max(acIdx-1,0);items.forEach((el,i)=>el.classList.toggle('selected',i===acIdx));e.preventDefault();}else if(e.key==='Enter'&&acIdx>=0){pickClient(acIdx);e.preventDefault();}else if(e.key==='Escape'){ac.style.display='none';}}
 function pickClient(i){const c=acMatches[i];$('fN').value=c.name;$('acList').style.display='none';const sel=$('fT'),opts=Array.from(sel.options).map(o=>o.value);if(opts.includes(c.type))sel.value=c.type;$('fA').value=c.amount||'';$('amtHint').textContent=`Din ${c.month}: ${(c.amount||0).toLocaleString('ro-RO')} RON`;$('amtHint').className='fi-hint ok';$('prefillSrc').textContent=c.month;$('prefillBar').classList.add('show');}
-
-// ── AUTOCOMPLETE SEDINTE ──
 function buildSedHistory(){const map={};ALL.forEach(m=>{(db[m]||[]).forEach(e=>{if(!e.name||!isSedType(e.type))return;const key=e.name.trim().toLowerCase();if(!map[key])map[key]={name:e.name,type:e.type,nr:extractSedNr(e.type),month:m};});});return map;}
 function onSedNameInput(val){const ac=$('sacList');if(val.length<2){ac.style.display='none';sacIdx=-1;return;}const hist=buildSedHistory(),q=val.trim().toLowerCase();sacMatches=Object.values(hist).filter(c=>c.name.toLowerCase().startsWith(q));if(!sacMatches.length){ac.style.display='none';return;}sacIdx=-1;ac.style.display='block';ac.innerHTML=sacMatches.slice(0,6).map((c,i)=>`<div class="ac-item" onclick="pickSedClient(${i})"><span class="ac-name">${c.name}</span><span class="ac-hint">${c.type} · ${c.month}</span></div>`).join('');}
 function onSedNameKey(e){const ac=$('sacList');if(ac.style.display==='none')return;const items=ac.querySelectorAll('.ac-item');if(e.key==='ArrowDown'){sacIdx=Math.min(sacIdx+1,items.length-1);items.forEach((el,i)=>el.classList.toggle('selected',i===sacIdx));e.preventDefault();}else if(e.key==='ArrowUp'){sacIdx=Math.max(sacIdx-1,0);items.forEach((el,i)=>el.classList.toggle('selected',i===sacIdx));e.preventDefault();}else if(e.key==='Enter'&&sacIdx>=0){pickSedClient(sacIdx);e.preventDefault();}else if(e.key==='Escape'){ac.style.display='none';}}
 function pickSedClient(i){const c=sacMatches[i];$('sfN').value=c.name;$('sacList').style.display='none';$('sfT').value=c.nr||'';const hint=$('sedTotalHint');hint.textContent=`✓ Sugestie din ${c.month}: ${c.nr} ședințe`;hint.classList.add('show');}
-
 document.addEventListener('click',e=>{if(!e.target.closest('#fN')&&!e.target.closest('#acList'))$('acList').style.display='none';if(!e.target.closest('#sfN')&&!e.target.closest('#sacList'))$('sacList').style.display='none';});
 
-// ── RENDER VENITURI ──
-function render(){
-  $('curTitle').textContent=cur;
-  const ents=db[cur]||[],total=tot(cur),sala=ents.filter(e=>e.type!=='Supliment');
-  $('sTotal').textContent=total.toLocaleString('ro-RO')+' RON';
-  $('sClients').textContent=sala.length;
-  $('sAvg').textContent=ents.length?Math.round(total/ents.length).toLocaleString('ro-RO')+' RON':'—';
-  $('tbody').innerHTML=ents.length?ents.map((e,i)=>{
-    let sedCell='';
-    if(isSedType(e.type)&&e.sedId&&sedDb[e.sedId]){
-      const sed=sedDb[e.sedId];
-      const left=sed.total-sed.used;
-      const cls=left===0?'epuizat':left<=2?'putine':'';
-      sedCell=` <span class="sed-badge ${cls}" onclick="openHistModal('${e.sedId}')">${left>0?left+'🏃':'✅'} / ${sed.total}</span>`;
-    }
-    return`<tr><td style="font-weight:500">${e.name}${sedCell}</td><td class="td-muted">${e.date||'—'}</td><td><span class="badge ${e.type==='Supliment'?'b-supl':'b-sala'}">${e.type}</span></td><td class="td-amt">${(e.amount||0).toLocaleString('ro-RO')} RON</td><td><button class="btn-del" onclick="delEntry('${cur}',${i})">✕</button></td></tr>`;
-  }).join(''):'<tr><td colspan="5" style="text-align:center;color:#555;padding:32px 0">Nicio intrare</td></tr>';
-  const ch=$('chart');ch.innerHTML='';const max=Math.max(...ALL.map(tot),1);
-  ALL.forEach(m=>{const pct=(tot(m)/max)*100;const c=document.createElement('div');c.className='bar-col'+(m===cur?' active':'');c.onclick=()=>{cur=m;render();};c.innerHTML=`<div class="bar-fill${m===cur?' active':''}" style="height:${Math.max(pct,3)}%"></div><div class="bar-lbl">${m.split(' ')[0].substring(0,3)}</div>`;ch.appendChild(c);});
-  $('pg').innerHTML=ALL.filter(m=>m!==cur).map(m=>`<div class="pc" onclick="cur='${m}';render()"><div class="pc-name">${m}</div><div class="pc-total">${tot(m).toLocaleString('ro-RO')} RON</div><div class="pc-sub">${(db[m]||[]).filter(e=>e.type!=='Supliment').length} clienți</div></div>`).join('');
-}
-
-// ── RENDER SEDINTE ──
-function renderSedinte(){
-  $('sedTitle').textContent=cur;
-  const q=($('sedSearch').value||'').toLowerCase().trim();
-  const entries=Object.entries(sedDb).filter(([k,v])=>!q||v.name.toLowerCase().includes(q)).sort((a,b)=>(b[1].total-b[1].used)-(a[1].total-a[1].used));
-  if(!entries.length){$('sedGrid').innerHTML=`<div class="sed-empty"><div style="font-size:32px;margin-bottom:8px">📋</div>${q?'Niciun client găsit':'Niciun client cu ședințe.<br>Apasă <strong>+ Client Nou</strong>.'}</div>`;return;}
-  $('sedGrid').innerHTML=entries.map(([key,sed])=>{
-    const left=sed.total-sed.used;const pct=Math.round((sed.used/sed.total)*100);const cls=left===0?'epuizat':left<=2?'putine':'';
-    return`<div class="sed-card">
-      <div class="sed-card-header"><div class="sed-name">${sed.name}</div><div class="sed-type-badge">${sed.total} ședințe · ${sed.month||''}</div></div>
-      <div class="sed-progress-wrap"><div class="sed-progress-bar"><div class="sed-progress-fill ${cls}" style="width:${pct}%"></div></div>
-      <div class="sed-count"><span>Efectuate: <strong>${sed.used}</strong></span><span style="color:${left===0?'var(--acc)':left<=2?'var(--gold)':'var(--grn)'}"><strong>${left}</strong> rămase</span></div></div>
-      ${left===0?'<div class="sed-done-msg">✅ Pachet finalizat</div>':''}
-      <div class="sed-actions" style="margin-top:10px">
-        <button class="btn-sed minus" onclick="sedMinus('${key}')" ${sed.used<=0?'disabled':''}>−</button>
-        <button class="btn-sed plus" onclick="sedPlus('${key}')" ${left<=0?'disabled':''}>+</button>
-        <button class="btn-sed-hist" onclick="openHistModal('${key}')">📅 Istoric</button>
-      </div>
-      <div style="font-size:10px;color:var(--dim);margin-top:8px">Start: ${sed.startDate||'—'}</div>
-    </div>`;
-  }).join('');
-}
-
-// ── SEDINTE PLUS/MINUS ──
-function sedPlus(key){if(!sedDb[key])return;const sed=sedDb[key];if(sed.used>=sed.total){toast('Pachetul e epuizat!',true);return;}sed.used++;sed.history=sed.history||[];sed.history.push({date:nowStr(),action:'+'});renderSedinte();render();scheduleSave();toast(`✓ ${sed.name} — ${sed.total-sed.used} ședințe rămase`);}
-function sedMinus(key){if(!sedDb[key])return;const sed=sedDb[key];if(sed.used<=0){toast('Nu poți scădea sub 0',true);return;}sed.used--;sed.history=sed.history||[];sed.history.push({date:nowStr(),action:'-'});renderSedinte();render();scheduleSave();toast(`↩ ${sed.name} — ${sed.total-sed.used} ședințe rămase`);}
-
-// ── HIST MODAL ──
-function openHistModal(key){const sed=sedDb[key];if(!sed)return;$('histTitle').textContent='Istoric — '+sed.name;$('histSub').textContent=`${sed.used} din ${sed.total} ședințe efectuate`;const hist=(sed.history||[]).slice().reverse();$('histList').innerHTML=hist.length?hist.map((h,i)=>`<div class="hist-item"><span class="hist-num">${h.action==='+'?'▶':'↩'}</span><span style="font-size:13px;color:${h.action==='+'?'var(--grn)':'var(--acc)'}">${h.action==='+'?'Ședință efectuată':'Anulată'}</span><span class="hist-date">${h.date}</span><button class="btn-hist-del" onclick="delHistItem('${key}',${hist.length-1-i})">✕</button></div>`).join(''):'<div class="hist-empty">Nicio activitate</div>';$('histOv').classList.add('open');}
+// ── RENDER ──
+function render(){$('curTitle').textContent=cur;const ents=db[cur]||[],total=tot(cur),sala=ents.filter(e=>e.type!=='Supliment');$('sTotal').textContent=total.toLocaleString('ro-RO')+' RON';$('sClients').textContent=sala.length;$('sAvg').textContent=ents.length?Math.round(total/ents.length).toLocaleString('ro-RO')+' RON':'—';$('tbody').innerHTML=ents.length?ents.map((e,i)=>{let sedCell='';if(isSedType(e.type)&&e.sedId&&sedDb[e.sedId]){const sed=sedDb[e.sedId];const left=sed.total-sed.used;const cls=left===0?'epuizat':left<=2?'putine':'';sedCell=` <span class="sed-badge ${cls}" onclick="openHistModal('${e.sedId}')">${left>0?left+'🏃':'✅'} / ${sed.total}</span>`;}return`<tr><td style="font-weight:500">${e.name}${sedCell}</td><td class="td-muted">${e.date||'—'}</td><td><span class="badge ${e.type==='Supliment'?'b-supl':'b-sala'}">${e.type}</span></td><td class="td-amt">${(e.amount||0).toLocaleString('ro-RO')} RON</td><td><button class="btn-del" onclick="delEntry('${cur}',${i})">✕</button></td></tr>`;}).join(''):'<tr><td colspan="5" style="text-align:center;color:#555;padding:32px 0">Nicio intrare</td></tr>';const ch=$('chart');ch.innerHTML='';const max=Math.max(...ALL.map(tot),1);ALL.forEach(m=>{const pct=(tot(m)/max)*100;const c=document.createElement('div');c.className='bar-col'+(m===cur?' active':'');c.onclick=()=>{cur=m;render();};c.innerHTML=`<div class="bar-fill${m===cur?' active':''}" style="height:${Math.max(pct,3)}%"></div><div class="bar-lbl">${m.split(' ')[0].substring(0,3)}</div>`;ch.appendChild(c);});$('pg').innerHTML=ALL.filter(m=>m!==cur).map(m=>`<div class="pc" onclick="cur='${m}';render()"><div class="pc-name">${m}</div><div class="pc-total">${tot(m).toLocaleString('ro-RO')} RON</div><div class="pc-sub">${(db[m]||[]).filter(e=>e.type!=='Supliment').length} clienți</div></div>`).join('');}
+function renderSedinte(){$('sedTitle').textContent=cur;const q=($('sedSearch').value||'').toLowerCase().trim();const entries=Object.entries(sedDb).filter(([k,v])=>!q||v.name.toLowerCase().includes(q)).sort((a,b)=>(b[1].total-b[1].used)-(a[1].total-a[1].used));if(!entries.length){$('sedGrid').innerHTML=`<div class="sed-empty"><div style="font-size:32px;margin-bottom:8px">📋</div>${q?'Niciun client găsit':'Niciun client cu ședințe.<br>Apasă <strong>+ Client Nou</strong>.'}</div>`;return;}$('sedGrid').innerHTML=entries.map(([key,sed])=>{const left=sed.total-sed.used;const pct=Math.round((sed.used/sed.total)*100);const cls=left===0?'epuizat':left<=2?'putine':'';return`<div class="sed-card"><div class="sed-card-header"><div class="sed-name">${sed.name}</div><div class="sed-type-badge">${sed.total} ședințe · ${sed.month||''}</div></div><div class="sed-progress-bar"><div class="sed-progress-fill ${cls}" style="width:${pct}%"></div></div><div class="sed-count" style="margin-bottom:8px"><span>Efectuate: <strong>${sed.used}</strong></span><span style="color:${left===0?'var(--acc)':left<=2?'var(--gold)':'var(--grn)'}"><strong>${left}</strong> rămase</span></div>${left===0?'<div class="sed-done-msg">✅ Pachet finalizat</div>':''}<div class="sed-actions"><button class="btn-sed" onclick="sedMinus('${key}')" ${sed.used<=0?'disabled':''}>−</button><button class="btn-sed" onclick="sedPlus('${key}')" ${left<=0?'disabled':''}>+</button><button class="btn-sed-hist" onclick="openHistModal('${key}')">📅 Istoric</button></div><div style="font-size:10px;color:var(--dim);margin-top:8px">Start: ${sed.startDate||'—'}</div></div>`;}).join('');}
+function sedPlus(key){if(!sedDb[key])return;const sed=sedDb[key];if(sed.used>=sed.total){toast('Pachetul e epuizat!',true);return;}sed.used++;sed.history=sed.history||[];sed.history.push({date:nowStr(),action:'+'});renderSedinte();render();scheduleSave();toast(`✓ ${sed.name} — ${sed.total-sed.used} rămase`);}
+function sedMinus(key){if(!sedDb[key])return;const sed=sedDb[key];if(sed.used<=0){toast('Nu poți scădea sub 0',true);return;}sed.used--;sed.history=sed.history||[];sed.history.push({date:nowStr(),action:'-'});renderSedinte();render();scheduleSave();toast(`↩ ${sed.name} — ${sed.total-sed.used} rămase`);}
+function openHistModal(key){const sed=sedDb[key];if(!sed)return;$('histTitle').textContent='Istoric — '+sed.name;$('histSub').textContent=`${sed.used} din ${sed.total} ședințe`;const hist=(sed.history||[]).slice().reverse();$('histList').innerHTML=hist.length?hist.map((h,i)=>`<div class="hist-item"><span style="font-size:13px;color:${h.action==='+'?'var(--grn)':'var(--acc)'}">${h.action==='+'?'▶ Efectuată':'↩ Anulată'}</span><span class="hist-date">${h.date}</span><button class="btn-hist-del" onclick="delHistItem('${key}',${hist.length-1-i})">✕</button></div>`).join(''):'<div class="hist-empty">Nicio activitate</div>';$('histOv').classList.add('open');}
 function closeHist(){$('histOv').classList.remove('open');}
 function delHistItem(key,idx){if(!sedDb[key])return;const sed=sedDb[key];const item=sed.history[idx];if(!item)return;if(item.action==='+')sed.used=Math.max(0,sed.used-1);else sed.used=Math.min(sed.total,sed.used+1);sed.history.splice(idx,1);openHistModal(key);renderSedinte();render();scheduleSave();}
-
-// ── ADD SEDINTE ──
-function openAddSed(){$('sfN').value='';$('sfT').value='';$('sfD').value=todayStr();$('sedTotalHint').classList.remove('show');$('sacList').style.display='none';sacIdx=-1;$('addSedOv').classList.add('open');}
+function openAddSed(){$('sfN').value='';$('sfT').value='';$('sfD').value=todayStr();$('sedTotalHint').classList.remove('show');$('sacList').style.display='none';$('addSedOv').classList.add('open');}
 function closeAddSed(){$('addSedOv').classList.remove('open');}
-function saveNewSed(){
-  const name=$('sfN').value.trim();const total=parseInt($('sfT').value);const startDate=$('sfD').value;
-  if(!name||!total||total<1){alert('Completează numele și numărul de ședințe!');return;}
-  // Verifica daca exista deja un client activ cu acelasi nume
-  const existing=Object.entries(sedDb).find(([k,v])=>v.name.trim().toLowerCase()===name.toLowerCase()&&v.total-v.used>0);
-  if(existing){if(!confirm(`${name} are deja ședințe active (${existing[1].total-existing[1].used} rămase). Adaugi un pachet nou?`))return;}
-  const id=genId();
-  sedDb[id]={id,name,total,used:0,startDate,month:cur,history:[]};
-  closeAddSed();renderSedinte();scheduleSave();toast(`${name} adăugat — ${total} ședințe ✓`);
-}
-
-// ── ADD VENITURI ──
+function saveNewSed(){const name=$('sfN').value.trim();const total=parseInt($('sfT').value);const startDate=$('sfD').value;if(!name||!total||total<1){alert('Completează numele și numărul de ședințe!');return;}const existing=Object.entries(sedDb).find(([k,v])=>v.name.trim().toLowerCase()===name.toLowerCase()&&v.total-v.used>0);if(existing){if(!confirm(`${name} are deja ședințe active. Adaugi pachet nou?`))return;}const id=genId();sedDb[id]={id,name,total,used:0,startDate,month:cur,history:[]};closeAddSed();renderSedinte();scheduleSave();toast(`${name} — ${total} ședințe ✓`);}
 function openAdd(){$('fN').value='';$('fD').value=todayStr();$('fA').value='';$('amtHint').textContent='';$('amtHint').className='fi-hint';$('prefillBar').classList.remove('show');$('acList').style.display='none';acIdx=-1;$('addMSub').textContent=cur;$('addOv').classList.add('open');}
 function closeAdd(){$('addOv').classList.remove('open');}
-function saveEntry(){
-  const n=$('fN').value.trim(),d=$('fD').value,t=$('fT').value,a=parseInt($('fA').value);
-  if(!n||!a){alert('Completează numele și suma!');return;}
-  if(!db[cur])db[cur]=[];
-  const entry={name:n,date:d,type:t,amount:a};
-  // Daca e tip sedinte, creeaza automat in sedDb cu ID unic
-  if(isSedType(t)){
-    const nr=extractSedNr(t);
-    if(nr>0){const id=genId();sedDb[id]={id,name:n,total:nr,used:0,startDate:d,month:cur,history:[]};entry.sedId=id;}
-  }
-  db[cur].push(entry);
-  closeAdd();render();scheduleSave();toast(n+' adăugat ✓');
-}
-function delEntry(m,i){
-  if(!confirm('Ștergi această intrare?'))return;
-  const e=db[m][i];
-  if(e&&e.sedId&&sedDb[e.sedId])delete sedDb[e.sedId];
-  db[m].splice(i,1);render();scheduleSave();
-}
-
-// ── NEW MONTH ──
+function saveEntry(){const n=$('fN').value.trim(),d=$('fD').value,t=$('fT').value,a=parseInt($('fA').value);if(!n||!a){alert('Completează numele și suma!');return;}if(!db[cur])db[cur]=[];const entry={name:n,date:d,type:t,amount:a};if(isSedType(t)){const nr=extractSedNr(t);if(nr>0){const id=genId();sedDb[id]={id,name:n,total:nr,used:0,startDate:d,month:cur,history:[]};entry.sedId=id;}}db[cur].push(entry);closeAdd();render();scheduleSave();toast(n+' adăugat ✓');}
+function delEntry(m,i){if(!confirm('Ștergi această intrare?'))return;const e=db[m][i];if(e&&e.sedId&&sedDb[e.sedId])delete sedDb[e.sedId];db[m].splice(i,1);render();scheduleSave();}
 function openNM(){$('nmOv').classList.add('open');}
 function mkMonth(){const k=$('nmM').value+' '+$('nmY').value;if(db[k]){alert('Luna '+k+' există deja!');return;}db[k]=[];ALL.unshift(k);cur=k;$('nmOv').classList.remove('open');render();scheduleSave();toast('Luna '+k+' creată ✓');}
-
-setDrive('off','Drive');
 render();
 </script>
 </body>
