@@ -286,24 +286,32 @@ async function loadFromDrive(){
     if(!r.ok)return;
     const saved=await r.json();
     if(saved&&saved.data&&Object.keys(saved.data).length>0){
-      db=saved.data;ALL=sortMonths(Object.keys(db));
-      // Auto-selecteaza luna curenta
-      cur=ALL.includes(getCurrentMonthKey())?getCurrentMonthKey():ALL[0];
-      if(saved.sedDb)sedDb=saved.sedDb;
-      render();renderSedinte();toast('Date încărcate ✓');
+      const driveTime=saved.savedAt?new Date(saved.savedAt).getTime():0;
+      const localTime=window._lastSaveTime||0;
+      if(localTime>driveTime){
+        // Local e mai nou - salveaza in Drive fara sa suprascrie local
+        await saveToDrive();
+      } else {
+        // Drive e mai nou sau prima deschidere - incarca din Drive
+        db=saved.data;ALL=sortMonths(Object.keys(db));
+        cur=ALL.includes(getCurrentMonthKey())?getCurrentMonthKey():ALL[0];
+        if(saved.sedDb)sedDb=saved.sedDb;
+        render();renderSedinte();toast('Date încărcate ✓');
+      }
     }else{await saveToDrive();}
   }catch(e){console.error(e);}
 }
 
 async function saveToDrive(){
   if(!gToken||!gFileId){
-    // Incearca sa obtina un token nou
     const t=await getToken();
     if(t)gToken=t; else return;
   }
   setDrive('saving','Se salvează...');
   try{
-    await fetch(`https://www.googleapis.com/upload/drive/v3/files/${gFileId}?uploadType=media`,{method:'PATCH',headers:{Authorization:'Bearer '+gToken,'Content-Type':'application/json'},body:JSON.stringify({data:db,sedDb:sedDb,savedAt:new Date().toISOString()})});
+    const now=new Date().toISOString();
+    await fetch(`https://www.googleapis.com/upload/drive/v3/files/${gFileId}?uploadType=media`,{method:'PATCH',headers:{Authorization:'Bearer '+gToken,'Content-Type':'application/json'},body:JSON.stringify({data:db,sedDb:sedDb,savedAt:now})});
+    window._lastSaveTime=new Date(now).getTime();
     setDrive('ok','Drive salvat ✓');
   }catch(e){setDrive('ok','Drive conectat');toast('Eroare salvare',true);}
 }
