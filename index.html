@@ -295,17 +295,45 @@ async function loadFromDrive(){
 }
 
 async function saveToDrive(){
-  if(!gToken||!gFileId){
+  if(!gFileId){
     const t=await getToken();
-    if(t)gToken=t; else return;
+    if(!t){setDrive('off','Drive');toast('Nu ești conectat la Drive!',true);return;}
+    gToken=t;
+    await findOrCreate();
   }
   setDrive('saving','Se salvează...');
   try{
     const now=new Date().toISOString();
-    await fetch(`https://www.googleapis.com/upload/drive/v3/files/${gFileId}?uploadType=media`,{method:'PATCH',headers:{Authorization:'Bearer '+gToken,'Content-Type':'application/json'},body:JSON.stringify({data:db,sedDb:sedDb,savedAt:now})});
-    window._lastSaveTime=new Date(now).getTime();
-    setDrive('ok','Drive salvat ✓');
-  }catch(e){setDrive('ok','Drive conectat');toast('Eroare salvare',true);}
+    const payload=JSON.stringify({data:db,sedDb:sedDb,savedAt:now});
+    let r=await fetch(`https://www.googleapis.com/upload/drive/v3/files/${gFileId}?uploadType=media`,{
+      method:'PATCH',
+      headers:{Authorization:'Bearer '+gToken,'Content-Type':'application/json'},
+      body:payload
+    });
+    // Daca token expirat, obtine unul nou si incearca din nou
+    if(r.status===401){
+      const t=await getToken();
+      if(!t){setDrive('off','Drive');toast('Sesiune expirată — reconectează Drive!',true);return;}
+      gToken=t;
+      r=await fetch(`https://www.googleapis.com/upload/drive/v3/files/${gFileId}?uploadType=media`,{
+        method:'PATCH',
+        headers:{Authorization:'Bearer '+gToken,'Content-Type':'application/json'},
+        body:payload
+      });
+    }
+    if(r.ok){
+      window._lastSaveTime=new Date(now).getTime();
+      setDrive('ok','Drive salvat ✓');
+    } else {
+      setDrive('ok','Drive conectat');
+      toast('Eroare salvare — încearcă din nou',true);
+      console.error('Save failed:',r.status,await r.text());
+    }
+  }catch(e){
+    setDrive('ok','Drive conectat');
+    toast('Eroare salvare — verifică conexiunea',true);
+    console.error(e);
+  }
 }
 
 function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(()=>saveToDrive(),1500);}
@@ -348,19 +376,19 @@ function renderSedinte(keepScroll){
 }
 function sedPlus(key){if(!sedDb[key])return;const sed=sedDb[key];if(sed.used>=sed.total){toast('Pachetul e epuizat!',true);return;}sed.used++;sed.history=sed.history||[];sed.history.push({date:nowStr(),action:'+'});renderSedinte(true);render();scheduleSave();toast(`✓ ${sed.name} — ${sed.total-sed.used} rămase`);}
 function sedMinus(key){if(!sedDb[key])return;const sed=sedDb[key];if(sed.used<=0){toast('Nu poți scădea sub 0',true);return;}sed.used--;sed.history=sed.history||[];sed.history.push({date:nowStr(),action:'-'});renderSedinte(true);render();scheduleSave();toast(`↩ ${sed.name} — ${sed.total-sed.used} rămase`);}
-function delSed(key){if(!sedDb[key])return;const sed=sedDb[key];if(!confirm(`Ștergi pachetul finalizat al lui ${sed.name}?`))return;delete sedDb[key];renderSedinte();scheduleSave();toast('Pachet șters ✓');}
+function delSed(key){if(!sedDb[key])return;const sed=sedDb[key];if(!confirm(`Ștergi pachetul finalizat al lui ${sed.name}?`))return;delete sedDb[key];renderSedinte();saveToDrive();toast('Pachet șters ✓');}
 function openHistModal(key){const sed=sedDb[key];if(!sed)return;$('histTitle').textContent='Istoric — '+sed.name;$('histSub').textContent=`${sed.used} din ${sed.total} ședințe`;const hist=(sed.history||[]).slice().reverse();$('histList').innerHTML=hist.length?hist.map((h,i)=>`<div class="hist-item"><span style="font-size:13px;color:${h.action==='+'?'var(--grn)':'var(--acc)'}">${h.action==='+'?'▶ Efectuată':'↩ Anulată'}</span><span class="hist-date">${h.date}</span><button class="btn-hist-del" onclick="delHistItem('${key}',${hist.length-1-i})">✕</button></div>`).join(''):'<div class="hist-empty">Nicio activitate</div>';$('histOv').classList.add('open');}
 function closeHist(){$('histOv').classList.remove('open');}
 function delHistItem(key,idx){if(!sedDb[key])return;const sed=sedDb[key];const item=sed.history[idx];if(!item)return;if(item.action==='+')sed.used=Math.max(0,sed.used-1);else sed.used=Math.min(sed.total,sed.used+1);sed.history.splice(idx,1);openHistModal(key);renderSedinte();render();scheduleSave();}
 function openAddSed(){$('sfN').value='';$('sfT').value='';$('sfD').value=todayStr();$('sedTotalHint').classList.remove('show');$('sacList').style.display='none';$('addSedOv').classList.add('open');}
 function closeAddSed(){$('addSedOv').classList.remove('open');}
-function saveNewSed(){const name=$('sfN').value.trim();const total=parseInt($('sfT').value);const startDate=$('sfD').value;if(!name||!total||total<1){alert('Completează numele și numărul de ședințe!');return;}const existing=Object.entries(sedDb).find(([k,v])=>v.name.trim().toLowerCase()===name.toLowerCase()&&v.total-v.used>0);if(existing){if(!confirm(`${name} are deja ședințe active. Adaugi pachet nou?`))return;}const id=genId();sedDb[id]={id,name,total,used:0,startDate,month:cur,history:[]};closeAddSed();renderSedinte();scheduleSave();toast(`${name} — ${total} ședințe ✓`);}
+function saveNewSed(){const name=$('sfN').value.trim();const total=parseInt($('sfT').value);const startDate=$('sfD').value;if(!name||!total||total<1){alert('Completează numele și numărul de ședințe!');return;}const existing=Object.entries(sedDb).find(([k,v])=>v.name.trim().toLowerCase()===name.toLowerCase()&&v.total-v.used>0);if(existing){if(!confirm(`${name} are deja ședințe active. Adaugi pachet nou?`))return;}const id=genId();sedDb[id]={id,name,total,used:0,startDate,month:cur,history:[]};closeAddSed();renderSedinte();saveToDrive();toast(`${name} — ${total} ședințe ✓`);}
 function openAdd(){$('fN').value='';$('fD').value=todayStr();$('fA').value='';$('amtHint').textContent='';$('amtHint').className='fi-hint';$('prefillBar').classList.remove('show');$('acList').style.display='none';acIdx=-1;$('addMSub').textContent=cur;$('addOv').classList.add('open');}
 function closeAdd(){$('addOv').classList.remove('open');}
-function saveEntry(){const n=$('fN').value.trim(),d=$('fD').value,t=$('fT').value,a=parseInt($('fA').value);if(!n||!a){alert('Completează numele și suma!');return;}if(!db[cur])db[cur]=[];const entry={name:n,date:d,type:t,amount:a};if(isSedType(t)){const nr=extractSedNr(t);if(nr>0){const id=genId();sedDb[id]={id,name:n,total:nr,used:0,startDate:d,month:cur,history:[]};entry.sedId=id;}}db[cur].push(entry);closeAdd();render();scheduleSave();toast(n+' adăugat ✓');}
-function delEntry(m,i){if(!confirm('Ștergi această intrare?'))return;const e=db[m][i];if(e&&e.sedId&&sedDb[e.sedId])delete sedDb[e.sedId];db[m].splice(i,1);render();scheduleSave();}
+function saveEntry(){const n=$('fN').value.trim(),d=$('fD').value,t=$('fT').value,a=parseInt($('fA').value);if(!n||!a){alert('Completează numele și suma!');return;}if(!db[cur])db[cur]=[];const entry={name:n,date:d,type:t,amount:a};if(isSedType(t)){const nr=extractSedNr(t);if(nr>0){const id=genId();sedDb[id]={id,name:n,total:nr,used:0,startDate:d,month:cur,history:[]};entry.sedId=id;}}db[cur].push(entry);closeAdd();render();saveToDrive();toast(n+' adăugat ✓');}
+function delEntry(m,i){if(!confirm('Ștergi această intrare?'))return;const e=db[m][i];if(e&&e.sedId&&sedDb[e.sedId])delete sedDb[e.sedId];db[m].splice(i,1);render();saveToDrive();}
 function openNM(){$('nmOv').classList.add('open');}
-function mkMonth(){const k=$('nmM').value+' '+$('nmY').value;if(db[k]){alert('Luna '+k+' există deja!');return;}db[k]=[];ALL=sortMonths([...ALL,k]);cur=k;$('nmOv').classList.remove('open');render();scheduleSave();toast('Luna '+k+' creată ✓');}
+function mkMonth(){const k=$('nmM').value+' '+$('nmY').value;if(db[k]){alert('Luna '+k+' există deja!');return;}db[k]=[];ALL=sortMonths([...ALL,k]);cur=k;$('nmOv').classList.remove('open');render();saveToDrive();toast('Luna '+k+' creată ✓');}
 render();
 </script>
 </body>
