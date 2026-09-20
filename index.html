@@ -111,6 +111,17 @@ hr{border:none;border-top:1px solid var(--bd);margin:24px 0}
 .sed-total-hint.show{display:block}
 .toast{position:fixed;bottom:24px;right:24px;background:var(--s1);border:1px solid var(--grn);border-radius:9px;padding:11px 18px;font-size:13px;color:var(--grn);z-index:500;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none}
 .toast.show{opacity:1;transform:translateY(0)}.toast.err{border-color:var(--acc);color:var(--acc)}
+/* ALERTE EXPIRARE */
+.alerts-wrap{margin-bottom:20px}
+.alert-card{background:rgba(229,57,53,.08);border:1px solid rgba(229,57,53,.3);border-radius:10px;padding:12px 16px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.alert-card.warn{background:rgba(232,160,32,.08);border-color:rgba(232,160,32,.3)}
+.alert-info{font-size:13px}
+.alert-name{font-weight:700;color:var(--tx)}
+.alert-msg{color:var(--muted);font-size:12px;margin-top:2px}
+.alert-icon{font-size:20px;min-width:28px;text-align:center}
+.alert-dismiss{background:none;border:none;color:var(--dim);cursor:pointer;font-size:16px;padding:2px 6px}.alert-dismiss:hover{color:var(--acc)}
+.exp-badge{display:inline-block;background:rgba(229,57,53,.15);color:var(--acc);border-radius:4px;font-size:10px;font-weight:700;padding:1px 5px;margin-left:4px;vertical-align:middle}
+.exp-badge.warn{background:rgba(232,160,32,.15);color:var(--gold)}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
 </style>
 </head>
@@ -137,6 +148,7 @@ hr{border:none;border-top:1px solid var(--bd);margin:24px 0}
       <button class="btn-gdrive" onclick="signIn()">Conectează Google Drive</button>
     </div>
     <div class="slbl">Luna Curentă</div>
+    <div class="alerts-wrap" id="alertsWrap"></div>
     <div class="cur-hdr">
       <div class="cur-title" id="curTitle">—</div>
       <button class="btn-add" onclick="openAdd()">+ Adaugă</button>
@@ -180,7 +192,7 @@ hr{border:none;border-top:1px solid var(--bd);margin:24px 0}
     <div class="fg"><label class="fl">Tip</label>
       <select class="fi" id="fT">
         <option>O lună</option><option>8 ședințe</option><option>12 ședințe</option>
-        <option>6 ședințe</option><option>2 săptămâni</option><option>Supliment</option><option>Altele</option>
+        <option>6 ședințe</option><option>16 ședințe</option><option>2 săptămâni</option><option>Supliment</option><option>Altele</option>
       </select>
     </div>
     <div class="fg"><label class="fl">Sumă (RON)</label>
@@ -298,42 +310,26 @@ async function saveToDrive(){
   if(!gFileId){
     const t=await getToken();
     if(!t){setDrive('off','Drive');toast('Nu ești conectat la Drive!',true);return;}
-    gToken=t;
-    await findOrCreate();
+    gToken=t;await findOrCreate();
   }
   setDrive('saving','Se salvează...');
   try{
     const now=new Date().toISOString();
     const payload=JSON.stringify({data:db,sedDb:sedDb,savedAt:now});
     let r=await fetch(`https://www.googleapis.com/upload/drive/v3/files/${gFileId}?uploadType=media`,{
-      method:'PATCH',
-      headers:{Authorization:'Bearer '+gToken,'Content-Type':'application/json'},
-      body:payload
+      method:'PATCH',headers:{Authorization:'Bearer '+gToken,'Content-Type':'application/json'},body:payload
     });
-    // Daca token expirat, obtine unul nou si incearca din nou
     if(r.status===401){
       const t=await getToken();
-      if(!t){setDrive('off','Drive');toast('Sesiune expirată — reconectează Drive!',true);return;}
+      if(!t){setDrive('off','Drive');toast('Sesiune expirată — apasă Conectează Drive',true);return;}
       gToken=t;
       r=await fetch(`https://www.googleapis.com/upload/drive/v3/files/${gFileId}?uploadType=media`,{
-        method:'PATCH',
-        headers:{Authorization:'Bearer '+gToken,'Content-Type':'application/json'},
-        body:payload
+        method:'PATCH',headers:{Authorization:'Bearer '+gToken,'Content-Type':'application/json'},body:payload
       });
     }
-    if(r.ok){
-      window._lastSaveTime=new Date(now).getTime();
-      setDrive('ok','Drive salvat ✓');
-    } else {
-      setDrive('ok','Drive conectat');
-      toast('Eroare salvare — încearcă din nou',true);
-      console.error('Save failed:',r.status,await r.text());
-    }
-  }catch(e){
-    setDrive('ok','Drive conectat');
-    toast('Eroare salvare — verifică conexiunea',true);
-    console.error(e);
-  }
+    if(r.ok){setDrive('ok','Drive salvat ✓');}
+    else{setDrive('ok','Drive conectat');toast('Eroare salvare — încearcă din nou',true);}
+  }catch(e){setDrive('ok','Drive conectat');toast('Eroare salvare — verifică conexiunea',true);}
 }
 
 function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(()=>saveToDrive(),1500);}
@@ -352,8 +348,79 @@ function onSedNameKey(e){const ac=$('sacList');if(ac.style.display==='none')retu
 function pickSedClient(i){const c=sacMatches[i];$('sfN').value=c.name;$('sacList').style.display='none';$('sfT').value=c.nr||'';const hint=$('sedTotalHint');hint.textContent=`✓ Sugestie din ${c.month}: ${c.nr} ședințe`;hint.classList.add('show');}
 document.addEventListener('click',e=>{if(!e.target.closest('#fN')&&!e.target.closest('#acList'))$('acList').style.display='none';if(!e.target.closest('#sfN')&&!e.target.closest('#sacList'))$('sacList').style.display='none';});
 
+// ── ALERTE EXPIRARE ──
+let dismissedAlerts=new Set();
+
+function parseDate(d){
+  if(!d||d==='—')return null;
+  // format dd.mm.yyyy sau yyyy-mm-dd
+  if(d.includes('-')){return new Date(d);}
+  const p=d.split('.');
+  if(p.length===3)return new Date(parseInt(p[2]),parseInt(p[1])-1,parseInt(p[0]));
+  return null;
+}
+
+function getExpiredClients(){
+  const now=new Date();
+  // Gaseste ultima plata per client (dupa nume)
+  const lastPayment={};
+  ALL.forEach(month=>{
+    (db[month]||[]).forEach(e=>{
+      if(e.type==='Supliment'||e.type==='Altele')return;
+      const d=parseDate(e.date);
+      if(!d)return;
+      const nameKey=e.name.trim().toLowerCase();
+      if(!lastPayment[nameKey]||d>lastPayment[nameKey].date){
+        lastPayment[nameKey]={name:e.name,date:d,dateStr:e.date,month,tip:e.type};
+      }
+    });
+  });
+  const alerts=[];
+  Object.values(lastPayment).forEach(p=>{
+    const daysDiff=Math.floor((now-p.date)/(1000*60*60*24));
+    const key=p.name+'|'+p.dateStr;
+    if(dismissedAlerts.has(key))return;
+    const limit=p.tip==='2 săptămâni'?14:30;
+    if(daysDiff>=limit){
+      alerts.push({name:p.name,date:p.dateStr,month:p.month,days:daysDiff,type:'expired',key,tip:p.tip});
+    } else if(daysDiff>=limit-3){
+      alerts.push({name:p.name,date:p.dateStr,month:p.month,days:daysDiff,daysLeft:limit-daysDiff,type:'soon',key,tip:p.tip});
+    }
+  });
+  // Sortat: expirate primele, apoi dupa nr zile descrescator
+  return alerts.sort((a,b)=>{
+    if(a.type!==b.type)return a.type==='expired'?-1:1;
+    return b.days-a.days;
+  });
+}
+
+function renderAlerts(){
+  const alerts=getExpiredClients();
+  const wrap=$('alertsWrap');
+  if(!alerts.length){wrap.innerHTML='';return;}
+  wrap.innerHTML=alerts.map(a=>{
+    const isExpired=a.type==='expired';
+    const msg=isExpired
+      ?`A plătit pe ${a.date} — au trecut ${a.days} zile (${a.month})`
+      :`Expiră în ${a.daysLeft} zile — a plătit pe ${a.date}`;
+    return`<div class="alert-card ${isExpired?'':'warn'}">
+      <span class="alert-icon">${isExpired?'🔴':'🟡'}</span>
+      <div class="alert-info">
+        <div class="alert-name">${a.name} <span class="exp-badge ${isExpired?'':'warn'}">${isExpired?'EXPIRAT':'EXPIRĂ CURÂND'}</span></div>
+        <div class="alert-msg">${msg}</div>
+      </div>
+      <button class="alert-dismiss" onclick="dismissAlert('${a.key}')" title="Ascunde">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function dismissAlert(key){
+  dismissedAlerts.add(key);
+  renderAlerts();
+}
+
 // ── RENDER ──
-function render(){$('curTitle').textContent=cur;const ents=db[cur]||[],total=tot(cur),sala=ents.filter(e=>e.type!=='Supliment');$('sTotal').textContent=total.toLocaleString('ro-RO')+' RON';$('sClients').textContent=sala.length;$('sAvg').textContent=ents.length?Math.round(total/ents.length).toLocaleString('ro-RO')+' RON':'—';$('tbody').innerHTML=ents.length?ents.map((e,i)=>{let sedCell='';if(isSedType(e.type)&&e.sedId&&sedDb[e.sedId]){const sed=sedDb[e.sedId];const left=sed.total-sed.used;const cls=left===0?'epuizat':left<=2?'putine':'';sedCell=` <span class="sed-badge ${cls}" onclick="openHistModal('${e.sedId}')">${left>0?left+'🏃':'✅'} / ${sed.total}</span>`;}return`<tr><td style="font-weight:500">${e.name}${sedCell}</td><td class="td-muted">${e.date||'—'}</td><td><span class="badge ${e.type==='Supliment'?'b-supl':'b-sala'}">${e.type}</span></td><td class="td-amt">${(e.amount||0).toLocaleString('ro-RO')} RON</td><td><button class="btn-del" onclick="delEntry('${cur}',${i})">✕</button></td></tr>`;}).join(''):'<tr><td colspan="5" style="text-align:center;color:#555;padding:32px 0">Nicio intrare</td></tr>';const ch=$('chart');ch.innerHTML='';const max=Math.max(...ALL.map(tot),1);ALL.forEach(m=>{const pct=(tot(m)/max)*100;const c=document.createElement('div');c.className='bar-col'+(m===cur?' active':'');c.onclick=()=>{cur=m;render();};c.innerHTML=`<div class="bar-fill${m===cur?' active':''}" style="height:${Math.max(pct,3)}%"></div><div class="bar-lbl">${m.split(' ')[0].substring(0,3)}</div>`;ch.appendChild(c);});$('pg').innerHTML=ALL.filter(m=>m!==cur).map(m=>`<div class="pc" onclick="cur='${m}';render()"><div class="pc-name">${m}</div><div class="pc-total">${tot(m).toLocaleString('ro-RO')} RON</div><div class="pc-sub">${(db[m]||[]).filter(e=>e.type!=='Supliment').length} clienți</div></div>`).join('');}
+function render(){$('curTitle').textContent=cur;renderAlerts();const ents=db[cur]||[],total=tot(cur),sala=ents.filter(e=>e.type!=='Supliment');$('sTotal').textContent=total.toLocaleString('ro-RO')+' RON';$('sClients').textContent=sala.length;$('sAvg').textContent=ents.length?Math.round(total/ents.length).toLocaleString('ro-RO')+' RON':'—';$('tbody').innerHTML=ents.length?ents.map((e,i)=>{let sedCell='';if(isSedType(e.type)&&e.sedId&&sedDb[e.sedId]){const sed=sedDb[e.sedId];const left=sed.total-sed.used;const cls=left===0?'epuizat':left<=2?'putine':'';sedCell=` <span class="sed-badge ${cls}" onclick="openHistModal('${e.sedId}')">${left>0?left+'🏃':'✅'} / ${sed.total}</span>`;}return`<tr><td style="font-weight:500">${e.name}${sedCell}</td><td class="td-muted">${e.date||'—'}</td><td><span class="badge ${e.type==='Supliment'?'b-supl':'b-sala'}">${e.type}</span></td><td class="td-amt">${(e.amount||0).toLocaleString('ro-RO')} RON</td><td><button class="btn-del" onclick="delEntry('${cur}',${i})">✕</button></td></tr>`;}).join(''):'<tr><td colspan="5" style="text-align:center;color:#555;padding:32px 0">Nicio intrare</td></tr>';const ch=$('chart');ch.innerHTML='';const max=Math.max(...ALL.map(tot),1);ALL.forEach(m=>{const pct=(tot(m)/max)*100;const c=document.createElement('div');c.className='bar-col'+(m===cur?' active':'');c.onclick=()=>{cur=m;render();};c.innerHTML=`<div class="bar-fill${m===cur?' active':''}" style="height:${Math.max(pct,3)}%"></div><div class="bar-lbl">${m.split(' ')[0].substring(0,3)}</div>`;ch.appendChild(c);});$('pg').innerHTML=ALL.filter(m=>m!==cur).map(m=>`<div class="pc" onclick="cur='${m}';render()"><div class="pc-name">${m}</div><div class="pc-total">${tot(m).toLocaleString('ro-RO')} RON</div><div class="pc-sub">${(db[m]||[]).filter(e=>e.type!=='Supliment').length} clienți</div></div>`).join('');}
 function renderSedinte(keepScroll){
   const scrollY=keepScroll?window.scrollY:0;
   $('sedTitle').textContent=cur;
@@ -376,7 +443,7 @@ function renderSedinte(keepScroll){
 }
 function sedPlus(key){if(!sedDb[key])return;const sed=sedDb[key];if(sed.used>=sed.total){toast('Pachetul e epuizat!',true);return;}sed.used++;sed.history=sed.history||[];sed.history.push({date:nowStr(),action:'+'});renderSedinte(true);render();scheduleSave();toast(`✓ ${sed.name} — ${sed.total-sed.used} rămase`);}
 function sedMinus(key){if(!sedDb[key])return;const sed=sedDb[key];if(sed.used<=0){toast('Nu poți scădea sub 0',true);return;}sed.used--;sed.history=sed.history||[];sed.history.push({date:nowStr(),action:'-'});renderSedinte(true);render();scheduleSave();toast(`↩ ${sed.name} — ${sed.total-sed.used} rămase`);}
-function delSed(key){if(!sedDb[key])return;const sed=sedDb[key];if(!confirm(`Ștergi pachetul finalizat al lui ${sed.name}?`))return;delete sedDb[key];renderSedinte();saveToDrive();toast('Pachet șters ✓');}
+function delSed(key){if(!sedDb[key])return;const sed=sedDb[key];if(!confirm(`Ștergi pachetul finalizat al lui ${sed.name}?`))return;delete sedDb[key];renderSedinte();scheduleSave();toast('Pachet șters ✓');}
 function openHistModal(key){const sed=sedDb[key];if(!sed)return;$('histTitle').textContent='Istoric — '+sed.name;$('histSub').textContent=`${sed.used} din ${sed.total} ședințe`;const hist=(sed.history||[]).slice().reverse();$('histList').innerHTML=hist.length?hist.map((h,i)=>`<div class="hist-item"><span style="font-size:13px;color:${h.action==='+'?'var(--grn)':'var(--acc)'}">${h.action==='+'?'▶ Efectuată':'↩ Anulată'}</span><span class="hist-date">${h.date}</span><button class="btn-hist-del" onclick="delHistItem('${key}',${hist.length-1-i})">✕</button></div>`).join(''):'<div class="hist-empty">Nicio activitate</div>';$('histOv').classList.add('open');}
 function closeHist(){$('histOv').classList.remove('open');}
 function delHistItem(key,idx){if(!sedDb[key])return;const sed=sedDb[key];const item=sed.history[idx];if(!item)return;if(item.action==='+')sed.used=Math.max(0,sed.used-1);else sed.used=Math.min(sed.total,sed.used+1);sed.history.splice(idx,1);openHistModal(key);renderSedinte();render();scheduleSave();}
@@ -386,7 +453,7 @@ function saveNewSed(){const name=$('sfN').value.trim();const total=parseInt($('s
 function openAdd(){$('fN').value='';$('fD').value=todayStr();$('fA').value='';$('amtHint').textContent='';$('amtHint').className='fi-hint';$('prefillBar').classList.remove('show');$('acList').style.display='none';acIdx=-1;$('addMSub').textContent=cur;$('addOv').classList.add('open');}
 function closeAdd(){$('addOv').classList.remove('open');}
 function saveEntry(){const n=$('fN').value.trim(),d=$('fD').value,t=$('fT').value,a=parseInt($('fA').value);if(!n||!a){alert('Completează numele și suma!');return;}if(!db[cur])db[cur]=[];const entry={name:n,date:d,type:t,amount:a};if(isSedType(t)){const nr=extractSedNr(t);if(nr>0){const id=genId();sedDb[id]={id,name:n,total:nr,used:0,startDate:d,month:cur,history:[]};entry.sedId=id;}}db[cur].push(entry);closeAdd();render();saveToDrive();toast(n+' adăugat ✓');}
-function delEntry(m,i){if(!confirm('Ștergi această intrare?'))return;const e=db[m][i];if(e&&e.sedId&&sedDb[e.sedId])delete sedDb[e.sedId];db[m].splice(i,1);render();saveToDrive();}
+function delEntry(m,i){if(!confirm('Ștergi această intrare?'))return;const e=db[m][i];if(e&&e.sedId&&sedDb[e.sedId])delete sedDb[e.sedId];db[m].splice(i,1);render();scheduleSave();}
 function openNM(){$('nmOv').classList.add('open');}
 function mkMonth(){const k=$('nmM').value+' '+$('nmY').value;if(db[k]){alert('Luna '+k+' există deja!');return;}db[k]=[];ALL=sortMonths([...ALL,k]);cur=k;$('nmOv').classList.remove('open');render();saveToDrive();toast('Luna '+k+' creată ✓');}
 render();
