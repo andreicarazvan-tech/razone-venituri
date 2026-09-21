@@ -301,6 +301,7 @@ async function loadFromDrive(){
       db=saved.data;ALL=sortMonths(Object.keys(db));
       cur=ALL.includes(getCurrentMonthKey())?getCurrentMonthKey():ALL[0];
       if(saved.sedDb)sedDb=saved.sedDb;
+      if(saved.dismissedAlerts)dismissedAlerts=new Set(saved.dismissedAlerts);
       render();renderSedinte();toast('Date încărcate ✓');
     }else{await saveToDrive();}
   }catch(e){console.error(e);}
@@ -315,7 +316,7 @@ async function saveToDrive(){
   setDrive('saving','Se salvează...');
   try{
     const now=new Date().toISOString();
-    const payload=JSON.stringify({data:db,sedDb:sedDb,savedAt:now});
+    const payload=JSON.stringify({data:db,sedDb:sedDb,dismissedAlerts:[...dismissedAlerts],savedAt:now});
     let r=await fetch(`https://www.googleapis.com/upload/drive/v3/files/${gFileId}?uploadType=media`,{
       method:'PATCH',headers:{Authorization:'Bearer '+gToken,'Content-Type':'application/json'},body:payload
     });
@@ -417,6 +418,7 @@ function renderAlerts(){
 function dismissAlert(key){
   dismissedAlerts.add(key);
   renderAlerts();
+  saveToDrive();
 }
 
 // ── RENDER ──
